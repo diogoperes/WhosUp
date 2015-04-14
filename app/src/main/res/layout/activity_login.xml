@@ -18,9 +18,6 @@
         android:layout_weight="1"
         android:gravity="center_vertical|center_horizontal"
         >
-        <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
-                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                     android:visibility="gone" />
 
 
                 <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
@@ -62,7 +59,15 @@
                             android:minHeight="45dp"
                             android:textColor="#ffffffff"
                             android:background="#ffd41310" />
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/forgetPassword"
+                        android:id="@+id/forgetPassword"
+                        android:textColor="#ffffffff"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:textIsSelectable="false"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -76,8 +81,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign up"
-            android:id="@+id/signUpTextView"
+            android:text="@string/signUp"
+            android:id="@+id/signUp"
             android:autoLink="web"
             android:textColor="#ffffffff"
             android:layout_gravity="bottom"
