@@ -1,8 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:background="@drawable/header_gradient"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    tools:context=".RegisterActivity">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_gradient">
 
-</LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/registerBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/signUp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:height="40sp"
+                android:textColor="#ffffff"
+                android:background="#000000"
+                android:textStyle="bold"/>
+            </LinearLayout>
+        <!-- Registration Form -->
+        <LinearLayout
+            android:layout_below="@id/registerBar"
+
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dip"
+            >
+            <!-- Full Name Label -->
+            <EditText android:id="@+id/username"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/username"
+                      android:inputType="text"
+                      android:maxLines="1"
+                      android:singleLine="true"
+                      android:layout_marginBottom="10dp"
+                      android:textColorHint="#ffffffff"
+                      android:textColor="#ffffffff" />
+            <!--  Email Label -->
+            <EditText android:id="@+id/email"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/email"
+                      android:inputType="textEmailAddress"
+                      android:maxLines="1"
+                      android:singleLine="true"
+
+                      android:layout_marginBottom="10dp"
+                      android:textColorHint="#ffffffff"
+                      android:textColor="#ffffffff" />
+            <!-- Password Label -->
+            <EditText android:id="@+id/password" android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/password"
+                      android:inputType="textPassword"
+                      android:maxLines="1" android:singleLine="true"
+                      android:layout_marginBottom="10dp"
+                      android:textColorHint="#ffffffff"
+                      android:textColor="#ffffffff" />
+            <!-- Confirm Password Password Label -->
+            <EditText android:id="@+id/confirm_password" android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/confirm_password"
+                      android:inputType="textPassword"
+                      android:maxLines="1" android:singleLine="true"
+                      android:layout_marginBottom="10dp"
+                      android:textColorHint="#ffffffff"
+                      android:textColor="#ffffffff" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="#ffffffff"
+                android:text="@string/agree_terms_and_conditions"
+                android:id="@+id/agree_terms_and_conditions"
+                android:layout_gravity="left"/>
+
+            <!-- Register Button -->
+
+            <Button android:id="@+id/register_new_account"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:textStyle="bold"
+                    android:minHeight="45dp"
+                    android:textColor="#ffffffff"
+                    android:background="#ffd41310"
+                    android:text="@string/register_new_account"/>
+            <!-- Link to Login Screen -->
+            <TextView android:id="@+id/link_to_login"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="40dip"
+                      android:layout_marginBottom="40dip"
+                      android:text="Already has account! Login here"
+                      android:gravity="center"
+                      android:textSize="20dip"
+                      android:textColor="#fffaf8ff"/>
+
+        </LinearLayout>
+        <!-- Registration Form Ends -->
+    </RelativeLayout>
+</ScrollView>
