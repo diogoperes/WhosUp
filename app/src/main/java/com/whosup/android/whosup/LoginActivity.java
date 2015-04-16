@@ -30,7 +30,7 @@ import java.util.List;
 public class LoginActivity extends Activity {
 
     Button buttonLogin;
-    TextView registerScreen;
+    TextView registerScreen, recoveryScreen;
     EditText email, pass;
     private Toast toast;
 
@@ -69,6 +69,7 @@ public class LoginActivity extends Activity {
         registerScreen = (TextView) findViewById(R.id.signUp);
         email = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.password);
+        recoveryScreen = (TextView) findViewById(R.id.passres);
         buttonLogin = (Button) findViewById(R.id.login);
 
 
@@ -96,6 +97,16 @@ public class LoginActivity extends Activity {
                 Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
 
+            }
+        });
+
+        recoveryScreen.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to Register screen
+                Intent i = new Intent(getApplicationContext(), ForgotLoginActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }

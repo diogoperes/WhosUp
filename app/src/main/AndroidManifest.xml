@@ -30,6 +30,10 @@
             android:name=".RegisterActivity"
             android:label="Register" >
         </activity>
+        <activity
+            android:name=".ForgotLoginActivity"
+            android:label="@string/title_activity_forgot_login">
+        </activity>
     </application>
     <!-- Allow to connect with internet and to know the current network state-->
     <uses-permission android:name="android.permission.INTERNET"/>
