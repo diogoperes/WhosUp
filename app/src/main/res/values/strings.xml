@@ -17,5 +17,6 @@
     <string name="please_insert_all_fields">Please insert all fields</string>
     <string name="account_successfully_created">Account Successfully Created</string>
     <string name="invalid_email">Invalid Email</string>
+    <string name="noInternetConnection">No Internet Connection</string>
 
 </resources>

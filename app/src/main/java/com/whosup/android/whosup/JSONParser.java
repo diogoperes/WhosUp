@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -19,6 +21,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 public class JSONParser {
@@ -27,10 +32,14 @@ public class JSONParser {
     static JSONObject jObj = null;
     static String json = "";
 
+
     // constructor
     public JSONParser() {
 
     }
+
+
+
 
 
     public JSONObject getJSONFromUrl(final String url) {
@@ -124,10 +133,13 @@ public class JSONParser {
             }
 
         } catch (UnsupportedEncodingException e) {
+            Log.e("UnsupportedEncodingException", e.toString());
             e.printStackTrace();
         } catch (ClientProtocolException e) {
+            Log.e("ClientProtocolException", e.toString());
             e.printStackTrace();
         } catch (IOException e) {
+            Log.e("IOException", e.toString());
             e.printStackTrace();
         }
 

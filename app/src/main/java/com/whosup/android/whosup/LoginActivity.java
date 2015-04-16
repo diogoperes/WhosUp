@@ -2,7 +2,10 @@ package com.whosup.android.whosup;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +20,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +32,7 @@ public class LoginActivity extends Activity {
     Button buttonLogin;
     TextView registerScreen;
     EditText email, pass;
-
+    private Toast toast;
 
 
 
@@ -64,10 +70,21 @@ public class LoginActivity extends Activity {
         email = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.password);
         buttonLogin = (Button) findViewById(R.id.login);
+
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AttemptLogin().execute();
+                if(isNetworkAvailable()) {
+                    new AttemptLogin().execute();
+                }else{
+
+                    if (toast == null || toast.getView().getWindowVisibility() != View.VISIBLE) {
+                        toast = Toast.makeText(getApplicationContext(), R.string.noInternetConnection, Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+
+                }
             }
         });
 
@@ -83,6 +100,43 @@ public class LoginActivity extends Activity {
         });
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    /*public boolean isInternetAccessible() {
+        if (isNetworkAvailable()) {
+            try {
+                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                urlc.setRequestProperty("User-Agent", "Test");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(1500);
+                urlc.connect();
+                return (urlc.getResponseCode() == 200);
+            } catch (IOException e) {
+                Log.e("Internet error", "Couldn't check internet connection", e);
+            }
+        } else {
+            Log.d("Internet error", "Internet not available!");
+        }
+        return false;
+    }
+
+    private class Connection extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object... arg0) {
+
+            isInternetAccessible();
+
+            return null;
+        }
+
+    }
+    */
 
     class AttemptLogin extends AsyncTask<String, String, String> {
 
