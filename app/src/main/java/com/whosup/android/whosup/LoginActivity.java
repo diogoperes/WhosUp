@@ -36,7 +36,7 @@ public class LoginActivity extends Activity {
 
 
 
-    // Progress Dialog
+    // Progress Dialo
     private ProgressDialog pDialog;
 
     // JSON parser class
