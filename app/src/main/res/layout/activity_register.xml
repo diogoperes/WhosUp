@@ -39,7 +39,7 @@
             android:padding="10dip"
             >
             <!-- Full Name Label -->
-            <EditText android:id="@+id/username"
+            <EditText android:id="@+id/editTextUserName"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:hint="@string/username"
@@ -50,7 +50,7 @@
                       android:textColorHint="#ffffffff"
                       android:textColor="#ffffffff" />
             <!--  Email Label -->
-            <EditText android:id="@+id/email"
+            <EditText android:id="@+id/editTextUserEmail"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:hint="@string/email"
@@ -62,7 +62,7 @@
                       android:textColorHint="#ffffffff"
                       android:textColor="#ffffffff" />
             <!-- Password Label -->
-            <EditText android:id="@+id/password" android:layout_width="match_parent"
+            <EditText android:id="@+id/editTextPassword" android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:hint="@string/password"
                       android:inputType="textPassword"
@@ -71,7 +71,8 @@
                       android:textColorHint="#ffffffff"
                       android:textColor="#ffffffff" />
             <!-- Confirm Password Password Label -->
-            <EditText android:id="@+id/confirm_password" android:layout_width="match_parent"
+            <EditText android:id="@+id/editTextConfirmPassword"
+                      android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:hint="@string/confirm_password"
                       android:inputType="textPassword"
@@ -91,7 +92,7 @@
 
             <!-- Register Button -->
 
-            <Button android:id="@+id/register_new_account"
+            <Button android:id="@+id/button_register_new_account"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"

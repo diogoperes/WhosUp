@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.whosup.android.whosup" >
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -32,5 +31,9 @@
             android:label="Register" >
         </activity>
     </application>
-
+    <!-- Allow to connect with internet and to know the current network state-->
+    <uses-permission android:name="android.permission.INTERNET">
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
+        </uses-permission>
+    </uses-permission>
 </manifest>

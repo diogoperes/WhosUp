@@ -9,7 +9,24 @@
               android:background="@drawable/header_gradient"
               android:descendantFocusability="beforeDescendants"
               android:focusableInTouchMode="true">
+    <LinearLayout
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
 
+        >
+        <ImageView android:src="@drawable/whosup_logo_small"
+                   android:id="@+id/loginLogo"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:adjustViewBounds="true"
+                   android:scaleType="fitCenter"
+                   android:layout_centerHorizontal="true"
+                   android:layout_gravity="center"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll2"
@@ -19,22 +36,12 @@
         android:gravity="center_vertical|center_horizontal"
         >
 
-
                 <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
                               android:layout_height="match_parent" android:orientation="vertical"
+
                     >
 
-                    <ImageView android:src="@drawable/whos_up_logo"
-                               android:id="@+id/loginLogo"
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:adjustViewBounds="true"
-                               android:maxWidth="200dp"
-                               android:maxHeight="200dp"
 
-                               android:scaleType="fitCenter"
-                               android:layout_centerHorizontal="true"
-                               android:layout_gravity="center_horizontal"/>
                            <!--android:maxWidth="200dp"
                            android:maxHeight="200dp"-->
 
@@ -57,7 +64,7 @@
                               android:textColorHint="#ffffffff"
                               android:textColor="#ffffffff" />
 
-                    <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
+                    <Button android:id="@+id/login" style="?android:textAppearanceSmall"
                             android:layout_width="match_parent" android:layout_height="wrap_content"
                             android:layout_marginTop="16dp" android:text="@string/login"
                             android:textStyle="bold"
@@ -67,12 +74,23 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/forgetPassword"
-                        android:id="@+id/forgetPassword"
+                        android:text="@string/forgotPassword"
+                        android:id="@+id/passres"
                         android:textColor="#ffffffff"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="15dp"
                         android:textIsSelectable="false"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="56dp"
+                        android:id="@+id/loginErrorMsg"
+                        android:textColor="#000000"
+                        android:layout_alignParentLeft="true"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -92,6 +110,9 @@
             android:textColor="#ffffffff"
             android:layout_gravity="bottom"
             android:textSize="18dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
             android:textIsSelectable="false"/>
     </LinearLayout>
 </LinearLayout>
