@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.whosup.android.whosup" >
+    <!-- Allow to connect with internet and to know the current network state -->
+    <uses-permission android:name="android.permission.INTERNET" >
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+        </uses-permission>
+    </uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <!-- Splash screen -->
         <activity
             android:name=".SplashScreen"
@@ -30,10 +37,10 @@
             android:name=".RegisterActivity"
             android:label="Register" >
         </activity>
+        <activity
+            android:name=".ForgotLoginActivity"
+            android:label="@string/title_activity_forgot_login">
+        </activity>
     </application>
-    <!-- Allow to connect with internet and to know the current network state-->
-    <uses-permission android:name="android.permission.INTERNET">
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
-        </uses-permission>
-    </uses-permission>
+
 </manifest>

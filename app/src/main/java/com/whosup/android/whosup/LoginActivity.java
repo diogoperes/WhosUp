@@ -1,26 +1,12 @@
 package com.whosup.android.whosup;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class LoginActivity extends Activity {
 
@@ -28,7 +14,7 @@ public class LoginActivity extends Activity {
     TextView registerScreen;
     EditText inputEmail;
     EditText inputPassword;
-
+    TextView recoverPassScreen;
 
 
     @Override
@@ -40,6 +26,7 @@ public class LoginActivity extends Activity {
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         buttonLogin = (Button) findViewById(R.id.login);
+        recoverPassScreen = (TextView) findViewById(R.id.passres);
 
 
         // Listening to register new account link
@@ -48,6 +35,17 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        // Listening to recover login
+        recoverPassScreen.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to Register screen
+                Intent i = new Intent(getApplicationContext(), ForgotLoginActivity.class);
                 startActivity(i);
 
             }
