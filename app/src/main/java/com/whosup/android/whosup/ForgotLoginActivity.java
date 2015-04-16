@@ -23,14 +23,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForgotLoginActivity extends Activity {
+public class ForgotLoginActivity extends Activity{
 
     Button buttonLogin;
     TextView buttonRecover, loginscreen;
     EditText inputEmail;
     private ProgressDialog pDialog;
-    private  final String ok = "Login retrieved. Please check your email.";
-    private final String fail = "Login could not be retrieved. Please try again";
+    public static final String ok = "Login retrieved. Please check your email.";
+    public static final String fail = "Login could not be retrieved. Please try again";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class ForgotLoginActivity extends Activity {
                     Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG).show();
                     return;
                 }
-                new RecoveryLogin().execute();
+                new ProgressDialogMessage(ForgotLoginActivity.this, "Retrieving your login. Please wait...", ok, fail).execute();
 
             }
         });
@@ -67,42 +67,5 @@ public class ForgotLoginActivity extends Activity {
             }
         });
     }
-
-    class RecoveryLogin extends AsyncTask<String, String, String>{
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(ForgotLoginActivity.this);
-            pDialog.setMessage("Retrieving your login. Please wait...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... args) {
-            //verificação à BD
-                String r = fail;
-            return r;
-
-        }
-
-        protected void onPostExecute(String s) {
-            // dismiss the dialog once product deleted
-            pDialog.dismiss();
-            if (s.equals(fail)){
-                Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
-            }
-            if (s.equals(ok)){
-                Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(i);
-                finish();
-            }
-
-        }
-    }
-
 
 }
