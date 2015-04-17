@@ -9,14 +9,14 @@ import android.widget.Toast;
 /**
  * Created by Nuno on 16/04/2015.
  */
-public class ProgressDialogMessage extends AsyncTask<String, String, String> {
+public class RecoverLoginProgress extends AsyncTask<String, String, String> {
 
     private final Activity activity;
     private final String message;
     private final String ok, fail;
     private ProgressDialog pDialog;
 
-    public ProgressDialogMessage(Activity activity, String message, String ok, String fail){
+    public RecoverLoginProgress(Activity activity, String message, String ok, String fail){
         this.activity=activity;
         this.message=message;
         this.ok=ok;
