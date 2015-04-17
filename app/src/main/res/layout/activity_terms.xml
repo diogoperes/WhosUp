@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    tools:context=".RegisterActivity">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_gradient">
+
+
+        <LinearLayout
+            android:id="@+id/registerBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/TermsAndConditions"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:height="40sp"
+                android:textColor="#ffffff"
+                android:background="#000000"
+                android:textStyle="bold"/>
+        </LinearLayout>
+        <!-- Registration Form -->
+        <LinearLayout
+            android:layout_below="@id/registerBar"
+
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dip"
+            >
+
+            <TextView android:id="@+id/terms"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dip"
+                android:layout_marginBottom="40dip"
+                android:textAlignment="viewStart"
+                android:text="@string/termstext"
+                android:textSize="15dip"
+                android:textColor="#fffaf8ff"
+                android:gravity="fill_horizontal|left" />
+            <!-- Go back button -->
+
+            <Button android:id="@+id/button_go_register"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:textStyle="bold"
+                android:minHeight="45dp"
+                android:textColor="#ffffffff"
+                android:background="#ffd41310"
+                android:text="@string/go_back"/>
+            <!-- Link to Login Screen -->
+
+
+        </LinearLayout>
+        <!-- Registration Form Ends -->
+    </RelativeLayout>
+</ScrollView>

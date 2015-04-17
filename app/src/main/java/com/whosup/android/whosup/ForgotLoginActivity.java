@@ -61,8 +61,6 @@ public class ForgotLoginActivity extends Activity{
 
             public void onClick(View v) {
                 // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(i);
                 finish();
             }
         });

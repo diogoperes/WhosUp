@@ -106,7 +106,6 @@ public class LoginActivity extends Activity {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), ForgotLoginActivity.class);
                 startActivity(i);
-                finish();
             }
         });
     }
