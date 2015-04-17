@@ -95,10 +95,6 @@ public class ForgotLoginActivity extends Activity{
                 JSONObject json = jsonParser.makeHttpRequest(
                         RECOVER_LOGIN_URL, "POST", params);
 
-                // check your log for json response
-                if(json == null){
-                    System.err.println("DOR");
-                }
                 Log.d("Recovery login attempt", json.toString());
 
                 // json success tag
