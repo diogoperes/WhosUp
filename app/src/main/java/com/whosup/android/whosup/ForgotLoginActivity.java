@@ -38,7 +38,7 @@ public class ForgotLoginActivity extends Activity{
                     Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG).show();
                     return;
                 }
-                new RecoverLoginProgress(ForgotLoginActivity.this, "Retrieving your login. Please wait...", ok, fail).execute();
+                new RecoverLoginProgress(ForgotLoginActivity.this, "Retrieving your login. Please wait...", ok, fail, email).execute();
 
             }
         });
