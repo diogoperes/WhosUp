@@ -3,7 +3,10 @@ package com.whosup.android.whosup;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +28,7 @@ public class ForgotLoginActivity extends Activity{
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
-    private static final String RECOVER_LOGIN_URL = "http://whosup.host22.com/recover_login.php";
+    private static final String RECOVER_LOGIN_URL = "http://whosup.host22.com/recoverlogin.php";
 
     Button buttonLogin;
     TextView buttonRecover, loginscreen;
@@ -34,6 +37,7 @@ public class ForgotLoginActivity extends Activity{
     private ProgressDialog pDialog;
     public static final String ok = "Password retrieved. Please check your email.";
     public static final String fail = "Password could not be retrieved. Please try again";
+    public static final String failEmail = "Password could not be retrieved. This email does not exist in WhosUp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +53,18 @@ public class ForgotLoginActivity extends Activity{
 
             @Override
             public void onClick(View v) {
-                String e = email.getText().toString();
-                if(e.equals("") || !e.contains("@") || !e.contains(".")){
-                    Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG).show();
+                if(isNetworkAvailable()){
+                    String e = email.getText().toString();
+                    if(e.equals("") || !e.contains("@") || !e.contains(".")){
+                        Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    new AttemptRecoveryLogin().execute();
+                }else{
+                    Toast.makeText(getApplicationContext(), R.string.noInternetConnection, Toast.LENGTH_LONG).show();
                     return;
                 }
-                new AttemptRecoveryLogin().execute();
+
 
             }
         });
@@ -76,6 +86,7 @@ public class ForgotLoginActivity extends Activity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog = null;
             pDialog = new ProgressDialog(ForgotLoginActivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setIndeterminate(false);
@@ -91,7 +102,7 @@ public class ForgotLoginActivity extends Activity{
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("email", eMail));
-
+                System.out.println(eMail);
                 Log.d("request!", "starting");
                 // getting product details by making HTTP request
                 JSONObject json = jsonParser.makeHttpRequest(
@@ -104,9 +115,13 @@ public class ForgotLoginActivity extends Activity{
                 if (success == 1) {
                     Log.d("Recovery login successful!", json.toString());
                     return ok;
-                }else{
+                }if (success == 0) {
                     Log.d("Recovery login Failure!", json.getString(TAG_MESSAGE));
                     return fail;
+                }
+                if (success == 2) {
+                    Log.d("Recovery login Failure!", json.getString(TAG_MESSAGE));
+                    return failEmail;
 
                 }
             } catch (JSONException e) {
@@ -123,12 +138,22 @@ public class ForgotLoginActivity extends Activity{
             if (s.equals(fail)) {
                 Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
             }
+            if (s.equals(failEmail)) {
+                Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
+            }
             if (s.equals(ok)) {
                 Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
                 finish();
             }
 
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }
