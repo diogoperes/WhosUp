@@ -184,8 +184,10 @@ public class LoginActivity extends Activity {
             pDialog.dismiss();
             if (file_url != null){
                 Toast.makeText(LoginActivity.this, file_url, Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(LoginActivity.this, R.string.noConnection, Toast.LENGTH_LONG).show();
             }
-            Toast.makeText(LoginActivity.this, R.string.noConnection, Toast.LENGTH_LONG).show();
+
 
         }
 
