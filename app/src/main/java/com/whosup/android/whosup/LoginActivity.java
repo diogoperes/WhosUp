@@ -33,7 +33,7 @@ public class LoginActivity extends Activity {
     TextView registerScreen, recoveryScreen;
     EditText email, pass;
     private Toast toast;
-
+    ConnectionDetector cd;
 
 
     // Progress Dialo
@@ -76,7 +76,9 @@ public class LoginActivity extends Activity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isNetworkAvailable()) {
+                //Check Connection
+                cd= new ConnectionDetector(getApplicationContext());
+                if(cd.isConnectingToInternet()) {
                     new AttemptLogin().execute();
                 }else{
 
@@ -110,43 +112,8 @@ public class LoginActivity extends Activity {
         });
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 
-    /*public boolean isInternetAccessible() {
-        if (isNetworkAvailable()) {
-            try {
-                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
-                urlc.setRequestProperty("User-Agent", "Test");
-                urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(1500);
-                urlc.connect();
-                return (urlc.getResponseCode() == 200);
-            } catch (IOException e) {
-                Log.e("Internet error", "Couldn't check internet connection", e);
-            }
-        } else {
-            Log.d("Internet error", "Internet not available!");
-        }
-        return false;
-    }
 
-    private class Connection extends AsyncTask {
-
-        @Override
-        protected Object doInBackground(Object... arg0) {
-
-            isInternetAccessible();
-
-            return null;
-        }
-
-    }
-    */
 
     class AttemptLogin extends AsyncTask<String, String, String> {
 

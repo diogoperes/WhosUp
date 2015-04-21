@@ -10,7 +10,9 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/header_gradient">
+        android:background="@drawable/header_gradient"
+        android:focusable="true" android:focusableInTouchMode="true"
+        >
 
 
         <LinearLayout
@@ -82,6 +84,49 @@
                       android:textColorHint="#ffffffff"
                       android:textColor="#ffffffff" />
 
+            <EditText android:id="@+id/editTextFirstName"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/firstName"
+                      android:inputType="text"
+                      android:maxLines="1"
+                      android:singleLine="true"
+                      android:layout_marginBottom="10dp"
+                      android:textColorHint="#ffffffff"
+                      android:textColor="#ffffffff" />
+
+            <EditText android:id="@+id/editTextLastName"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/lastName"
+                      android:inputType="text"
+                      android:maxLines="1"
+                      android:singleLine="true"
+                      android:layout_marginBottom="10dp"
+                      android:textColorHint="#ffffffff"
+                      android:textColor="#ffffffff" />
+
+
+            <RadioGroup
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                <RadioButton android:id="@+id/radio_male"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="@string/male"
+                             android:onClick="onRadioButtonClicked"
+                             android:textSize="20sp"
+                             android:textColor="#ffffff"/>
+                <RadioButton android:id="@+id/radio_female"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="@string/female"
+                             android:onClick="onRadioButtonClicked"
+                             android:layout_marginLeft="20dp"
+                             android:textSize="20sp"
+                             android:textColor="#ffffff"/>
+            </RadioGroup>
             <!--<DatePicker
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,13 +134,32 @@
                 android:calendarViewShown="false"
 
                 ></DatePicker>-->
+
+            <LinearLayout
+                android:id="@+id/linearLayout_birthdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
+                android:layout_marginLeft="5sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/birthdate"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_marginRight="10sp"/>
+
             <com.whosup.android.whosup.DateDisplayPicker
                 android:id="@+id/clientEditCreate_BirthDateDayPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                android:hint="Date"/>
-
+                android:textColorHint="#ffffff"
+                android:textColor="#ffffff"
+                android:hint="00-00-00"/>
+            </LinearLayout>
 
 
             <CheckBox

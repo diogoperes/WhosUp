@@ -49,6 +49,6 @@ public class DateDisplayPicker extends TextView implements DatePickerDialog.OnDa
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear,
                           int dayOfMonth) {
-        setText(String.format("%s/%s/%s", monthOfYear, dayOfMonth, year));
+        setText(String.format("%s-%s-%s", dayOfMonth, monthOfYear+1 , year));
     }
 }

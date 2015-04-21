@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ public class RegisterActivity extends Activity {
         button_register_new_account.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
+
                 String userName=editTextUserName.getText().toString();
                 String userEmail=editTextUserEmail.getText().toString();
                 String password=editTextPassword.getText().toString();
@@ -86,6 +88,8 @@ public class RegisterActivity extends Activity {
             }
         });
 
+
+
         // Listening to Login Screen link
         loginScreen.setOnClickListener(new View.OnClickListener() {
 
@@ -97,4 +101,22 @@ public class RegisterActivity extends Activity {
         });
 
     }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_male:
+                if (checked)
+                    // Pirates are the best
+                    break;
+            case R.id.radio_female:
+                if (checked)
+                    // Ninjas rule
+                    break;
+        }
+    }
+
 }
