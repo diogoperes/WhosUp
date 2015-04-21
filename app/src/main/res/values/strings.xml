@@ -21,6 +21,7 @@
     <string name="RetrievePassword">Retrieve Password</string>
     <string name="goBackLogin">Login</string>
     <string name="noInternetConnection">No Internet Connection</string>
+    <string name="noConnection">Error! Bad Connection</string>
     <string name="title_activity_terms">Terms and Conditions</string>
     <string name="TermsAndConditions">Terms and Conditions</string>
     <string name="go_back">Go Back</string>

@@ -172,12 +172,9 @@ public class LoginActivity extends Activity {
                     return json.getString(TAG_MESSAGE);
 
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                return null;
             }
-
-            return null;
-
         }
         /**
          * After completing background task Dismiss the progress dialog
@@ -188,6 +185,7 @@ public class LoginActivity extends Activity {
             if (file_url != null){
                 Toast.makeText(LoginActivity.this, file_url, Toast.LENGTH_LONG).show();
             }
+            Toast.makeText(LoginActivity.this, R.string.noConnection, Toast.LENGTH_LONG).show();
 
         }
 

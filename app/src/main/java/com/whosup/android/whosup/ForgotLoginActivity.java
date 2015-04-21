@@ -21,6 +21,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,8 +131,8 @@ public class ForgotLoginActivity extends Activity{
                     return failEmail;
 
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            }catch (Exception e){
+                return null;
             }
 
             return null;
@@ -141,17 +142,20 @@ public class ForgotLoginActivity extends Activity{
         protected void onPostExecute(String s) {
             // dismiss the dialog once product deleted
             pDialog.dismiss();
-            if (s.equals(fail)) {
-                Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
+            if(s == null){
+                Toast.makeText(ForgotLoginActivity.this, R.string.noConnection, Toast.LENGTH_LONG).show();
+            }else {
+                if (s.equals(fail)) {
+                    Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
+                }
+                if (s.equals(failEmail)) {
+                    Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
+                }
+                if (s.equals(ok)) {
+                    Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
+                    ForgotLoginActivity.this.finish();
+                }
             }
-            if (s.equals(failEmail)) {
-                Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
-            }
-            if (s.equals(ok)) {
-                Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
-                ForgotLoginActivity.this.finish();
-            }
-
         }
     }
 
