@@ -79,7 +79,13 @@ public class LoginActivity extends Activity {
                 //Check Connection
                 cd= new ConnectionDetector(getApplicationContext());
                 if(cd.isConnectingToInternet()) {
-                    new AttemptLogin().execute();
+                    String e = email.getText().toString();
+                    if(e.equals("") || !e.contains("@") || !e.contains(".")){
+                        toast= Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG);
+                        toast.show();
+                    }else{
+                        new AttemptLogin().execute();
+                    }
                 }else{
 
                     if (toast == null || toast.getView().getWindowVisibility() != View.VISIBLE) {
@@ -166,12 +172,9 @@ public class LoginActivity extends Activity {
                     return json.getString(TAG_MESSAGE);
 
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                return null;
             }
-
-            return null;
-
         }
         /**
          * After completing background task Dismiss the progress dialog
@@ -182,6 +185,7 @@ public class LoginActivity extends Activity {
             if (file_url != null){
                 Toast.makeText(LoginActivity.this, file_url, Toast.LENGTH_LONG).show();
             }
+            Toast.makeText(LoginActivity.this, R.string.noConnection, Toast.LENGTH_LONG).show();
 
         }
 
