@@ -29,6 +29,7 @@ public class ForgotLoginActivity extends Activity{
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static final String RECOVER_LOGIN_URL = "http://whosup.host22.com/recoverlogin.php";
+    private Toast toast;
 
     Button buttonLogin;
     TextView buttonRecover, loginscreen;
@@ -38,6 +39,7 @@ public class ForgotLoginActivity extends Activity{
     public static final String ok = "Password retrieved. Please check your email.";
     public static final String fail = "Password could not be retrieved. Please try again";
     public static final String failEmail = "Password could not be retrieved. This email does not exist in WhosUp";
+    ConnectionDetector cd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +55,20 @@ public class ForgotLoginActivity extends Activity{
 
             @Override
             public void onClick(View v) {
-                if(isNetworkAvailable()){
+                cd= new ConnectionDetector(getApplicationContext());
+                if(cd.isConnectingToInternet()) {
+
                     String e = email.getText().toString();
                     if(e.equals("") || !e.contains("@") || !e.contains(".")){
-                        Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG).show();
-                        return;
+                        toast= Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG);
+                        toast.show();
+                    }else{
+                        new AttemptRecoveryLogin().execute();
                     }
-                    new AttemptRecoveryLogin().execute();
+
                 }else{
-                    Toast.makeText(getApplicationContext(), R.string.noInternetConnection, Toast.LENGTH_LONG).show();
-                    return;
+                    toast = Toast.makeText(getApplicationContext(), R.string.noInternetConnection, Toast.LENGTH_LONG);
+                    toast.show();
                 }
 
 
@@ -143,17 +149,12 @@ public class ForgotLoginActivity extends Activity{
             }
             if (s.equals(ok)) {
                 Toast.makeText(ForgotLoginActivity.this, s, Toast.LENGTH_LONG).show();
-                finish();
+                ForgotLoginActivity.this.finish();
             }
 
         }
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+
 
 }

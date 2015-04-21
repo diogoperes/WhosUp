@@ -79,7 +79,13 @@ public class LoginActivity extends Activity {
                 //Check Connection
                 cd= new ConnectionDetector(getApplicationContext());
                 if(cd.isConnectingToInternet()) {
-                    new AttemptLogin().execute();
+                    String e = email.getText().toString();
+                    if(e.equals("") || !e.contains("@") || !e.contains(".")){
+                        toast= Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG);
+                        toast.show();
+                    }else{
+                        new AttemptLogin().execute();
+                    }
                 }else{
 
                     if (toast == null || toast.getView().getWindowVisibility() != View.VISIBLE) {
