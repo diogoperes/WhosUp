@@ -25,7 +25,7 @@ public class ForgotLoginActivity extends Activity{
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
-    private static final String RECOVER_LOGIN_URL = "http://whosup.host22.com/recover_login.php";
+    private static final String RECOVER_LOGIN_URL = "http://whosup.host22.com/recoverlogin.php";
 
     Button buttonLogin;
     TextView buttonRecover, loginscreen;
@@ -74,6 +74,7 @@ public class ForgotLoginActivity extends Activity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog = null;
             pDialog = new ProgressDialog(ForgotLoginActivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setIndeterminate(false);
