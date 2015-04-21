@@ -18,7 +18,7 @@
     <string name="account_successfully_created">Account Successfully Created</string>
     <string name="invalid_email">Invalid Email</string>
     <string name="title_activity_forgot_login">Forgot your Password?</string>
-    <string name="RetrieveLogin">Retrieve Login</string>
+    <string name="RetrievePassword">Retrieve Password</string>
     <string name="goBackLogin">Login</string>
     <string name="noInternetConnection">No Internet Connection</string>
     <string name="title_activity_terms">Terms and Conditions</string>
