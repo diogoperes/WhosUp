@@ -5,7 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterActivity"
+    android:id="@+id/scrollViewRegister">
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -80,6 +81,22 @@
                       android:layout_marginBottom="10dp"
                       android:textColorHint="#ffffffff"
                       android:textColor="#ffffffff" />
+
+            <!--<DatePicker
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
+
+                ></DatePicker>-->
+            <com.whosup.android.whosup.DateDisplayPicker
+                android:id="@+id/clientEditCreate_BirthDateDayPicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:hint="Date"/>
+
+
 
             <CheckBox
                 android:layout_width="wrap_content"
