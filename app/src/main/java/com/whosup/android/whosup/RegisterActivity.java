@@ -1,21 +1,54 @@
 package com.whosup.android.whosup;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.RadioButton;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class RegisterActivity extends Activity {
 
     EditText editTextUserName,editTextUserEmail,editTextPassword,editTextConfirmPassword;
     CheckBox terms;
+
+    // Creating JSON Parser object
+    JSONParser jsonParser = new JSONParser();
+
+    ArrayList<HashMap<String, String>> citiesList;
+
+    // albums JSONArray
+    JSONArray cities = null;
+
+
+    // Progress Dialog
+    private ProgressDialog pDialog;
+
+    // albums JSON url
+    private static final String URL_CITIES = "http://whosup.host22.com/cities_list.php";
+
+    // ALL JSON node names
+    private static final String TAG_CITY = "city";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,5 +151,7 @@ public class RegisterActivity extends Activity {
                     break;
         }
     }
+
+
 
 }

@@ -161,6 +161,12 @@
                 android:hint="00-00-00"/>
             </LinearLayout>
 
+            <Spinner
+                android:id="@+id/spinner_cities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
 
             <CheckBox
                 android:layout_width="wrap_content"
