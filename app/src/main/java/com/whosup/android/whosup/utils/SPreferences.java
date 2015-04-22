@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.renderscript.Sampler;
 
-/**
- * Created by Nuno on 22/04/2015.
- */
+
 public class SPreferences {
 
     private static SPreferences sPreferences=null;

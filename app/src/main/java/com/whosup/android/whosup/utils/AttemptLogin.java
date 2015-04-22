@@ -18,9 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Nuno on 22/04/2015.
- */
+
 public class AttemptLogin extends AsyncTask<String, String, String> {
     private static final String LOGIN_URL = "http://whosup.host22.com/login.php";
 
@@ -66,7 +64,7 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
         // TODO Auto-generated method stub
         // Check for success tag
         int success;
-        if(!splash) password = EncryptedData.MD5(password);
+        if(!splash) password = Utility.MD5(password);
         try {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();

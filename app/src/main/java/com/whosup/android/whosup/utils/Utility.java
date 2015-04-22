@@ -1,10 +1,7 @@
 package com.whosup.android.whosup.utils;
 
-/**
- * Created by Nuno on 22/04/2015.
- */
-public class EncryptedData {
 
+public class Utility {
 
     public static String MD5(String md5) {
         try {
@@ -19,4 +16,5 @@ public class EncryptedData {
         }
         return null;
     }
+
 }

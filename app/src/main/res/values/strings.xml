@@ -31,5 +31,6 @@
     <string name="female">Female</string>
     <string name="male">Male</string>
     <string name="birthdate">Birthdate: </string>
+    <string name="invalid_username">Username has invalid characters, only letters and numbers permitted</string>
 
 </resources>

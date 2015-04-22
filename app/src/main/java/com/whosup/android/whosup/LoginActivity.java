@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.whosup.android.whosup.utils.AttemptLogin;
 import com.whosup.android.whosup.utils.ConnectionDetector;
-import com.whosup.android.whosup.utils.EncryptedData;
+import com.whosup.android.whosup.utils.Utility;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
 
