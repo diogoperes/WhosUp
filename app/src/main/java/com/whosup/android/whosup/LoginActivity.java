@@ -72,8 +72,10 @@ public class LoginActivity extends Activity {
                 if(cd.isConnectingToInternet()) {
                     String e = email.getText().toString();
                     if(e.equals("") || !e.contains("@") || !e.contains(".")){
-                        toast= Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG);
-                        toast.show();
+                        if (toast == null || toast.getView().getWindowVisibility() != View.VISIBLE) {
+                            toast = Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG);
+                            toast.show();
+                        }
                     }else{
                         new AttemptLogin(LoginActivity.this, e, pass.getText().toString(), false).execute();
                     }

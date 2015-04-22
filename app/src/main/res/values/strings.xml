@@ -32,5 +32,7 @@
     <string name="male">Male</string>
     <string name="birthdate">Birthdate: </string>
     <string name="invalid_username">Username has invalid characters, only letters and numbers permitted</string>
+    <string name="must_be_13_years_or_older">Must be 13 years or older</string>
+    <string name="insert_date">Insert date</string>
 
 </resources>

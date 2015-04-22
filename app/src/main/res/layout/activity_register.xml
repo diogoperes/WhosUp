@@ -110,7 +110,8 @@
             <RadioGroup
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:id="@+id/radio_gender">
                 <RadioButton android:id="@+id/radio_male"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"

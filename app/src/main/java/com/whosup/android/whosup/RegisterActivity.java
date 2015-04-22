@@ -3,22 +3,30 @@ package com.whosup.android.whosup;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whosup.android.whosup.utils.ConnectionDetector;
+import com.whosup.android.whosup.utils.DateDisplayPicker;
+import com.whosup.android.whosup.utils.Utility;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,12 +34,14 @@ import java.util.List;
 public class RegisterActivity extends Activity {
 
     EditText username,email,password,confirmPassword, firstName, lastName;
+    String gender;
     CheckBox terms;
     Boolean checkedGender, checkedTerms;
     Toast toast;
     ConnectionDetector cd;
-
-
+    DateDisplayPicker birthdate;
+    private final String MALE_STRING = "Male";
+    private final String FEMALE_STRING = "Female";
 
 
 
@@ -52,6 +62,7 @@ public class RegisterActivity extends Activity {
         confirmPassword=(EditText)findViewById(R.id.editTextConfirmPassword);
         firstName=(EditText)findViewById(R.id.editTextFirstName);
         lastName=(EditText)findViewById(R.id.editTextLastName);
+        birthdate=(DateDisplayPicker)findViewById(R.id.clientEditCreate_BirthDateDayPicker);
         terms = (CheckBox) findViewById(R.id.agree_terms_and_conditions);
 
 
@@ -79,10 +90,7 @@ public class RegisterActivity extends Activity {
                 //checkConnection
                 cd= new ConnectionDetector(getApplicationContext());
                 if(!cd.isConnectingToInternet()) {
-                    if (toast == null ||toast.getView().getWindowVisibility() != View.VISIBLE) {
-                        toast = Toast.makeText(getApplicationContext(), R.string.noInternetConnection, Toast.LENGTH_LONG);
-                        toast.show();
-                    }
+                   makeToast(R.string.noInternetConnection);
                     return;
                 }
 
@@ -92,7 +100,7 @@ public class RegisterActivity extends Activity {
                 }else{
                     // Save the Data in Database
                     //loginDataBaseAdapter.insertEntry(userName, password);
-                    Toast.makeText(getApplicationContext(), R.string.account_successfully_created, Toast.LENGTH_LONG).show();
+                    makeToast(R.string.account_successfully_created);
                     finish();
                 }
 
@@ -122,11 +130,11 @@ public class RegisterActivity extends Activity {
         switch(view.getId()) {
             case R.id.radio_male:
                 if (checkedGender)
-                    // Pirates are the best
+                    gender = MALE_STRING;
                     break;
             case R.id.radio_female:
                 if (checkedGender)
-                    // Ninjas rule
+                    gender = FEMALE_STRING;
                     break;
         }
     }
@@ -140,35 +148,62 @@ public class RegisterActivity extends Activity {
         String lastNameStr=lastName.getText().toString();
 
 
+        //Check birthdate to see if its 13 years old or older
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(c.getTime());
+        Date currentDate = null;
+        try {
+            currentDate = df.parse(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //Log.d("Birthdate: ", birthdate.getDate().toString());
+        //Log.d("Current Date: ", currentDate.toString());
+        if(Utility.getDiffYears(birthdate.getDate(),currentDate)<13){
+            makeToast(R.string.must_be_13_years_or_older);
+            return false;
+        }
 
+
+        //check if date was inserted
+        if(birthdate.getDateWasInserted()){
+            makeToast(R.string.insert_date);
+        }
 
         // check if any of the fields are vaccant
         if(usernameStr.equals("")||passwordStr.equals("")||confirmPasswordStr.equals("")||
-                emailStr.equals("") || firstNameStr.equals("") || lastNameStr.equals("") || !checkedGender)
-        {
-            toast.makeText(getApplicationContext(), R.string.please_insert_all_fields, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        //See if username is valid
-        String pattern= "^[a-zA-Z0-9]*$";
-        if(usernameStr.matches(pattern)){
-            toast.makeText(getApplicationContext(), R.string.invalid_username, Toast.LENGTH_LONG).show();
+                emailStr.equals("") || firstNameStr.equals("") || lastNameStr.equals("") || !checkedGender){
+            makeToast(R.string.please_insert_all_fields);
             return false;
         }
 
+
+        //See if username is valid
+        String pattern= "^[a-zA-Z0-9]*$";
+        if(usernameStr.matches(pattern)){
+            makeToast(R.string.invalid_username);
+            return false;
+        }
         //check if email is valid
-        if(!usernameStr.contains("@"))
-        {
-            toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG).show();
+        if(!Utility.isEmailValid(emailStr)){
+            makeToast(R.string.invalid_email);
             return false;
         }
         // check if both password matches
-        if(!password.equals(confirmPassword))
-        {
-            toast.makeText(getApplicationContext(), R.string.password_does_not_match, Toast.LENGTH_LONG).show();
+        if(!password.equals(confirmPassword)){
+            makeToast(R.string.password_does_not_match);
             return false;
         }
         return true;
     }
+
+    public void makeToast(int s){
+        if (toast == null || toast.getView().getWindowVisibility() != View.VISIBLE) {
+            toast = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
 
 }
