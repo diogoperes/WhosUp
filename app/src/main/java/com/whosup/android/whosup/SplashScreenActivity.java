@@ -39,7 +39,7 @@ public class SplashScreenActivity extends Activity {
                 if(email!=null){
                     if(!email.equals("")) {
                         pass = SPreferences.getInstance().getLoginPassword(getApplicationContext());
-
+                        autoLogin();
                     }else{
                         Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
                         startActivity(i);
@@ -52,6 +52,9 @@ public class SplashScreenActivity extends Activity {
                 }
             }
         }, SPLASH_TIME_OUT);
+    }
+
+    private void autoLogin() {
     }
 
 }
