@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.whosup.android.whosup" >
+
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="21" />
+
+    <meta-data
+        android:name="com.whosup.android.whosup.AIzaSyAlkMQzknLgT9GObBAqbuOA5YbP2gNUK-I"
+        android:value="AIzaSyAlkMQzknLgT9GObBAqbuOA5YbP2gNUK-I" />
+
     <!-- Allow to connect with internet and to know the current network state -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -47,6 +56,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.whosup.android.whosup.RegisterActivity" />
+        </activity>
+        <activity
+            android:name=".CreateInviteActivity"
+            android:label="@string/title_activity_create_invite" >
         </activity>
     </application>
 

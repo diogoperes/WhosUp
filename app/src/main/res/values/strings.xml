@@ -37,5 +37,7 @@
     <string name="must_be_13_years_or_older">Must be 13 years or older</string>
     <string name="insert_date">Insert a valid date</string>
     <string name="you_must_accept_the_terms_and_conditions">You must accept the terms and conditions</string>
+    <string name="title_activity_place_picker">Pick a place</string>
+    <string name="title_activity_create_invite">Create a invite</string>
 
 </resources>
