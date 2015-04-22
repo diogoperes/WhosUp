@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class DateDisplayPicker extends TextView implements DatePickerDialog.OnDateSetListener{
 
-    private Boolean dateWasInserted = false;
+
     private int year;
     private int month;
     private int day;
@@ -60,7 +60,9 @@ public class DateDisplayPicker extends TextView implements DatePickerDialog.OnDa
         this.year=year;
         month=monthOfYear+1;
         day=dayOfMonth;
-        dateWasInserted=true;
+
+
+
         setText(String.format("%s-%s-%s", dayOfMonth, monthOfYear+1 , year));
     }
 
@@ -79,8 +81,6 @@ public class DateDisplayPicker extends TextView implements DatePickerDialog.OnDa
     }
 
 
-    public Boolean getDateWasInserted(){
-        return dateWasInserted;
-    }
+
 
 }

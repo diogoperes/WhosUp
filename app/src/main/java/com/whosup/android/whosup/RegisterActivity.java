@@ -1,7 +1,9 @@
 package com.whosup.android.whosup;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +17,12 @@ import android.widget.Toast;
 
 import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.DateDisplayPicker;
+import com.whosup.android.whosup.utils.JSONParser;
+import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.Utility;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,15 +41,29 @@ public class RegisterActivity extends Activity {
     EditText username,email,password,confirmPassword, firstName, lastName;
     String gender;
     CheckBox terms;
-    Boolean checkedGender, checkedTerms;
+    Boolean checkedGender=false, checkedTerms=false;
     Toast toast;
     ConnectionDetector cd;
     DateDisplayPicker birthdate;
     private final String MALE_STRING = "Male";
     private final String FEMALE_STRING = "Female";
 
+    String usernameStr,emailStr,passwordStr,confirmPasswordStr,firstNameStr,lastNameStr,birthdateStr;
 
 
+    private static final String REGISTER_URL = "http://whosup.host22.com/register.php";
+
+    //testing from a real server:
+    //private static final String LOGIN_URL = "http://www.yourdomain.com/webservice/login.php";
+
+    //JSON element ids from repsonse of php script:
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_MESSAGE = "message";
+
+    private ProgressDialog pDialog=null;
+
+    // JSON parser class
+    JSONParser jsonParser = new JSONParser();
 
 
     @Override
@@ -66,10 +85,11 @@ public class RegisterActivity extends Activity {
         terms = (CheckBox) findViewById(R.id.agree_terms_and_conditions);
 
 
+
         terms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkedTerms = ((RadioButton) v).isChecked();
+                checkedTerms = ((CheckBox) v).isChecked();
             }
         });
         terms.setLongClickable(true);
@@ -100,8 +120,9 @@ public class RegisterActivity extends Activity {
                 }else{
                     // Save the Data in Database
                     //loginDataBaseAdapter.insertEntry(userName, password);
-                    makeToast(R.string.account_successfully_created);
-                    finish();
+                    new AttemptRegister().execute();
+
+
                 }
 
 
@@ -140,19 +161,57 @@ public class RegisterActivity extends Activity {
     }
 
     public Boolean allFieldsOk(){
-        String usernameStr=username.getText().toString();
-        String emailStr=email.getText().toString();
-        String passwordStr=password.getText().toString();
-        String confirmPasswordStr=confirmPassword.getText().toString();
-        String firstNameStr=firstName.getText().toString();
-        String lastNameStr=lastName.getText().toString();
 
+        usernameStr=username.getText().toString();
+        emailStr=email.getText().toString();
+        passwordStr=password.getText().toString();
+        confirmPasswordStr=confirmPassword.getText().toString();
+        firstNameStr=firstName.getText().toString();
+        lastNameStr=lastName.getText().toString();
+
+        //check if date was inserted
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+        int yearInserted = Integer.parseInt(yearFormat.format(birthdate.getDate()));
+        //Log.d("Birthdate: ", new String(yearInserted+""));
+        if(yearInserted<1900){
+            makeToast(R.string.insert_date);
+            return false;
+        }
+
+        // check if any of the fields are vaccant
+        if(usernameStr.equals("")||passwordStr.equals("")||confirmPasswordStr.equals("")||
+                emailStr.equals("") || firstNameStr.equals("") || lastNameStr.equals("") || !checkedGender){
+            makeToast(R.string.please_insert_all_fields);
+            return false;
+        }
+
+
+
+        //See if username is valid
+        String pattern= "^[a-zA-Z0-9]*$";
+        if(!usernameStr.matches(pattern)){
+            makeToast(R.string.invalid_username);
+            return false;
+        }
+        //check if email is valid
+        if(!Utility.isEmailValid(emailStr)){
+            makeToast(R.string.invalid_email);
+            return false;
+        }
+        // check if both password matches
+        if(!passwordStr.equals(confirmPasswordStr)){
+            makeToast(R.string.password_does_not_match);
+            return false;
+        }
 
         //Check birthdate to see if its 13 years old or older
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = df.format(c.getTime());
         Date currentDate = null;
+        birthdateStr = df.format(birthdate.getDate());
+        Log.d("Birthdate: ", birthdateStr);
+
         try {
             currentDate = df.parse(formattedDate);
         } catch (ParseException e) {
@@ -165,36 +224,11 @@ public class RegisterActivity extends Activity {
             return false;
         }
 
-
-        //check if date was inserted
-        if(birthdate.getDateWasInserted()){
-            makeToast(R.string.insert_date);
-        }
-
-        // check if any of the fields are vaccant
-        if(usernameStr.equals("")||passwordStr.equals("")||confirmPasswordStr.equals("")||
-                emailStr.equals("") || firstNameStr.equals("") || lastNameStr.equals("") || !checkedGender){
-            makeToast(R.string.please_insert_all_fields);
+        if(!checkedTerms){
+            makeToast(R.string.you_must_accept_the_terms_and_conditions);
             return false;
         }
 
-
-        //See if username is valid
-        String pattern= "^[a-zA-Z0-9]*$";
-        if(usernameStr.matches(pattern)){
-            makeToast(R.string.invalid_username);
-            return false;
-        }
-        //check if email is valid
-        if(!Utility.isEmailValid(emailStr)){
-            makeToast(R.string.invalid_email);
-            return false;
-        }
-        // check if both password matches
-        if(!password.equals(confirmPassword)){
-            makeToast(R.string.password_does_not_match);
-            return false;
-        }
         return true;
     }
 
@@ -205,5 +239,93 @@ public class RegisterActivity extends Activity {
         }
     }
 
+
+    public class AttemptRegister extends AsyncTask<String, String, String> {
+
+
+
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+
+        int success =0;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pDialog=null;
+            pDialog = new ProgressDialog(RegisterActivity.this);
+            pDialog.setMessage("Attempting register...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... args) {
+
+            // Check for success tag
+
+            String passwordMD5 = Utility.MD5(passwordStr);
+            try {
+                // Building Parameters
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair("username", usernameStr));
+                params.add(new BasicNameValuePair("email", emailStr));
+                params.add(new BasicNameValuePair("password", passwordMD5));
+                params.add(new BasicNameValuePair("confirm_password", passwordMD5));
+                params.add(new BasicNameValuePair("firstName", firstNameStr));
+                params.add(new BasicNameValuePair("lastName", lastNameStr));
+                params.add(new BasicNameValuePair("gender", gender));
+                params.add(new BasicNameValuePair("bday", birthdateStr));
+
+                Log.d("request!", "starting");
+                // getting product details by making HTTP request
+                JSONObject json = jsonParser.makeHttpRequest(
+                        REGISTER_URL, "POST", params);
+
+                // check your log for json response
+                Log.d("Register Attempt", json.toString());
+
+                // json success tag
+                success = json.getInt(TAG_SUCCESS);
+                if (success == 1) {
+                    Log.d("Register Successful!", json.toString());
+                    return json.getString(TAG_MESSAGE);
+                }else{
+                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+
+                    return json.getString(TAG_MESSAGE);
+
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once product deleted
+            pDialog.dismiss();
+            if (file_url != null){
+                Toast.makeText(RegisterActivity.this, file_url, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), R.string.account_successfully_created, Toast.LENGTH_LONG).show();
+
+                if(success==1){
+                    finish();
+                }
+            }else{
+                Toast.makeText(RegisterActivity.this, R.string.noConnection, Toast.LENGTH_LONG).show();
+
+            }
+
+
+        }
+
+    }
 
 }
