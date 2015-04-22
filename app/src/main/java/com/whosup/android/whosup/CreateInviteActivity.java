@@ -44,9 +44,9 @@ public class CreateInviteActivity extends Activity {
                     startActivityForResult(intent, REQUEST_PLACE_PICKER);
 
                 } catch (GooglePlayServicesRepairableException e) {
-                    // ...
+                    e.printStackTrace();
                 } catch (GooglePlayServicesNotAvailableException e) {
-                    //
+                    e.printStackTrace();
                 }
             }
         });

@@ -95,10 +95,7 @@ public class LoginActivity extends Activity {
 
             public void onClick(View v) {
                 // Switching to Register screen
-                /*Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(i);
-                */
-                Intent i = new Intent(getApplicationContext(), CreateInviteActivity.class);
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
 
             }
