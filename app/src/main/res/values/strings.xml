@@ -4,6 +4,8 @@
     <string name="app_name">Who\'sUp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_exit">Exit</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

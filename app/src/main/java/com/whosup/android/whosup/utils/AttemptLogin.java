@@ -52,15 +52,14 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        pDialog=null;
         if(!splash){
-            pDialog=null;
             pDialog = new ProgressDialog(a);
             pDialog.setMessage("Attempting login...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
         }
-
     }
 
     @Override
@@ -111,7 +110,7 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
      * **/
     protected void onPostExecute(String file_url) {
         // dismiss the dialog once product deleted
-        if(!splash) pDialog.dismiss();
+        if(pDialog!=null) pDialog.dismiss();
         if (file_url != null){
             if(!splash)Toast.makeText(a, file_url, Toast.LENGTH_LONG).show();
         }else{

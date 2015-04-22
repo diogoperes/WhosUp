@@ -49,8 +49,7 @@ public class SPreferences {
     public void discardLoginCredentials(Context c){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);;
         SharedPreferences.Editor editor = prefs.edit();
-        editor.remove("PREFS_LOGIN_USERNAME_KEY");
-        editor.remove("PREFS_LOGIN_PASSWORD_KEY");
+        editor.clear();
         editor.commit();
     }
 }
