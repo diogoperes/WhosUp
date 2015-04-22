@@ -32,7 +32,7 @@ public class LoginActivity extends Activity {
 
     Button buttonLogin;
     TextView registerScreen, recoveryScreen;
-    EditText email, pass;
+    EditText email=null, pass;
     private Toast toast;
     ConnectionDetector cd;
 
@@ -108,6 +108,4 @@ public class LoginActivity extends Activity {
             }
         });
     }
-
-
 }

@@ -2,6 +2,7 @@ package com.whosup.android.whosup;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -32,12 +33,13 @@ public class SplashScreenActivity extends Activity {
                 // This method will be executed once the timer is over
                 // Start your app main activityzz
                //Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                //startActivity(i);
+               // startActivity(i);
 
                 // close this activity
-               pass="";
+               // SharedPreferences.Editor.
+                       pass="";
                email = SPreferences.getInstance().getLoginEmail(getApplicationContext());
-               // finish();
+                //finish();
                 if(email!=null){
                     if(!email.equals("")) {
                         pass = SPreferences.getInstance().getLoginPassword(getApplicationContext());
