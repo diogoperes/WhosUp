@@ -1,4 +1,4 @@
-package com.whosup.android.whosup;
+package com.whosup.android.whosup.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

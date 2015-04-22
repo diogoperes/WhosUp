@@ -151,7 +151,7 @@
                 android:textColor="#ffffff"
                 android:layout_marginRight="10sp"/>
 
-            <com.whosup.android.whosup.DateDisplayPicker
+            <com.whosup.android.whosup.utils.DateDisplayPicker
                 android:id="@+id/clientEditCreate_BirthDateDayPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

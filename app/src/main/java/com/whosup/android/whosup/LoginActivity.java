@@ -2,10 +2,7 @@ package com.whosup.android.whosup;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,14 +12,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whosup.android.whosup.utils.ConnectionDetector;
+import com.whosup.android.whosup.utils.JSONParser;
+import com.whosup.android.whosup.utils.SPreferences;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,7 +160,8 @@ public class LoginActivity extends Activity {
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
-                    Intent i = new Intent(LoginActivity.this, SplashScreen.class);
+                    SPreferences.getInstance().saveLogin(getApplicationContext(), email.toString(), pass.toString());
+                    Intent i = new Intent(LoginActivity.this, SplashScreenActivity.class);
                     finish();
                     startActivity(i);
                     return json.getString(TAG_MESSAGE);
