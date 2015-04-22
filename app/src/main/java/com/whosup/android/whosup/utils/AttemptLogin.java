@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.whosup.android.whosup.LoginActivity;
+import com.whosup.android.whosup.MainActivity;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.SplashScreenActivity;
 
@@ -51,12 +52,15 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        pDialog=null;
-        pDialog = new ProgressDialog(a);
-        pDialog.setMessage("Attempting login...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(true);
-        pDialog.show();
+        if(!splash){
+            pDialog=null;
+            pDialog = new ProgressDialog(a);
+            pDialog.setMessage("Attempting login...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
     }
 
     @Override
@@ -84,12 +88,17 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
             if (success == 1) {
                 Log.d("Login Successful!", json.toString());
                 if(!splash)SPreferences.getInstance().saveLogin(a.getApplicationContext(), eMail, password);
-                Intent i = new Intent(a, SplashScreenActivity.class);
+                Intent i = new Intent(a, MainActivity.class);
                 a.finish();
                 a.startActivity(i);
                 return json.getString(TAG_MESSAGE);
             }else{
                 Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+                if(splash){
+                    Intent i = new Intent(a.getApplicationContext(), LoginActivity.class);
+                    a.finish();
+                    a.startActivity(i);
+                }
                 return json.getString(TAG_MESSAGE);
 
             }
@@ -102,11 +111,17 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
      * **/
     protected void onPostExecute(String file_url) {
         // dismiss the dialog once product deleted
-        pDialog.dismiss();
+        if(!splash) pDialog.dismiss();
         if (file_url != null){
-            Toast.makeText(a, file_url, Toast.LENGTH_LONG).show();
+            if(!splash)Toast.makeText(a, file_url, Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(a, R.string.noConnection, Toast.LENGTH_LONG).show();
+            if(splash){
+                LoginActivity login = new LoginActivity();
+                Intent i = new Intent(a.getApplicationContext(), login.getClass());
+                a.finish();
+                a.startActivity(i);
+            }
         }
 
 
