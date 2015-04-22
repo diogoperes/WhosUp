@@ -59,13 +59,6 @@ public class RegisterActivity extends Activity {
         editTextConfirmPassword=(EditText)findViewById(R.id.editTextConfirmPassword);
         terms = (CheckBox) findViewById(R.id.agree_terms_and_conditions);
 
-        terms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.err.println("lol");
-            }
-        });
-
         terms.setLongClickable(true);
         terms.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

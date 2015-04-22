@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+
+import com.whosup.android.whosup.utils.SPreferences;
 
 public class SplashScreenActivity extends Activity {
 
@@ -25,12 +28,28 @@ public class SplashScreenActivity extends Activity {
             @Override
             public void run() {
                 // This method will be executed once the timer is over
-                // Start your app main activity
-                Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                startActivity(i);
+                // Start your app main activityzz
+               //Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                //startActivity(i);
 
                 // close this activity
-                finish();
+               String pass="";
+                String email = SPreferences.getInstance().getLoginEmail(getApplicationContext());
+                //finish();
+                if(email!=null){
+                    if(!email.equals("")) {
+                        pass = SPreferences.getInstance().getLoginPassword(getApplicationContext());
+
+                    }else{
+                        Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                }else{
+                    Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         }, SPLASH_TIME_OUT);
     }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whosup.android.whosup.utils.ConnectionDetector;
+import com.whosup.android.whosup.utils.EncryptedData;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
 
@@ -20,6 +21,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,6 +131,7 @@ public class LoginActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog=null;
             pDialog = new ProgressDialog(LoginActivity.this);
             pDialog.setMessage("Attempting login...");
             pDialog.setIndeterminate(false);
@@ -142,6 +146,7 @@ public class LoginActivity extends Activity {
             int success;
             String eMail = email.getText().toString();
             String password = pass.getText().toString();
+            password = EncryptedData.MD5(password);
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -160,7 +165,7 @@ public class LoginActivity extends Activity {
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
-                    SPreferences.getInstance().saveLogin(getApplicationContext(), email.toString(), pass.toString());
+                    SPreferences.getInstance().saveLogin(getApplicationContext(), eMail, password);
                     Intent i = new Intent(LoginActivity.this, SplashScreenActivity.class);
                     finish();
                     startActivity(i);
