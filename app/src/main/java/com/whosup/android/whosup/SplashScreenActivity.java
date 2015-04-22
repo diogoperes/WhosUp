@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.whosup.android.whosup.utils.AttemptLogin;
 import com.whosup.android.whosup.utils.SPreferences;
 
 public class SplashScreenActivity extends Activity {
 
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 3000;
+    private String email, pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +35,9 @@ public class SplashScreenActivity extends Activity {
                 //startActivity(i);
 
                 // close this activity
-               String pass="";
-                String email = SPreferences.getInstance().getLoginEmail(getApplicationContext());
-                //finish();
+               pass="";
+               email = SPreferences.getInstance().getLoginEmail(getApplicationContext());
+               // finish();
                 if(email!=null){
                     if(!email.equals("")) {
                         pass = SPreferences.getInstance().getLoginPassword(getApplicationContext());
@@ -55,6 +57,7 @@ public class SplashScreenActivity extends Activity {
     }
 
     private void autoLogin() {
+        new AttemptLogin(SplashScreenActivity.this, email, pass, true).execute();
     }
 
 }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whosup.android.whosup.utils.AttemptLogin;
 import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.EncryptedData;
 import com.whosup.android.whosup.utils.JSONParser;
@@ -36,11 +37,8 @@ public class LoginActivity extends Activity {
     ConnectionDetector cd;
 
 
-    // Progress Dialo
-    private ProgressDialog pDialog;
 
-    // JSON parser class
-    JSONParser jsonParser = new JSONParser();
+
 
     //php login script location:
 
@@ -51,14 +49,7 @@ public class LoginActivity extends Activity {
     // private static final String LOGIN_URL = "http://xxx.xxx.x.x:1234/webservice/login.php";
 
     //testing on Emulator:
-    private static final String LOGIN_URL = "http://whosup.host22.com/login.php";
 
-    //testing from a real server:
-    //private static final String LOGIN_URL = "http://www.yourdomain.com/webservice/login.php";
-
-    //JSON element ids from repsonse of php script:
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
 
 
     @Override
@@ -84,7 +75,7 @@ public class LoginActivity extends Activity {
                         toast= Toast.makeText(getApplicationContext(), R.string.invalid_email, Toast.LENGTH_LONG);
                         toast.show();
                     }else{
-                        new AttemptLogin().execute();
+                        new AttemptLogin(LoginActivity.this, e, pass.getText().toString(), false).execute();
                     }
                 }else{
 
@@ -117,85 +108,6 @@ public class LoginActivity extends Activity {
             }
         });
     }
-
-
-
-
-    class AttemptLogin extends AsyncTask<String, String, String> {
-
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        boolean failure = false;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog=null;
-            pDialog = new ProgressDialog(LoginActivity.this);
-            pDialog.setMessage("Attempting login...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... args) {
-            // TODO Auto-generated method stub
-            // Check for success tag
-            int success;
-            String eMail = email.getText().toString();
-            String password = pass.getText().toString();
-            password = EncryptedData.MD5(password);
-            try {
-                // Building Parameters
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("email", eMail));
-                params.add(new BasicNameValuePair("password", password));
-
-                Log.d("request!", "starting");
-                // getting product details by making HTTP request
-                JSONObject json = jsonParser.makeHttpRequest(
-                        LOGIN_URL, "POST", params);
-
-                // check your log for json response
-                Log.d("Login attempt", json.toString());
-
-                // json success tag
-                success = json.getInt(TAG_SUCCESS);
-                if (success == 1) {
-                    Log.d("Login Successful!", json.toString());
-                    SPreferences.getInstance().saveLogin(getApplicationContext(), eMail, password);
-                    Intent i = new Intent(LoginActivity.this, SplashScreenActivity.class);
-                    finish();
-                    startActivity(i);
-                    return json.getString(TAG_MESSAGE);
-                }else{
-                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-                    return json.getString(TAG_MESSAGE);
-
-                }
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog once product deleted
-            pDialog.dismiss();
-            if (file_url != null){
-                Toast.makeText(LoginActivity.this, file_url, Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(LoginActivity.this, R.string.noConnection, Toast.LENGTH_LONG).show();
-            }
-
-
-        }
-
-    }
-
 
 
 }
