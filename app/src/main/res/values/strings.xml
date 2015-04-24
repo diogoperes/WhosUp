@@ -39,5 +39,8 @@
     <string name="you_must_accept_the_terms_and_conditions">You must accept the terms and conditions</string>
     <string name="title_activity_place_picker">Pick a place</string>
     <string name="title_activity_create_invite">Create a invite</string>
+    <string name="openDrawer">Abrir Drawer</string>
+    <string name="closeDrawer">Fechar Drawer</string>
+
 
 </resources>
