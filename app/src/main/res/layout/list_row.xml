@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp" >
+
+    <!-- Thumbnail Image -->
+    <ImageView
+        android:id="@+id/inviterProfilePic"
+        android:contentDescription="profilePic"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <!-- Movie Title -->
+    <TextView
+        android:id="@+id/inviteFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/inviterProfilePic"
+        android:layout_toRightOf="@+id/inviterProfilePic"
+        android:layout_toEndOf="@+id/inviterProfilePic"
+        android:textSize="@dimen/title"
+        android:textStyle="bold" />
+
+    <!-- Rating -->
+    <TextView
+        android:id="@+id/invitePlace"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inviteFrom"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/inviterProfilePic"
+        android:layout_toEndOf="@+id/inviterProfilePic"
+        android:textSize="@dimen/rating" />
+
+    <!--&lt;!&ndash; Genre &ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:id="@+id/genre"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/inviteDistance"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:layout_toRightOf="@+id/inviterProfilePic"-->
+        <!--android:layout_toEndOf="@+id/inviterProfilePic"-->
+        <!--android:textColor="@color/genre"-->
+        <!--android:textSize="@dimen/genre" />-->
+
+    <!-- Release Year -->
+    <TextView
+        android:id="@+id/inviteDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/year"
+        android:textSize="@dimen/year" />
+
+</RelativeLayout>

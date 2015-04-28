@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="createInvite" type="id" />
     <item name="inviteFrom" type="id">Invite from</item>
     <item name="invitePlace" type="id">Invite place</item>
     <item name="inviteDistance" type="id">Invite distance</item>

@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.whosup.android.whosup.utils.SPreferences;
@@ -18,23 +20,45 @@ import com.whosup.drawer.FragmentDrawer;
 import com.whosup.drawer.fragments.Friends;
 import com.whosup.drawer.fragments.Home;
 import com.whosup.drawer.fragments.Messages;
+import com.whosup.listview.Invite;
+import com.whosup.listview.InviteAdapter;
 
-public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, AdapterView.OnItemClickListener {
+
+    private ArrayList<Invite> inviteList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        inviteList = new ArrayList<>();
+
+        //TEST INVITES
+        inviteList.add(new Invite(R.drawable.ic_launcher, "Antonio", "Colombo", "3"));
+        inviteList.add(new Invite(R.mipmap.ic_home, "Nuno", "Vasco da Gama", "8"));
+        inviteList.add(new Invite(R.drawable.ic_launcher, "Diogo", "Horta", "0,5"));
+        inviteList.add(new Invite(R.mipmap.ic_home, "Jose", "Benfica", "3"));
+        inviteList.add(new Invite(R.drawable.ic_launcher, "Mario", "Mafra", "18"));
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FragmentDrawer drawerFragment = drawerFragment = (FragmentDrawer)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        // Get the ListView by Id and instantiate the adapter with
+        // invite data and then set it the ListView
+        ListView inviteListView = (ListView) findViewById(R.id.list_invites);
+        InviteAdapter adapter = new InviteAdapter(this, inviteList);
+        inviteListView.setAdapter(adapter);
+        // Set the onItemClickListener on the ListView to listen for items clicks
+        inviteListView.setOnItemClickListener(this);
+
+        FragmentDrawer drawerFragment = (FragmentDrawer) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
+
 
     }
 
@@ -53,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        switch(id){
+        switch (id) {
             case R.id.action_settings:
                 Toast.makeText(MainActivity.this.getApplicationContext(), "jowf", Toast.LENGTH_LONG).show();
                 return true;
@@ -67,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 finish();
                 return true;
         }
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onDrawerItemSelected(View view, int position) {
@@ -104,5 +128,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // set the toolbar title
             getSupportActionBar().setTitle(title);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Invite selectedInvite = inviteList.get(position);
+        Toast.makeText(this, "You've selected :\n Invite from : " + selectedInvite.getFrom() + "\n Place : " + selectedInvite.getPlace(), Toast.LENGTH_SHORT).show();
     }
 }
