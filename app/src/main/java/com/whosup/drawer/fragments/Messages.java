@@ -36,4 +36,10 @@ public class Messages extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(R.string.title_messages);
+    }
 }

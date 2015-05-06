@@ -38,9 +38,10 @@
             </ListView>
 
             <FrameLayout
+                android:background="#ffffff"
                 android:id="@+id/container_body"
                 android:layout_width="fill_parent"
-                android:layout_height="0dp" />
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 

@@ -3,6 +3,7 @@ package com.whosup.drawer.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import com.whosup.android.whosup.R;
 public class Home extends Fragment {
 
     public Home() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -35,5 +36,11 @@ public class Home extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(R.string.title_home);
     }
 }
