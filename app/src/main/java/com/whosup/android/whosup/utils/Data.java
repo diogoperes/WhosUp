@@ -33,18 +33,29 @@ public class Data {
     public ArrayList<Category> getCategories(Context c){
         if(categories.size()==0){
             String[] myCatArray = c.getResources().getStringArray(R.array.categories);
+            String[] mySubCatArray;
+            int subcategoryResourceId;
+            String value;
+            int id = 0;
             for (String s : myCatArray) {
-                Category cat = new Category(s);
+                value=c.getResources().getStringArray(R.array.categories_identifier)[id];
+                subcategoryResourceId=c.getResources().getIdentifier(value, "array", c.getPackageName());
+                Log.d("IDENTIFICADOR ", "R.array."+value);
+                mySubCatArray = c.getResources().getStringArray(subcategoryResourceId);
+                Category cat = new Category(id, s, value);
                 categories.add(cat);
+                for (String sc : mySubCatArray) {
+                    Log.d("SubCategory ", sc);
+                    SubCategory subcat = new SubCategory(sc);
+                    cat.getSubcategories().add(subcat);
+                }
+                id++;
             }
         }
         return categories;
     }
 
 
-    public ArrayList<SubCategory> getSubCategories(Context c){
-        //getResourceId
-    }
 
 
 }

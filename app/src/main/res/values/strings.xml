@@ -54,12 +54,7 @@
         <item>@string/nav_item_notifications</item>
     </string-array>
 
-    <string-array name="categories">
-        <item name="restaurant">Restaurant</item>
-        <item name="bar/cafe">Bar / Cafe</item>
-        <item name="outdoor/sport">Outdoor / Sport</item>
-        <item name="culture/art">Culture / Art</item>
-    </string-array>
+
 
 
 
