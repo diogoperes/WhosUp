@@ -54,10 +54,22 @@
         <item>@string/nav_item_notifications</item>
     </string-array>
 
+    <string-array name="categories">
+        <item name="restaurant">Restaurant</item>
+        <item name="bar/cafe">Bar / Cafe</item>
+        <item name="outdoor/sport">Outdoor / Sport</item>
+        <item name="culture/art">Culture / Art</item>
+    </string-array>
+
+
+
+
     <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
     <string name="action_refresh">Refresh invites</string>
+
+    <string name="restaurant">Restaurant</string>
 
 
 </resources>

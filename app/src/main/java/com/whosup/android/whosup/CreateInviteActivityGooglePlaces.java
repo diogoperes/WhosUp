@@ -3,31 +3,24 @@ package com.whosup.android.whosup;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-import static com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
-
-public class CreateInviteActivity extends Activity {
+public class CreateInviteActivityGooglePlaces extends Activity {
     Button createInvite;
     private int REQUEST_PLACE_PICKER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_invite);
+        setContentView(R.layout.activity_create_invite_google_places);
 
         final Context context = getApplicationContext();
         createInvite = (Button) findViewById(R.id.placePicker);

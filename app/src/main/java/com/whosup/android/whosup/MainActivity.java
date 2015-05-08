@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.drawer.FragmentDrawer;
 import com.whosup.drawer.fragments.Friends;
-import com.whosup.drawer.fragments.Home;
+import com.whosup.drawer.fragments.CreateInviteActivity;
 import com.whosup.drawer.fragments.Messages;
 import com.whosup.listview.Invite;
 import com.whosup.listview.InviteAdapter;
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         String title = getString(R.string.app_name);
         switch (position) {
             case 0:
-                fragment = new Home();
+                fragment = new CreateInviteActivity();
                 title = getString(R.string.title_home);
                 break;
             case 1:
@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             fragmentTransaction.replace(R.id.container_body, fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-
             // set the toolbar title
             setTitle(title);
         }

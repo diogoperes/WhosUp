@@ -52,7 +52,7 @@
                 android:value="com.whosup.android.whosup.RegisterActivity" />
         </activity>
         <activity
-            android:name=".CreateInviteActivity"
+            android:name=".CreateInviteActivityGooglePlaces"
             android:label="@string/title_activity_create_invite" >
             <meta-data
                 android:name="com.whosup.android.whosup.AIzaSyAlkMQzknLgT9GObBAqbuOA5YbP2gNUK-I"
