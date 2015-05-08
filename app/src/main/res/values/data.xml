@@ -33,12 +33,12 @@
 
     <string-array name="outdoor_sport">
         <item name="run">Run</item>
-        <item name="jogging">Jogging Bar</item>
+        <item name="jogging">Jogging</item>
         <item name="tennis">Tennis</item>
     </string-array>
 
     <string-array name="culture_art">
-        <item name="cinema">cinema</item>
+        <item name="cinema">Cinema</item>
         <item name="museum">Museum</item>
     </string-array>
 

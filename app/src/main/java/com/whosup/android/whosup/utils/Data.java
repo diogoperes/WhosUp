@@ -40,12 +40,10 @@ public class Data {
             for (String s : myCatArray) {
                 value=c.getResources().getStringArray(R.array.categories_identifier)[id];
                 subcategoryResourceId=c.getResources().getIdentifier(value, "array", c.getPackageName());
-                Log.d("IDENTIFICADOR ", "R.array."+value);
                 mySubCatArray = c.getResources().getStringArray(subcategoryResourceId);
                 Category cat = new Category(id, s, value);
                 categories.add(cat);
                 for (String sc : mySubCatArray) {
-                    Log.d("SubCategory ", sc);
                     SubCategory subcat = new SubCategory(sc);
                     cat.getSubcategories().add(subcat);
                 }
