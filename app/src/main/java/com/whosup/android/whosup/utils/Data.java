@@ -42,9 +42,9 @@ public class Data {
     }
 
 
-    public ArrayList<SubCategory> getSubCategories(Context c){
-        //getResourceId
-    }
+//    public ArrayList<SubCategory> getSubCategories(Context c){
+//        //getResourceId
+//    }
 
 
 }
