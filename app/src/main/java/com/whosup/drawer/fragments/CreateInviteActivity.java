@@ -31,6 +31,7 @@ import com.whosup.android.whosup.utils.Category;
 import com.whosup.android.whosup.utils.Data;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.drawer.PlaceArrayAdapter;
+import com.whosup.android.whosup.utils.SubCategory;
 
 import org.json.JSONArray;
 
@@ -40,13 +41,19 @@ import java.util.List;
 
 public class CreateInviteActivity extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
-    ProgressDialog pDialog;
     private Spinner spinnerCategory;
     // array list for spinner adapter
     private ArrayList<Category> categoriesList;
     //An array of all of our categories
     private JSONArray mCategories = null;
     //manages all of our categories in a list.
+    private Spinner spinnerSubCategory;
+    private Category categorySelected;
+    private SubCategory subCategorySelected;
+
+
+
+
     private ArrayList<Category> mCategoryList;
     // Creating JSON Parser object
     JSONParser jsonParser = new JSONParser();
@@ -63,6 +70,7 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     private Collection<Integer> filterTypes;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
+
 
     public CreateInviteActivity() {
 
@@ -93,7 +101,7 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
         View rootview = inflater.inflate(R.layout.fragment_create_invite, container,
                 false);
         spinnerCategory = (Spinner) rootview.findViewById(R.id.spinnerCategory);
-        categoriesList = new ArrayList<Category>();
+        spinnerSubCategory = (Spinner) rootview.findViewById(R.id.spinnerSubCategory);
 
         // spinner item select listener
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -102,10 +110,11 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
 
                 // On selecting a spinner item
                 String label = parent.getItemAtPosition(position).toString();
+                categorySelected=mCategoryList.get(position);
 
-                // Showing selected spinner item
-                /*Toast.makeText(parent.getContext(), "You selected: " + label,
-                        Toast.LENGTH_LONG).show();*/
+
+                updateSubCategory();
+
             }
 
             @Override
@@ -124,6 +133,22 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
         mPlaceArrayAdapter = new PlaceArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, BOUNDS_MOUNTAIN_VIEW, AutocompleteFilter.create(filterTypes));
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
+
+        spinnerSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+
+                // On selecting a spinner item
+                String label = parent.getItemAtPosition(position).toString();
+                subCategorySelected = categorySelected.getSubcategories().get(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return rootview;
     }
@@ -153,8 +178,9 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     @Override
     public void onResume() {
         super.onResume();
-        updateList();
-        getActivity().setTitle(R.string.title_home);
+        updateCategoryList();
+        updateSubCategory();
+        getActivity().setTitle(R.string.create_invite);
     }
 
     /**
@@ -207,10 +233,14 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     /**
      * Inserts the parsed data into the listview.
      */
-    private void updateList() {
+    
+    private void updateCategoryList() {
+
         mCategoryList= Data.getInstance().getCategories(getActivity().getApplicationContext());
 
         List<String> lables = new ArrayList<String>();
+
+        categorySelected=mCategoryList.get(0);
         for(Category c : mCategoryList ){
             lables.add(c.getName());
         }
@@ -247,4 +277,23 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
         mPlaceArrayAdapter.setGoogleApiClient(null);
         Log.e(LOG_TAG, "Google Places API connection suspended.");
     }
+    private void updateSubCategory(){
+        List<String> lables = new ArrayList<String>();
+        for(SubCategory sc : categorySelected.getSubcategories() ){
+            lables.add(sc.getName());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, lables);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinnerSubCategory.setAdapter(dataAdapter);
+
+
+    }
+
+
 }

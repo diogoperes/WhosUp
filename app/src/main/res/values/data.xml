@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--CATEGORIES-->
+    <!--Atention, each time you add a category you must add a category identifier and its subcategories related with it-->
+    <string-array name="categories">
+        <item name="restaurant">Restaurant</item>
+        <item name="bar_cafe">Bar / Cafe</item>
+        <item name="outdoor_sport">Outdoor / Sport</item>
+        <item name="culture_art">Culture / Art</item>
+    </string-array>
+
+    <string-array name="categories_identifier">
+        <item name="restaurant">restaurant</item>
+        <item name="bar_cafe">bar_cafe</item>
+        <item name="outdoor_sport">outdoor_sport</item>
+        <item name="culture_art">culture_art</item>
+    </string-array>
+
+
+    <!--SUBCATEGORIES-->
+    <string-array name="restaurant">
+        <item name="vegetarian">Vegetarian</item>
+        <item name="buffet">Buffet</item>
+        <item name="pizzeria">Pizzeria</item>
+        <item name="chinese">Chinese</item>
+    </string-array>
+
+    <string-array name="bar_cafe">
+        <item name="nightclub">Nightclub</item>
+        <item name="snackbar">Snack Bar</item>
+        <item name="gelateria">Gelateria</item>
+    </string-array>
+
+    <string-array name="outdoor_sport">
+        <item name="run">Run</item>
+        <item name="jogging">Jogging</item>
+        <item name="tennis">Tennis</item>
+    </string-array>
+
+    <string-array name="culture_art">
+        <item name="cinema">Cinema</item>
+        <item name="museum">Museum</item>
+    </string-array>
+
+
+
+</resources>

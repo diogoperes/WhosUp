@@ -104,14 +104,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         switch (position) {
             case 0:
                 fragment = new CreateInviteActivity();
-                title = getString(R.string.title_home);
+                title = getString(R.string.create_invite);
                 break;
             case 1:
                 fragment = new Friends();
                 title = getString(R.string.title_friends);
                 break;
             case 2:
-                fragment = new Messages();
+                fragment = new Messages(    );
                 title = getString(R.string.title_messages);
                 break;
             default:

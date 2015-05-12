@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/header_gradient">
+
+<LinearLayout android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/header_gradient">
+              >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_a_category"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:layout_margin="5sp"/>
 
     <Spinner
         android:id="@+id/spinnerCategory"
@@ -12,89 +25,94 @@
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_a_subcategory"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:layout_margin="5sp"/>
+    <Spinner
+        android:id="@+id/spinnerSubCategory"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context=".MainActivity">
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown" />
 
-        <AutoCompleteTextView
+    <LinearLayout
+        android:id="@+id/linearLayout_meet_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:layout_marginLeft="5sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/meet_day"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginRight="10sp"/>
+
+        <com.whosup.android.whosup.utils.DateDisplayPicker
+            android:id="@+id/clientEditCreate_MeetHourDateDayPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Place Here"
-            android:id="@+id/autoCompleteTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"/>
+            android:textSize="20dp"
+            android:textColorHint="#ffffff"
+            android:textColor="#ffffff"
+            android:hint="00-00-00"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout_meet_hour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:layout_marginLeft="5sp">
 
         <TextView
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/meet_hour"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_marginRight="10sp"/>
+
+    <com.whosup.android.whosup.utils.TimeDisplayPicker
+        android:id="@+id/clientEditCreate_MeetHourDateDayPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:hint="00:00"/>
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView_Edit_Text">
+        <EditText
+            android:hint="@string/enter_a_description_max_250_char"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/header"
-            android:layout_below="@+id/autoCompleteTextView"
-            android:layout_marginTop="20dp"
-            android:text="Selected Place:"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/name"
-            android:layout_below="@+id/header"
-            android:layout_marginTop="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/address"
-            android:layout_below="@+id/name"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/place_id"
-            android:layout_below="@+id/address"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/phone"
-            android:layout_below="@+id/place_id"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:autoLink="phone"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/web"
-            android:layout_below="@+id/phone"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:autoLink="web"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/poweredBy"
-            android:src="@drawable/powered_by_google_light"/>
-
-    </RelativeLayout>
-
+            android:layout_margin="5dp"
+            android:padding="2dp"
+            android:lines="5"
+            android:background="#FFF"
+            android:inputType="textMultiLine"
+            android:maxLength="250"
+            android:gravity="left|top"
+            />
+    </ScrollView>
 
 
 </LinearLayout>
+</ScrollView>
