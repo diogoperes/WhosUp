@@ -44,12 +44,12 @@
     <string name="closeDrawer">Fechar Drawer</string>
 
     <!-- navigation drawer item labels  -->
-    <string name="nav_item_home">Home</string>
+    <string name="nav_item_create_invite">Create Invite</string>
     <string name="nav_item_friends">Friends</string>
     <string name="nav_item_notifications">Messages</string>
 
     <string-array name="nav_drawer_labels">
-        <item>@string/nav_item_home</item>
+        <item>@string/create_invite</item>
         <item>@string/nav_item_friends</item>
         <item>@string/nav_item_notifications</item>
     </string-array>
@@ -66,6 +66,11 @@
 
     <string name="restaurant">Restaurant</string>
     <string name="select_a_category">Select a Category</string>
+    <string name="meet_hour">Meet Hour:</string>
+    <string name="meet_day">Meet Day:</string>
+    <string name="select_a_subcategory">Select a Subcategory</string>
+    <string name="enter_a_description_max_250_char">Enter a description (max 250 char)</string>
+    <string name="create_invite">Create Invite</string>
 
 
 </resources>

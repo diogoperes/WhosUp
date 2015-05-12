@@ -109,7 +109,7 @@ public class CreateInviteActivity extends Fragment {
         super.onResume();
         updateCategoryList();
         updateSubCategory();
-        getActivity().setTitle(R.string.title_home);
+        getActivity().setTitle(R.string.create_invite);
     }
 
 
