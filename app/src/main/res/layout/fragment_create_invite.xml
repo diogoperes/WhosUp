@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
+            android:id="@+id/scrollView_create_invite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/header_gradient">
+            android:background="@drawable/create_invite">
 
 <LinearLayout android:orientation="vertical"
               android:layout_width="match_parent"
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="@string/select_a_category"
         android:textSize="20sp"
-        android:textColor="#ffffff"
+        android:textColor="@color/create_invite_text"
         android:layout_margin="5sp"/>
 
     <Spinner
@@ -30,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="@string/select_a_subcategory"
         android:textSize="20sp"
-        android:textColor="#ffffff"
+        android:textColor="@color/create_invite_text"
         android:layout_margin="5sp"/>
     <Spinner
         android:id="@+id/spinnerSubCategory"
@@ -52,7 +53,7 @@
             android:layout_height="match_parent"
             android:text="@string/meet_day"
             android:textSize="20sp"
-            android:textColor="#ffffff"
+            android:textColor="@color/create_invite_text"
             android:layout_marginRight="10sp"/>
 
         <com.whosup.android.whosup.utils.DateDisplayPicker
@@ -60,9 +61,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:textColorHint="#ffffff"
-            android:textColor="#ffffff"
-            android:hint="00-00-00"/>
+            android:textColorHint="@color/create_invite_text"
+            android:textColor="@color/create_invite_text"
+            android:hint="@string/dd_mm_yy"/>
 
     </LinearLayout>
 
@@ -80,7 +81,7 @@
             android:layout_height="match_parent"
             android:text="@string/meet_hour"
             android:textSize="20sp"
-            android:textColor="#ffffff"
+            android:textColor="@color/create_invite_text"
             android:layout_marginRight="10sp"/>
 
     <com.whosup.android.whosup.utils.TimeDisplayPicker
@@ -88,30 +89,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"
-        android:hint="00:00"/>
+        android:textColorHint="@color/create_invite_text"
+        android:textColor="@color/create_invite_text"
+        android:hint="@string/hh_mm"/>
 
     </LinearLayout>
 
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView_Edit_Text">
+
         <EditText
+            android:id="@+id/description"
             android:hint="@string/enter_a_description_max_250_char"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_margin="5dp"
             android:padding="2dp"
             android:lines="5"
-            android:background="#FFF"
             android:inputType="textMultiLine"
             android:maxLength="250"
             android:gravity="left|top"
+            android:background="@drawable/edit_text_style"
             />
-    </ScrollView>
+
 
     <AutoCompleteTextView
         android:layout_width="match_parent"

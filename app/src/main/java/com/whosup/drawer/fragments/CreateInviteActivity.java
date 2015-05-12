@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +57,6 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     // Creating JSON Parser object
     JSONParser jsonParser = new JSONParser();
     private static final String LOG_TAG = "CreateInviteFragment";
-    private static final int GOOGLE_API_CLIENT_ID = 0;
     private TextView mNameTextView;
     private TextView mAddressTextView;
     private TextView mIdTextView;
@@ -61,10 +64,9 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     private TextView mWebTextView;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
-    private Collection<Integer> filterTypes;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
-
+    private EditText editTextDescription;
 
     public CreateInviteActivity() {
 
@@ -84,15 +86,12 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-
-        filterTypes = new ArrayList<>();
-        filterTypes.add( Place.TYPE_ESTABLISHMENT );
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootview = inflater.inflate(R.layout.fragment_create_invite, container,
+        final View rootview = inflater.inflate(R.layout.fragment_create_invite, container,
                 false);
         spinnerCategory = (Spinner) rootview.findViewById(R.id.spinnerCategory);
         spinnerSubCategory = (Spinner) rootview.findViewById(R.id.spinnerSubCategory);
@@ -125,7 +124,7 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
         mPhoneTextView = (TextView) rootview.findViewById(R.id.phone);
         mWebTextView = (TextView) rootview.findViewById(R.id.web);
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
-        mPlaceArrayAdapter = new PlaceArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, BOUNDS_MOUNTAIN_VIEW, AutocompleteFilter.create(filterTypes));
+        mPlaceArrayAdapter = new PlaceArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, BOUNDS_MOUNTAIN_VIEW, null);
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
 
         spinnerSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -144,8 +143,29 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
             }
         });
 
+        editTextDescription = (EditText) rootview.findViewById(R.id.description);
+        editTextDescription.setMovementMethod(new ScrollingMovementMethod());
+        editTextDescription.setOnTouchListener(touchListener);
         return rootview;
     }
+
+    View.OnTouchListener touchListener = new View.OnTouchListener(){
+        public boolean onTouch(final View v, final MotionEvent motionEvent){
+            int action = motionEvent.getAction();
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    // Disallow ScrollView to intercept touch events.
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    break;
+
+                case MotionEvent.ACTION_UP:
+                    // Allow ScrollView to intercept touch events.
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
+            }
+            return false;
+        }
+    };
 
     @Override
     public void onAttach(Activity activity) {
@@ -166,6 +186,8 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     @Override
     public void onStop() {
         mGoogleApiClient.disconnect();
+        getActivity().setTitle(R.string.app_name
+        );
         super.onStop();
     }
 
