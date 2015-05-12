@@ -3,14 +3,10 @@ package com.whosup.android.whosup.utils;
 
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.util.Log;
 
 import com.whosup.android.whosup.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class Data {
@@ -25,10 +21,6 @@ public class Data {
         }
         return sData;
     }
-
-
-
-
 
     public ArrayList<Category> getCategories(Context c){
         if(categories.size()==0){
@@ -52,11 +44,4 @@ public class Data {
         }
         return categories;
     }
-
-
-    public ArrayList<SubCategory> getSubCategories(Context c){
-        //getResourceId
-    }
-
-
 }

@@ -1,7 +1,6 @@
 package com.whosup.drawer.fragments;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -50,14 +49,9 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     private Spinner spinnerSubCategory;
     private Category categorySelected;
     private SubCategory subCategorySelected;
-
-
-
-
     private ArrayList<Category> mCategoryList;
     // Creating JSON Parser object
     JSONParser jsonParser = new JSONParser();
-
     private static final String LOG_TAG = "CreateInviteFragment";
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private TextView mNameTextView;
