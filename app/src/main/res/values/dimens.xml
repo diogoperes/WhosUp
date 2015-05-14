@@ -19,6 +19,11 @@
     <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_huge">64dp</dimen>
 
+    <!-- PLACE PICKER DIMENSIONS -->
+    <dimen name="place_picker_suggest_list_row_name">16sp</dimen>
+    <dimen name="place_picker_suggest_list_row_description">15sp</dimen>
+    <dimen name="place_picker_list_row_icon_width">70dp</dimen>
+
     <!-- Semantic definitions -->
     <dimen name="horizontal_page_margin">@dimen/margin_medium</dimen>
     <dimen name="vertical_page_margin">@dimen/margin_medium</dimen>

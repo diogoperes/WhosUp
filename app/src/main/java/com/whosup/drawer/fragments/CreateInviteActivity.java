@@ -1,9 +1,9 @@
 package com.whosup.drawer.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,37 +12,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.utils.Category;
 import com.whosup.android.whosup.utils.Data;
 import com.whosup.android.whosup.utils.JSONParser;
-import com.whosup.drawer.PlaceArrayAdapter;
 import com.whosup.android.whosup.utils.SubCategory;
+import com.whosup.drawer.placepicker.PlaceDetail;
+import com.whosup.drawer.placepicker.PlacePicker;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-public class CreateInviteActivity extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class CreateInviteActivity extends Fragment {
 
     private Spinner spinnerCategory;
     // array list for spinner adapter
@@ -57,16 +47,13 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     // Creating JSON Parser object
     JSONParser jsonParser = new JSONParser();
     private static final String LOG_TAG = "CreateInviteFragment";
-    private TextView mNameTextView;
-    private TextView mAddressTextView;
-    private TextView mIdTextView;
-    private TextView mPhoneTextView;
-    private TextView mWebTextView;
-    private GoogleApiClient mGoogleApiClient;
-    private PlaceArrayAdapter mPlaceArrayAdapter;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     private EditText editTextDescription;
+    private Button mCreateInviteButton, mPickPlace;
+    private TextView placeDescription;
+    private String api_key = "AIzaSyC1JHD6BOCKX40CH5nIdh_6armrgWrW9-4";
+    private Double latitude, longitude;
 
     public CreateInviteActivity() {
 
@@ -75,17 +62,6 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Construct a GoogleApiClient for the {@link Places#GEO_DATA_API} using AutoManage
-        // functionality, which automatically sets up the API client to handle Activity lifecycle
-        // events. If your activity does not extend FragmentActivity, make sure to call connect()
-        // and disconnect() explicitly.
-        mGoogleApiClient = new GoogleApiClient.Builder(this.getActivity())
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
     }
 
     @Override
@@ -98,16 +74,13 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
 
         // spinner item select listener
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 // On selecting a spinner item
                 String label = parent.getItemAtPosition(position).toString();
-                categorySelected=mCategoryList.get(position);
-
+                categorySelected = mCategoryList.get(position);
 
                 updateSubCategory();
-
             }
 
             @Override
@@ -116,20 +89,8 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
             }
         });
 
-        AutoCompleteTextView mAutocompleteTextView = (AutoCompleteTextView) rootview.findViewById(R.id.autoCompleteTextView);
-        mAutocompleteTextView.setThreshold(3);
-        mNameTextView = (TextView) rootview.findViewById(R.id.name);
-        mAddressTextView = (TextView) rootview.findViewById(R.id.address);
-        mIdTextView = (TextView) rootview.findViewById(R.id.place_id);
-        mPhoneTextView = (TextView) rootview.findViewById(R.id.phone);
-        mWebTextView = (TextView) rootview.findViewById(R.id.web);
-        mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
-        mPlaceArrayAdapter = new PlaceArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, BOUNDS_MOUNTAIN_VIEW, null);
-        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
-
         spinnerSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 // On selecting a spinner item
                 String label = parent.getItemAtPosition(position).toString();
@@ -146,6 +107,13 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
         editTextDescription = (EditText) rootview.findViewById(R.id.description);
         editTextDescription.setMovementMethod(new ScrollingMovementMethod());
         editTextDescription.setOnTouchListener(touchListener);
+        mPickPlace = (Button) rootview.findViewById(R.id.pick_place);
+        mPickPlace.setOnClickListener(new PickPlaceOnClickListener());
+        placeDescription = (TextView) rootview.findViewById(R.id.place_description);
+        mCreateInviteButton = (Button) rootview.findViewById(R.id.create_invite);
+        mCreateInviteButton.setOnClickListener(new CreateInviteOnClickListener());
+
+
         return rootview;
     }
 
@@ -180,14 +148,11 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
     @Override
     public void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
     }
 
     @Override
     public void onStop() {
-        mGoogleApiClient.disconnect();
-        getActivity().setTitle(R.string.app_name
-        );
+        getActivity().setTitle(R.string.app_name);
         super.onStop();
     }
 
@@ -198,57 +163,6 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
         updateSubCategory();
         getActivity().setTitle(R.string.create_invite);
     }
-
-    /**
-     * Listener that handles selections from suggestions from the AutoCompleteTextView that
-     * displays Place suggestions.
-     * Gets the place id of the selected item and issues a request to the Places Geo Data API
-     * to retrieve more details about the place.
-     *
-     * @see com.google.android.gms.location.places.GeoDataApi#getPlaceById(com.google.android.gms.common.api.GoogleApiClient,
-     * String...)
-     */
-    private AdapterView.OnItemClickListener mAutocompleteClickListener
-            = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
-            final String placeId = String.valueOf(item.placeId);
-            Log.i(LOG_TAG, "Selected: " + item.description);
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                    .getPlaceById(mGoogleApiClient, placeId);
-            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
-            Log.i(LOG_TAG, "Fetching details for ID: " + item.placeId);
-        }
-    };
-
-    /**
-     * Callback for results from a Places Geo Data API query that shows the first place result in
-     * the details view on screen.
-     */
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
-            = new ResultCallback<PlaceBuffer>() {
-        @Override
-        public void onResult(PlaceBuffer places) {
-            if (!places.getStatus().isSuccess()) {
-                Log.e(LOG_TAG, "Place query did not complete. Error: " +
-                        places.getStatus().toString());
-                return;
-            }
-            // Selecting the first object buffer.
-            final Place place = places.get(0);
-
-            mNameTextView.setText(Html.fromHtml(place.getName() + ""));
-            mAddressTextView.setText(Html.fromHtml(place.getAddress() + ""));
-            mIdTextView.setText(Html.fromHtml(place.getId() + ""));
-            mPhoneTextView.setText(Html.fromHtml(place.getPhoneNumber() + ""));
-            mWebTextView.setText(place.getWebsiteUri() + "");
-        }
-    };
-
-    /**
-     * Inserts the parsed data into the listview.
-     */
     
     private void updateCategoryList() {
 
@@ -271,28 +185,6 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
         spinnerCategory.setAdapter(dataAdapter);
     }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.e(LOG_TAG, "Google Places API connection failed with error code: "
-                + connectionResult.getErrorCode());
-
-        Toast.makeText(getActivity(),
-                "Google Places API connection failed with error code:" +
-                        connectionResult.getErrorCode(),
-                Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
-        Log.i(LOG_TAG, "Google Places API connected.");
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        mPlaceArrayAdapter.setGoogleApiClient(null);
-        Log.e(LOG_TAG, "Google Places API connection suspended.");
-    }
     private void updateSubCategory(){
         List<String> lables = new ArrayList<String>();
         for(SubCategory sc : categorySelected.getSubcategories() ){
@@ -302,14 +194,53 @@ public class CreateInviteActivity extends Fragment implements GoogleApiClient.On
                 android.R.layout.simple_spinner_item, lables);
 
         // Drop down layout style - list view with radio button
-        dataAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
         spinnerSubCategory.setAdapter(dataAdapter);
+    }
 
-
+    private class PickPlaceOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            // Create an intent with `PlacePicker.class`
+            Intent intent = new Intent(getActivity(), PlacePicker.class);
+            // Set your server api key (required)
+            intent.putExtra(PlacePicker.PARAM_API_KEY, api_key);
+            // Set extra query in a one line like below
+            intent.putExtra(PlacePicker.PARAM_EXTRA_QUERY, "&rankby=distance");
+            // Then start the intent for result
+            startActivityForResult(intent, PlacePicker.REQUEST_CODE_PLACE);
+        }
     }
 
 
+    private class CreateInviteOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PlacePicker.REQUEST_CODE_PLACE && resultCode == PlacePicker.RESULT_OK) {
+            PlaceDetail placeDetail = PlacePicker.fromIntent(data);
+            PlacePicker.fetchDetails(api_key, data.getStringExtra(PlacePicker.PARAM_PLACE_ID), new PlacePicker.OnDetailFetched() {
+                @Override
+                public void completed(PlaceDetail placeInfoDetail) {
+                    latitude = placeInfoDetail.latitude;
+                    longitude = placeInfoDetail.longitude;
+                    placeDescription.setText(placeInfoDetail.description);
+                    System.out.println(placeInfoDetail.description);
+                    System.out.println(latitude);
+                    System.out.println(longitude);
+                }
+            });
+            Log.v("=====PlacePicker=====", data.getStringExtra(PlacePicker.PARAM_PLACE_ID));
+            Log.v("=====PlacePicker=====", data.getStringExtra(PlacePicker.PARAM_PLACE_DESCRIPTION));
+        }
+
+    }
 }

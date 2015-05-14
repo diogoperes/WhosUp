@@ -8,7 +8,7 @@
 
 <LinearLayout android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               >
 
     <TextView
@@ -46,7 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10sp"
         android:layout_marginBottom="10sp"
-        android:layout_marginLeft="5sp">
+        android:layout_marginLeft="5sp"
+        android:layout_marginStart="5sp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,13 +55,14 @@
             android:text="@string/meet_day"
             android:textSize="20sp"
             android:textColor="@color/create_invite_text"
-            android:layout_marginRight="10sp"/>
+            android:layout_marginRight="10sp"
+            android:layout_marginEnd="10sp"/>
 
         <com.whosup.android.whosup.utils.DateDisplayPicker
             android:id="@+id/clientEditCreate_MeetDayPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColorHint="@color/create_invite_text"
             android:textColor="@color/create_invite_text"
             android:hint="@string/dd_mm_yy"/>
@@ -74,7 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10sp"
         android:layout_marginBottom="10sp"
-        android:layout_marginLeft="5sp">
+        android:layout_marginLeft="5sp"
+        android:layout_marginStart="5sp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,13 +85,14 @@
             android:text="@string/meet_hour"
             android:textSize="20sp"
             android:textColor="@color/create_invite_text"
-            android:layout_marginRight="10sp"/>
+            android:layout_marginRight="10sp"
+            android:layout_marginEnd="10sp"/>
 
     <com.whosup.android.whosup.utils.TimeDisplayPicker
         android:id="@+id/clientEditCreate_MeetHourPicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColorHint="@color/create_invite_text"
         android:textColor="@color/create_invite_text"
         android:hint="@string/hh_mm"/>
@@ -107,30 +111,47 @@
             android:lines="5"
             android:inputType="textMultiLine"
             android:maxLength="250"
-            android:gravity="left|top"
+            android:gravity="start|top"
             android:background="@drawable/edit_text_style"
             />
 
-
-    <AutoCompleteTextView
+    <Button android:id="@+id/pick_place"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Place Here"
-        android:id="@+id/autoCompleteTextView"
-        android:layout_marginTop="5dp"
-        android:layout_margin="5dp"/>
+        android:layout_marginTop="10dip"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:minHeight="45dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/create_invite_text"
+        android:background="@drawable/edit_text_style"
+        android:text="@string/pick_place"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/poweredBy"
         android:layout_gravity="end"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/powered_by_google"
         android:src="@drawable/powered_by_google_light"/>
 
-    <Button android:id="@+id/button_register_new_account"
+    <TextView
+        android:id="@+id/place_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Place chosen will appear here"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:textSize="14sp"
+        android:maxLines="2"/>
+
+    <Button android:id="@+id/create_invite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
+            android:layout_marginTop="20dip"
+            android:layout_marginBottom="20dip"
             android:layout_gravity="center"
             android:textStyle="bold"
             android:minHeight="45dp"
@@ -139,51 +160,6 @@
             android:textColor="@color/create_invite_text"
             android:background="@drawable/edit_text_style"
             android:text="@string/create_invite"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/header"
-        android:layout_marginTop="5dp"
-        android:text="Selected Place:"
-        android:textStyle="bold"
-        android:layout_margin="5dp"/>
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/name"
-        android:layout_marginTop="20dp"
-        android:layout_margin="5dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/address"
-        android:layout_margin="5dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/place_id"
-        android:layout_margin="5dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/phone"
-        android:autoLink="phone"
-        android:layout_margin="5dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/web"
-        android:autoLink="web"/>
-
-
 
 </LinearLayout>
 

@@ -58,6 +58,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.whosup.android.whosup.RegisterActivity" />
         </activity>
+
+        <!-- PLACE PICKER ACTIVITIES -->
+        <activity
+            android:name="com.whosup.drawer.placepicker.PlacePicker"
+            android:label="@string/app_name" >
+            <meta-data
+                android:name="android.app.place_picker_searchable"
+                android:resource="@xml/place_picker_searchable" />
+        </activity>
+        <activity
+            android:name="com.whosup.drawer.placepicker.RecentSearchesActivity"
+            android:label="@string/title_activity_recent_searches"
+            android:parentActivityName="com.whosup.drawer.placepicker.PlacePicker" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.whosup.drawer.placepicker.PlacePicker" />
+        </activity>
+
     </application>
 
 </manifest>

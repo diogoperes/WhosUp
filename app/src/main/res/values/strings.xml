@@ -79,5 +79,13 @@
     <string name="dd_mm_yy">dd-mm-yy</string>
     <string name="hh_mm">hh:mm</string>
 
+    <!-- PLACE PICKER STRINGS-->
+    <string name="place_picker_search_label">Search</string>
+    <string name="place_picker_search_hint">Search place...</string>
+    <string name="title_activity_recent_searches">Recent Searches</string>
+    <string name="more_recent_history_text">MORE FROM RECENT HISTORY</string>
+    <string name="pick_place">Pick a place</string>
+    <string name="powered_by_google">Powered by Google</string>
+
 
 </resources>
