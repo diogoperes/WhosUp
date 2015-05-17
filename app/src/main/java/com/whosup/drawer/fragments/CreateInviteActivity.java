@@ -17,8 +17,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.utils.Category;
 import com.whosup.android.whosup.utils.Data;
@@ -54,6 +61,9 @@ public class CreateInviteActivity extends Fragment {
     private TextView placeDescription;
     private String api_key = "AIzaSyC1JHD6BOCKX40CH5nIdh_6armrgWrW9-4";
     private Double latitude, longitude;
+    private LatLng placeChosen;
+    private GoogleMap map;
+    private MapView mMapView;
 
     public CreateInviteActivity() {
 
@@ -113,6 +123,10 @@ public class CreateInviteActivity extends Fragment {
         mCreateInviteButton = (Button) rootview.findViewById(R.id.create_invite);
         mCreateInviteButton.setOnClickListener(new CreateInviteOnClickListener());
 
+        // DEFINING MAPVIEW
+        mMapView = (MapView) rootview.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume();
 
         return rootview;
     }
@@ -161,7 +175,27 @@ public class CreateInviteActivity extends Fragment {
         super.onResume();
         updateCategoryList();
         updateSubCategory();
+        mMapView.onResume();
         getActivity().setTitle(R.string.create_invite);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        getActivity().setTitle(R.string.app_name);
+        mMapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
     
     private void updateCategoryList() {
@@ -233,14 +267,48 @@ public class CreateInviteActivity extends Fragment {
                     latitude = placeInfoDetail.latitude;
                     longitude = placeInfoDetail.longitude;
                     placeDescription.setText(placeInfoDetail.description);
+                    String placeName = placeInfoDetail.description;
+
+                    //DEBUG PURPOSES
                     System.out.println(placeInfoDetail.description);
                     System.out.println(latitude);
                     System.out.println(longitude);
+
+                    //DISPLAY MAP
+                    placeChosen = new LatLng(latitude, longitude);
+                    displayMap(placeChosen, placeName);
                 }
             });
             Log.v("=====PlacePicker=====", data.getStringExtra(PlacePicker.PARAM_PLACE_ID));
             Log.v("=====PlacePicker=====", data.getStringExtra(PlacePicker.PARAM_PLACE_DESCRIPTION));
         }
 
+    }
+
+    private void displayMap(LatLng position, String placeName) {
+        // For showing a move to my loction button
+        try {
+            MapsInitializer.initialize(getActivity());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        map = mMapView.getMap();
+        map.getUiSettings().setZoomControlsEnabled(true);
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        map.setIndoorEnabled(true);
+        map.setBuildingsEnabled(true);
+
+        // create marker
+        MarkerOptions marker = new MarkerOptions().position(position).title(placeName);
+
+        // Changing marker icon
+        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
+        // adding marker
+        map.addMarker(marker);
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(14).build();
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMapView.invalidate();
     }
 }
