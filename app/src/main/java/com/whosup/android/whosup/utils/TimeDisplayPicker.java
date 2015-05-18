@@ -1,6 +1,9 @@
 package com.whosup.android.whosup.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -13,6 +16,8 @@ import android.widget.TimePicker;
 public class TimeDisplayPicker extends TextView implements
         TimePickerDialog.OnTimeSetListener {
     private Context _context;
+    private int hour;
+    private int minute;
 
     public TimeDisplayPicker(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -53,6 +58,8 @@ public class TimeDisplayPicker extends TextView implements
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         setText(String.format("%02d:%02d", hourOfDay, minute));
+        hour=hourOfDay;
+        this.minute=minute;
     }
 
     public String getTimeForPersistence(String str) {
@@ -78,6 +85,20 @@ public class TimeDisplayPicker extends TextView implements
         } else {
             return 0;
         }
+    }
+
+    public Date getDate(){
+        String str_date=hour+":"+minute;
+        java.text.DateFormat formatter ;
+        Date date = null;
+        formatter = new SimpleDateFormat("HH:mm");
+        try {
+            date = formatter.parse(str_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
     }
 
 }

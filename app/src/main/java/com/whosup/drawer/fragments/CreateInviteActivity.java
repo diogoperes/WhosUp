@@ -1,7 +1,9 @@
 package com.whosup.drawer.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,15 +31,26 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.utils.Category;
+import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.Data;
+import com.whosup.android.whosup.utils.DateDisplayPicker;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SubCategory;
+import com.whosup.android.whosup.utils.TimeDisplayPicker;
+import com.whosup.android.whosup.utils.Utility;
 import com.whosup.drawer.placepicker.PlaceDetail;
 import com.whosup.drawer.placepicker.PlacePicker;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CreateInviteActivity extends Fragment {
@@ -64,6 +78,17 @@ public class CreateInviteActivity extends Fragment {
     private LatLng placeChosen;
     private GoogleMap map;
     private MapView mMapView;
+    private DateDisplayPicker meetDay;
+    private TimeDisplayPicker meetTime;
+    private String usernameStr, meetDayStr, meetTimeStr, description;
+
+    //Attempt Register Invite variables
+    private ProgressDialog pDialog=null;
+    //JSON element ids from repsonse of php script:
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_MESSAGE = "message";
+    private static final String CREATE_INVITE_URL = "http://whosup.host22.com/create_invite.php";
+    ConnectionDetector cd;
 
     public CreateInviteActivity() {
 
@@ -122,7 +147,8 @@ public class CreateInviteActivity extends Fragment {
         placeDescription = (TextView) rootview.findViewById(R.id.place_description);
         mCreateInviteButton = (Button) rootview.findViewById(R.id.create_invite);
         mCreateInviteButton.setOnClickListener(new CreateInviteOnClickListener());
-
+        meetDay=(DateDisplayPicker)rootview.findViewById(R.id.clientEditCreate_MeetDayPicker);
+        meetTime=(TimeDisplayPicker)rootview.findViewById(R.id.clientEditCreate_MeetTimePicker);
         // DEFINING MAPVIEW
         mMapView = (MapView) rootview.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -252,6 +278,23 @@ public class CreateInviteActivity extends Fragment {
     private class CreateInviteOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            //checkConnection
+            cd= new ConnectionDetector(getActivity().getApplicationContext());
+            if(!cd.isConnectingToInternet()) {
+                //makeToast(R.string.noInternetConnection);
+                return;
+            }
+
+            if(!allFieldsOk()) {
+                return;
+
+            }else{
+                // Save the Data in Database
+                //loginDataBaseAdapter.insertEntry(userName, password);
+                new AttemptCreateInvite().execute();
+
+
+            }
 
         }
     }
@@ -311,4 +354,117 @@ public class CreateInviteActivity extends Fragment {
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMapView.invalidate();
     }
+
+    private boolean allFieldsOk(){
+        usernameStr="testeAndroid";
+        description = editTextDescription.getText().toString();
+
+        //put meetDay Date to String
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(c.getTime());
+        Date currentDate = null;
+        meetDayStr = df.format(meetDay.getDate());
+        Log.d("meetDay: ", meetDayStr);
+
+        try {
+            currentDate = df.parse(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //put meetTime Time to String
+        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
+        //Date date = new Date();
+        meetTimeStr = fmt.format(meetTime.getDate());
+        Log.d("meetTime: ", meetTimeStr);
+
+        return true;
+    }
+
+    public class AttemptCreateInvite extends AsyncTask<String, String, String> {
+
+
+
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+
+        int success =0;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pDialog=null;
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Attempting register...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... args) {
+
+            // Check for success tag
+
+
+            try {
+                // Building Parameters
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair("username", usernameStr));
+                params.add(new BasicNameValuePair("meetDay", meetDayStr));
+                params.add(new BasicNameValuePair("meetHour", meetTimeStr));
+                params.add(new BasicNameValuePair("categoryList", categorySelected.getValue()));
+                params.add(new BasicNameValuePair("subcategoriesList", subCategorySelected.getName()));
+                params.add(new BasicNameValuePair("description", description));
+
+
+                Log.d("request!", "starting");
+                // getting product details by making HTTP request
+                JSONObject json = jsonParser.makeHttpRequest(
+                        CREATE_INVITE_URL, "POST", params);
+
+                // check your log for json response
+                Log.d("Register Attempt", json.toString());
+
+                // json success tag
+                success = json.getInt(TAG_SUCCESS);
+                if (success == 1) {
+                    Log.d("Register Successful!", json.toString());
+                    return json.getString(TAG_MESSAGE);
+                }else{
+                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+
+                    return json.getString(TAG_MESSAGE);
+
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once product deleted
+            pDialog.dismiss();
+            if (file_url != null){
+                Toast.makeText(getActivity(), file_url, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), R.string.account_successfully_created, Toast.LENGTH_LONG).show();
+
+
+            }else{
+                Toast.makeText(getActivity(), R.string.noConnection, Toast.LENGTH_LONG).show();
+
+            }
+
+
+        }
+
+    }
+
 }

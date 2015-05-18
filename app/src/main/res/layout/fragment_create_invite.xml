@@ -82,14 +82,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/meet_hour"
+            android:text="@string/meet_time"
             android:textSize="20sp"
             android:textColor="@color/create_invite_text"
             android:layout_marginRight="10sp"
             android:layout_marginEnd="10sp"/>
 
     <com.whosup.android.whosup.utils.TimeDisplayPicker
-        android:id="@+id/clientEditCreate_MeetHourPicker"
+        android:id="@+id/clientEditCreate_MeetTimePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
