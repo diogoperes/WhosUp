@@ -87,6 +87,7 @@
     <string name="pick_place">Pick a place</string>
     <string name="powered_by_google">Powered by Google</string>
     <string name="meet_time">Meet Time</string>
+    <string name="invalid_date">Invalid Date</string>
 
 
 </resources>

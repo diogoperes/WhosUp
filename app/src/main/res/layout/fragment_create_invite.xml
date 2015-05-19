@@ -95,7 +95,7 @@
         android:textSize="20sp"
         android:textColorHint="@color/create_invite_text"
         android:textColor="@color/create_invite_text"
-        android:hint="@string/hh_mm"/>
+        android:hint="00:00"/>
 
     </LinearLayout>
 

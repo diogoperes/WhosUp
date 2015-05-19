@@ -396,14 +396,42 @@ public class CreateInviteActivity extends Fragment {
         currentTimeStr = fmt.format(cal.getTime());
 
         String md = meetDayStr + " " + meetTimeStr;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat sourceFormat  = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat desiredFormat   = new SimpleDateFormat("dd/M/yyyy HH:mm:ss");
+        Date dateFormated = null;
+        Date currentDateFormatted = null;
+        String currentDateFormattedStr = desiredFormat.format(cal.getTime());
         try {
-            Date meetDate = format.parse(md);
+            Date date = sourceFormat.parse(md);
+            String dateFormatedStr = desiredFormat.format(date);
+            dateFormated = desiredFormat.parse(dateFormatedStr);
+            currentDateFormatted = desiredFormat.parse(currentDateFormattedStr);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        format = new SimpleDateFormat("dd/M/yyyy hh:mm:ss");
 
+        ArrayList<Integer> differenceDate = Utility.getDifferenceTime(currentDateFormatted,dateFormated);
+        if(differenceDate.get(0) ==0){
+            if(differenceDate.get(1) ==0){
+                if(differenceDate.get(2) == 0){
+                    Toast.makeText(getActivity(), R.string.invalid_date, Toast.LENGTH_LONG).show();
+                    return false;
+                }else if(differenceDate.get(2) < 0){
+                    Toast.makeText(getActivity(), R.string.invalid_date, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }else if(differenceDate.get(1) < 0){
+                Toast.makeText(getActivity(), R.string.invalid_date, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }else if(differenceDate.get(0) < 0){
+            Toast.makeText(getActivity(), R.string.invalid_date, Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+
+        Log.v("DIFFERENCE TIME", "" + differenceDate.get(0) + differenceDate.get(1) +differenceDate.get(2));
 
 
         return true;
@@ -502,5 +530,8 @@ public class CreateInviteActivity extends Fragment {
         }
 
     }
+
+
+
 
 }
