@@ -29,6 +29,10 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
     //JSON element ids from repsonse of php script:
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+    private static final String TAG_USERNAME = "username";
+    private static final String TAG_FIRSTNAME = "firstName";
+    private static final String TAG_LASTNAME = "lastName";
+    private static final String TAG_GENDER = "gender";
 
     private String eMail, password;
     private Activity a=null;
@@ -86,7 +90,13 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
             success = json.getInt(TAG_SUCCESS);
             if (success == 1) {
                 Log.d("Login Successful!", json.toString());
-                if(!splash)SPreferences.getInstance().saveLogin(a.getApplicationContext(), eMail, password);
+                if(!splash){
+                    String username = json.getString(TAG_USERNAME);
+                    String firstName = json.getString(TAG_FIRSTNAME);
+                    String lastName = json.getString(TAG_LASTNAME);
+                    String gender = json.getString(TAG_GENDER);
+                    SPreferences.getInstance().saveLogin(a.getApplicationContext(), eMail, password, username, firstName, lastName, gender);
+                }
                 Intent i = new Intent(a, MainActivity.class);
                 a.finish();
                 a.startActivity(i);

@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.Data;
 import com.whosup.android.whosup.utils.DateDisplayPicker;
 import com.whosup.android.whosup.utils.JSONParser;
+import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.SubCategory;
 import com.whosup.android.whosup.utils.TimeDisplayPicker;
 import com.whosup.android.whosup.utils.Utility;
@@ -80,13 +82,14 @@ public class CreateInviteActivity extends Fragment {
     private MapView mMapView;
     private DateDisplayPicker meetDay;
     private TimeDisplayPicker meetTime;
-    private String usernameStr, meetDayStr, meetTimeStr, description;
+    private String usernameStr, firstNameStr, lastnameStr, genderStr, meetDayStr, meetTimeStr, description, currentDateStr, currentTimeStr;
 
     //Attempt Register Invite variables
     private ProgressDialog pDialog=null;
     //JSON element ids from repsonse of php script:
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+
     private static final String CREATE_INVITE_URL = "http://whosup.host22.com/create_invite.php";
     ConnectionDetector cd;
 
@@ -153,9 +156,10 @@ public class CreateInviteActivity extends Fragment {
         mMapView = (MapView) rootview.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
-
+        mMapView.setClickable(false);
         return rootview;
     }
+
 
     View.OnTouchListener touchListener = new View.OnTouchListener(){
         public boolean onTouch(final View v, final MotionEvent motionEvent){
@@ -275,6 +279,8 @@ public class CreateInviteActivity extends Fragment {
     }
 
 
+
+
     private class CreateInviteOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -356,7 +362,10 @@ public class CreateInviteActivity extends Fragment {
     }
 
     private boolean allFieldsOk(){
-        usernameStr="testeAndroid";
+        usernameStr= SPreferences.getInstance().getLoginUsername(getActivity().getApplicationContext());
+        firstNameStr=SPreferences.getInstance().getLoginFirstName(getActivity().getApplicationContext());
+        lastnameStr=SPreferences.getInstance().getLoginLastName(getActivity().getApplicationContext());
+        genderStr=SPreferences.getInstance().getLoginGender(getActivity().getApplicationContext());
         description = editTextDescription.getText().toString();
 
         //put meetDay Date to String
@@ -379,6 +388,24 @@ public class CreateInviteActivity extends Fragment {
         meetTimeStr = fmt.format(meetTime.getDate());
         Log.d("meetTime: ", meetTimeStr);
 
+        //current Date
+        Calendar cal = Calendar.getInstance();
+        currentDateStr = df.format(cal.getTime());
+
+        //currentTime
+        currentTimeStr = fmt.format(cal.getTime());
+
+        String md = meetDayStr + " " + meetTimeStr;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            Date meetDate = format.parse(md);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format = new SimpleDateFormat("dd/M/yyyy hh:mm:ss");
+
+
+
         return true;
     }
 
@@ -398,7 +425,7 @@ public class CreateInviteActivity extends Fragment {
 
             pDialog=null;
             pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Attempting register...");
+            pDialog.setMessage("Creating Invite...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -416,9 +443,18 @@ public class CreateInviteActivity extends Fragment {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("username", usernameStr));
+                Log.v("USERNAME SENT", usernameStr);
+                params.add(new BasicNameValuePair("firstName", firstNameStr));
+                Log.v("FIRSTNAME SENT", firstNameStr);
+                params.add(new BasicNameValuePair("lastName", lastnameStr));
+                Log.v("LASTNAME SENT", lastnameStr);
+                params.add(new BasicNameValuePair("gender", genderStr));
+                Log.v("GENDER SENT", genderStr);
                 params.add(new BasicNameValuePair("meetDay", meetDayStr));
                 params.add(new BasicNameValuePair("meetHour", meetTimeStr));
-                params.add(new BasicNameValuePair("categoryList", categorySelected.getValue()));
+                params.add(new BasicNameValuePair("currentDate", currentDateStr));
+                params.add(new BasicNameValuePair("currentTime", currentTimeStr));
+                params.add(new BasicNameValuePair("categoryList", categorySelected.getName()));
                 params.add(new BasicNameValuePair("subcategoriesList", subCategorySelected.getName()));
                 params.add(new BasicNameValuePair("description", description));
 
@@ -429,15 +465,15 @@ public class CreateInviteActivity extends Fragment {
                         CREATE_INVITE_URL, "POST", params);
 
                 // check your log for json response
-                Log.d("Register Attempt", json.toString());
+                Log.d("Creating Invite attempt", json.toString());
 
                 // json success tag
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
-                    Log.d("Register Successful!", json.toString());
+                    Log.d("Invite Created!", json.toString());
                     return json.getString(TAG_MESSAGE);
                 }else{
-                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+                    Log.d("Invite Failure!", json.getString(TAG_MESSAGE));
 
                     return json.getString(TAG_MESSAGE);
 
