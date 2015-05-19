@@ -82,7 +82,8 @@ public class CreateInviteActivity extends Fragment {
     private MapView mMapView;
     private DateDisplayPicker meetDay;
     private TimeDisplayPicker meetTime;
-    private String usernameStr, firstNameStr, lastnameStr, genderStr, meetDayStr, meetTimeStr, description, currentDateStr, currentTimeStr;
+    private String usernameStr, firstNameStr, lastnameStr, genderStr, meetDayStr, meetTimeStr, description, currentDateStr, currentTimeStr, placeID;
+    private String placeName = "";
 
     //Attempt Register Invite variables
     private ProgressDialog pDialog=null;
@@ -92,6 +93,8 @@ public class CreateInviteActivity extends Fragment {
 
     private static final String CREATE_INVITE_URL = "http://whosup.host22.com/create_invite.php";
     ConnectionDetector cd;
+
+
 
     public CreateInviteActivity() {
 
@@ -310,13 +313,15 @@ public class CreateInviteActivity extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == PlacePicker.REQUEST_CODE_PLACE && resultCode == PlacePicker.RESULT_OK) {
             PlaceDetail placeDetail = PlacePicker.fromIntent(data);
+            placeID = data.getStringExtra(PlacePicker.PARAM_PLACE_ID);
             PlacePicker.fetchDetails(api_key, data.getStringExtra(PlacePicker.PARAM_PLACE_ID), new PlacePicker.OnDetailFetched() {
                 @Override
                 public void completed(PlaceDetail placeInfoDetail) {
+
                     latitude = placeInfoDetail.latitude;
                     longitude = placeInfoDetail.longitude;
                     placeDescription.setText(placeInfoDetail.description);
-                    String placeName = placeInfoDetail.description;
+                    placeName = placeInfoDetail.description;
 
                     //DEBUG PURPOSES
                     System.out.println(placeInfoDetail.description);
@@ -411,7 +416,7 @@ public class CreateInviteActivity extends Fragment {
             e.printStackTrace();
         }
 
-        ArrayList<Integer> differenceDate = Utility.getDifferenceTime(currentDateFormatted,dateFormated);
+        ArrayList<Integer> differenceDate = Utility.getDifferenceTime(currentDateFormatted, dateFormated);
         if(differenceDate.get(0) ==0){
             if(differenceDate.get(1) ==0){
                 if(differenceDate.get(2) == 0){
@@ -432,6 +437,11 @@ public class CreateInviteActivity extends Fragment {
 
 
         Log.v("DIFFERENCE TIME", "" + differenceDate.get(0) + differenceDate.get(1) +differenceDate.get(2));
+
+        if(placeName.equals("")){
+            Toast.makeText(getActivity(), R.string.enter_place, Toast.LENGTH_LONG).show();
+            return false;
+        }
 
 
         return true;
@@ -485,6 +495,10 @@ public class CreateInviteActivity extends Fragment {
                 params.add(new BasicNameValuePair("categoryList", categorySelected.getName()));
                 params.add(new BasicNameValuePair("subcategoriesList", subCategorySelected.getName()));
                 params.add(new BasicNameValuePair("description", description));
+                params.add(new BasicNameValuePair("latitude", latitude.toString()));
+                params.add(new BasicNameValuePair("longitude", longitude.toString()));
+                params.add(new BasicNameValuePair("placeID",placeID));
+                params.add(new BasicNameValuePair("address",placeName));
 
 
                 Log.d("request!", "starting");

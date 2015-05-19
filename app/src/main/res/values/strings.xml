@@ -88,6 +88,7 @@
     <string name="powered_by_google">Powered by Google</string>
     <string name="meet_time">Meet Time</string>
     <string name="invalid_date">Invalid Date</string>
+    <string name="enter_place">Enter Place</string>
 
 
 </resources>
