@@ -34,7 +34,8 @@ public class InviteAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return inviteList.get(position).getDrawableId();
+        //return inviteList.get(position).getUsername();
+        return 00000;
     }
 
     @Override
@@ -45,10 +46,10 @@ public class InviteAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.list_row, parent, false);
 
-            holder.txtFrom = (TextView) convertView.findViewById(R.id.inviteFrom);
-            holder.txtPlace = (TextView) convertView.findViewById(R.id.invitePlace);
+            holder.name = (TextView) convertView.findViewById(R.id.inviteFrom);
+            holder.subcategory = (TextView) convertView.findViewById(R.id.invitePlace);
             holder.txtDistance = (TextView) convertView.findViewById(R.id.inviteDistance);
-            holder.imgProfile = (ImageView) convertView.findViewById(R.id.inviterProfilePic);
+            //holder.imgProfile = (ImageView) convertView.findViewById(R.id.inviterProfilePic);
 
             convertView.setTag(holder);
         } else {
@@ -56,17 +57,17 @@ public class InviteAdapter extends BaseAdapter {
         }
 
         Invite invite = inviteList.get(position);
-        holder.txtFrom.setText(invite.getFrom());
-        holder.txtPlace.setText(invite.getPlace());
-        holder.txtDistance.setText(invite.getDistance() + " Km");
-        holder.imgProfile.setImageResource(invite.getDrawableId());
+        holder.name.setText(invite.getFirstName()+ " "+ invite.getLastName());
+        holder.subcategory.setText(invite.getSubcategory());
+        holder.txtDistance.setText(invite.getAddress() + " Km");
+        //holder.imgProfile.setImageResource(invite.getDrawableId());
 
         return convertView;
     }
 
     private static class ViewHolder {
-        TextView txtFrom;
-        TextView txtPlace;
+        TextView name;
+        TextView subcategory;
         TextView txtDistance;
         ImageView imgProfile;
     }

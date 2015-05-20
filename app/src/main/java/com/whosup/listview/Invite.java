@@ -2,48 +2,110 @@ package com.whosup.listview;
 
 public class Invite {
 
-    private int drawableId;
-    private String from;
-    private String place;
-    private String distance;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private String birthday;
+    private String postDay;
+    private String postHour;
+    private String meetDay;
+    private String meetHour;
+    private String category;
+    private String subcategory;
+    private String description;
+    private String latitude;
+    private String longitude;
+    private String placeID;
+    private String address;
 
-    public Invite(int drawableId, String from, String place, String distance) {
+
+    public Invite(String username, String firstName, String lastName, String gender, String birthday, String postDay, String postHour, String meetDay, String meetHour, String category
+            , String subcategory, String description, String latitude, String longitude, String placeID, String address) {
         super();
-        this.drawableId = drawableId;
-        this.from = from;
-        this.place = place;
-        this.distance = distance;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.postDay = postDay;
+        this.postHour = postHour;
+        this.meetDay = meetDay;
+        this.meetHour = meetHour;
+        this.category = category;
+        this.subcategory = subcategory;
+        this.description = description;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.placeID = placeID;
+        this.address = address;
+
+
+
     }
 
-    public int getDrawableId() {
-        return drawableId;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setDrawableId(int drawableId) {
-        this.drawableId = drawableId;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getFrom() {
-        return from;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public String getGender() {
+        return gender;
     }
 
-    public String getPlace() {
-        return place;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public String getPostDay() {
+        return postDay;
     }
 
-    public String getDistance() {
-        return distance;
+    public String getPostHour() {
+        return postHour;
     }
 
-    public void setDistance(String distance) {
-        this.distance = distance;
+    public String getMeetDay() {
+        return meetDay;
+    }
+
+    public String getMeetHour() {
+        return meetHour;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getSubcategory() {
+        return subcategory;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public String getPlaceID() {
+        return placeID;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

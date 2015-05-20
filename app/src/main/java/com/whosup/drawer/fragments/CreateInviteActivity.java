@@ -336,7 +336,7 @@ public class CreateInviteActivity extends Fragment {
             //checkConnection
             cd= new ConnectionDetector(getActivity().getApplicationContext());
             if(!cd.isConnectingToInternet()) {
-                //makeToast(R.string.noInternetConnection);
+                Toast.makeText(getActivity(), R.string.noInternetConnection, Toast.LENGTH_LONG).show();
                 return;
             }
 
