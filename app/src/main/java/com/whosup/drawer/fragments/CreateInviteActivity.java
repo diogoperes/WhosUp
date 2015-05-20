@@ -521,8 +521,8 @@ public class CreateInviteActivity extends Fragment {
         protected String doInBackground(String... args) {
 
             // Check for success tag
-
-
+            String birthdayStr=SPreferences.getInstance().getLoginBirthday(getActivity().getApplicationContext());
+            Log.v("BIRTHDAY", birthdayStr);
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -534,6 +534,7 @@ public class CreateInviteActivity extends Fragment {
                 Log.v("LASTNAME SENT", lastnameStr);
                 params.add(new BasicNameValuePair("gender", genderStr));
                 Log.v("GENDER SENT", genderStr);
+                params.add(new BasicNameValuePair("birthday",birthdayStr));
                 params.add(new BasicNameValuePair("meetDay", meetDayStr));
                 params.add(new BasicNameValuePair("meetHour", meetTimeStr));
                 params.add(new BasicNameValuePair("currentDate", currentDateStr));
@@ -545,6 +546,8 @@ public class CreateInviteActivity extends Fragment {
                 params.add(new BasicNameValuePair("longitude", longitude.toString()));
                 params.add(new BasicNameValuePair("placeID",placeID));
                 params.add(new BasicNameValuePair("address",placeName));
+
+
 
 
                 Log.d("request!", "starting");

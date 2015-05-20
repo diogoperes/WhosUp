@@ -33,6 +33,7 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
     private static final String TAG_FIRSTNAME = "firstName";
     private static final String TAG_LASTNAME = "lastName";
     private static final String TAG_GENDER = "gender";
+    private static final String TAG_BIRTHDAY = "birthday";
 
     private String eMail, password;
     private Activity a=null;
@@ -95,7 +96,9 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
                     String firstName = json.getString(TAG_FIRSTNAME);
                     String lastName = json.getString(TAG_LASTNAME);
                     String gender = json.getString(TAG_GENDER);
-                    SPreferences.getInstance().saveLogin(a.getApplicationContext(), eMail, password, username, firstName, lastName, gender);
+                    String birthday = json.getString(TAG_BIRTHDAY);
+                    Log.v("BIRTHDAY", birthday);
+                    SPreferences.getInstance().saveLogin(a.getApplicationContext(), eMail, password, username, firstName, lastName, gender, birthday);
                 }
                 Intent i = new Intent(a, MainActivity.class);
                 a.finish();

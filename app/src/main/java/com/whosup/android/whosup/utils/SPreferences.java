@@ -15,6 +15,7 @@ public class SPreferences {
     public static final String PREFS_LOGIN_FIRSTNAME_KEY = "FIRSTNAME" ;
     public static final String PREFS_LOGIN_LASTNAME_KEY = "LASTNAME" ;
     public static final String PREFS_LOGIN_GENDER_KEY = "GENDER" ;
+    public static final String PREFS_LOGIN_BIRTHDAY_KEY = "BIRTHDAY" ;
 
 
     public static SPreferences getInstance(){
@@ -24,7 +25,7 @@ public class SPreferences {
         return sPreferences;
     }
 
-    public void saveLogin(Context c, String email, String pass, String user, String firstName, String lastName, String gender){
+    public void saveLogin(Context c, String email, String pass, String user, String firstName, String lastName, String gender, String birthday){
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
         final SharedPreferences.Editor editor = sp.edit();
         editor.putString(PREFS_LOGIN_EMAIL_KEY, email.toString());
@@ -33,6 +34,7 @@ public class SPreferences {
         editor.putString(PREFS_LOGIN_FIRSTNAME_KEY, firstName);
         editor.putString(PREFS_LOGIN_LASTNAME_KEY, lastName);
         editor.putString(PREFS_LOGIN_GENDER_KEY, gender);
+        editor.putString(PREFS_LOGIN_BIRTHDAY_KEY, birthday);
         editor.commit();
 
     }
@@ -86,6 +88,15 @@ public class SPreferences {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
         try {
             return sharedPrefs.getString(PREFS_LOGIN_GENDER_KEY, null);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getLoginBirthday(Context c){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
+        try {
+            return sharedPrefs.getString(PREFS_LOGIN_BIRTHDAY_KEY, null);
         } catch (Exception e) {
             return "";
         }
