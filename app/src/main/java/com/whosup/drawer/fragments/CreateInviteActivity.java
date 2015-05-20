@@ -2,7 +2,9 @@ package com.whosup.drawer.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,7 +38,9 @@ import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.Data;
 import com.whosup.android.whosup.utils.DateDisplayPicker;
 import com.whosup.android.whosup.utils.JSONParser;
+import com.whosup.android.whosup.utils.ObservableScrollView;
 import com.whosup.android.whosup.utils.SPreferences;
+import com.whosup.android.whosup.utils.ScrollViewListener;
 import com.whosup.android.whosup.utils.SubCategory;
 import com.whosup.android.whosup.utils.TimeDisplayPicker;
 import com.whosup.android.whosup.utils.Utility;
@@ -64,8 +68,10 @@ public class CreateInviteActivity extends Fragment {
     private JSONArray mCategories = null;
     //manages all of our categories in a list.
     private Spinner spinnerSubCategory;
-    private Category categorySelected;
-    private SubCategory subCategorySelected;
+    private Category categorySelected = null;
+    private int categorySelectedIndex = 0;
+    private SubCategory subCategorySelected = null;
+    private int subCategorySelectedIndex = 0;
     private ArrayList<Category> mCategoryList;
     // Creating JSON Parser object
     JSONParser jsonParser = new JSONParser();
@@ -84,6 +90,7 @@ public class CreateInviteActivity extends Fragment {
     private TimeDisplayPicker meetTime;
     private String usernameStr, firstNameStr, lastnameStr, genderStr, meetDayStr, meetTimeStr, description, currentDateStr, currentTimeStr, placeID;
     private String placeName = "";
+
 
     //Attempt Register Invite variables
     private ProgressDialog pDialog=null;
@@ -110,6 +117,16 @@ public class CreateInviteActivity extends Fragment {
         // Inflate the layout for this fragment
         final View rootview = inflater.inflate(R.layout.fragment_create_invite, container,
                 false);
+
+        final ObservableScrollView sv = (ObservableScrollView) rootview.findViewById(R.id.scrollView_create_invite);
+        sv.setScrollViewListener(new ScrollViewListener() {
+            @Override
+            public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+                sv.setVisibility(View.GONE);
+                sv.setVisibility(View.VISIBLE);
+            }
+        });
+
         spinnerCategory = (Spinner) rootview.findViewById(R.id.spinnerCategory);
         spinnerSubCategory = (Spinner) rootview.findViewById(R.id.spinnerSubCategory);
 
@@ -120,6 +137,7 @@ public class CreateInviteActivity extends Fragment {
                 // On selecting a spinner item
                 String label = parent.getItemAtPosition(position).toString();
                 categorySelected = mCategoryList.get(position);
+                categorySelectedIndex = position;
 
                 updateSubCategory();
             }
@@ -136,7 +154,7 @@ public class CreateInviteActivity extends Fragment {
                 // On selecting a spinner item
                 String label = parent.getItemAtPosition(position).toString();
                 subCategorySelected = categorySelected.getSubcategories().get(position);
-
+                subCategorySelectedIndex = position;
             }
 
             @Override
@@ -194,7 +212,10 @@ public class CreateInviteActivity extends Fragment {
 
     @Override
     public void onStart() {
+
         super.onStart();
+        updateCategoryList();
+        updateSubCategory();
     }
 
     @Override
@@ -206,8 +227,24 @@ public class CreateInviteActivity extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateCategoryList();
-        updateSubCategory();
+        SharedPreferences seti = getActivity().getSharedPreferences( "create_invite", 0);
+
+        if(seti.contains("initialized")) {
+
+            categorySelectedIndex = seti.getInt("categorySelectedIndex", 0);
+            subCategorySelectedIndex = seti.getInt("subcategorySelectedIndex", 0);
+            categorySelected = mCategoryList.get(categorySelectedIndex);
+            subCategorySelected = categorySelected.getSubcategories().get(subCategorySelectedIndex);
+            spinnerCategory.setSelection(categorySelectedIndex);
+            spinnerSubCategory.setSelection(subCategorySelectedIndex);
+
+            Log.v("Category Selected",categorySelected.getName() + "");
+            Log.v("SubCategory Selected",subCategorySelected.getName() + "");
+        }
+
+
+
+
         mMapView.onResume();
         getActivity().setTitle(R.string.create_invite);
     }
@@ -215,6 +252,15 @@ public class CreateInviteActivity extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        SharedPreferences seti = getActivity().getSharedPreferences( "create_invite", 0);
+        SharedPreferences.Editor edito = seti.edit();
+        edito.putBoolean("initialized", true);
+        edito.putInt("categorySelectedIndex", categorySelectedIndex);
+        Log.v("Category Selected Pause",categorySelectedIndex+"");
+        Log.v("Category Selected Index",seti.getInt("categorySelectedIndex", 0) + "");
+        edito.putInt("subcategorySelectedIndex", subCategorySelectedIndex);
+        edito.commit();
+
         mMapView.onPause();
     }
 
@@ -236,8 +282,8 @@ public class CreateInviteActivity extends Fragment {
         mCategoryList= Data.getInstance().getCategories(getActivity().getApplicationContext());
 
         List<String> lables = new ArrayList<String>();
-
-        categorySelected=mCategoryList.get(0);
+        if(categorySelected==null)
+            categorySelected=mCategoryList.get(0);
         for(Category c : mCategoryList ){
             lables.add(c.getName());
         }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.whosup.android.whosup.utils.ObservableScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:id="@+id/scrollView_create_invite"
             android:layout_width="match_parent"
@@ -170,4 +171,4 @@
 
 </LinearLayout>
 
-</ScrollView>
+</com.whosup.android.whosup.utils.ObservableScrollView>
