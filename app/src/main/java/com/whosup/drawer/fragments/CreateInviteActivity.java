@@ -155,6 +155,8 @@ public class CreateInviteActivity extends Fragment {
                 String label = parent.getItemAtPosition(position).toString();
                 subCategorySelected = categorySelected.getSubcategories().get(position);
                 subCategorySelectedIndex = position;
+                Log.v("SubCategory Selected P",subCategorySelectedIndex+"");
+
             }
 
             @Override
@@ -235,16 +237,13 @@ public class CreateInviteActivity extends Fragment {
             subCategorySelectedIndex = seti.getInt("subcategorySelectedIndex", 0);
             categorySelected = mCategoryList.get(categorySelectedIndex);
             subCategorySelected = categorySelected.getSubcategories().get(subCategorySelectedIndex);
-            spinnerCategory.setSelection(categorySelectedIndex);
-            spinnerSubCategory.setSelection(subCategorySelectedIndex);
+            spinnerCategory.setSelection(categorySelectedIndex, false);
+            spinnerSubCategory.setSelection(subCategorySelectedIndex, false);
 
             Log.v("Category Selected",categorySelected.getName() + "");
             Log.v("SubCategory Selected",subCategorySelected.getName() + "");
+            Log.v("SubCategory SelectedI",subCategorySelectedIndex + "");
         }
-
-
-
-
         mMapView.onResume();
         getActivity().setTitle(R.string.create_invite);
     }
@@ -256,9 +255,10 @@ public class CreateInviteActivity extends Fragment {
         SharedPreferences.Editor edito = seti.edit();
         edito.putBoolean("initialized", true);
         edito.putInt("categorySelectedIndex", categorySelectedIndex);
-        Log.v("Category Selected Pause",categorySelectedIndex+"");
-        Log.v("Category Selected Index",seti.getInt("categorySelectedIndex", 0) + "");
         edito.putInt("subcategorySelectedIndex", subCategorySelectedIndex);
+        Log.v("SubCategory Selected P",categorySelectedIndex+"");
+        Log.v("SubCategory Selected I",subCategorySelectedIndex + "");
+
         edito.commit();
 
         mMapView.onPause();
