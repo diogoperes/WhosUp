@@ -83,6 +83,8 @@
                 android:value="com.whosup.drawer.placepicker.PlacePicker" />
         </activity>
 
+        <!-- SEARCHABLE ACTIVITY FOR INVITES SEARCH -->
+
     </application>
 
 </manifest>

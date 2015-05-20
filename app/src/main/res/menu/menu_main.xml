@@ -4,23 +4,24 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_action_search"
         android:orderInCategory="100"
         android:title="@string/action_search"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
     <item
         android:id="@+id/action_refresh"
         android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="100"
         android:title="@string/action_refresh"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_logout"

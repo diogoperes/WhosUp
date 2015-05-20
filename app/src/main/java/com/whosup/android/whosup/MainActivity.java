@@ -1,6 +1,8 @@
 package com.whosup.android.whosup;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -16,13 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.drawer.FragmentDrawer;
-import com.whosup.drawer.fragments.Friends;
 import com.whosup.drawer.fragments.CreateInviteActivity;
+import com.whosup.drawer.fragments.Friends;
 import com.whosup.drawer.fragments.Messages;
 import com.whosup.listview.Invite;
 import com.whosup.listview.InviteAdapter;
@@ -39,6 +43,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, AdapterView.OnItemClickListener {
 
     private ArrayList<Invite> inviteList;
+    private Menu menu;
     private ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
     private final String TAG_LATITUDE = "latitude";
@@ -56,6 +61,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         setContentView(R.layout.activity_main);
         inviteList = new ArrayList<>();
 
+        //GET USERNAME AND EMAIL
+        SPreferences userSession = new SPreferences();
+        TextView usernameTextView = (TextView) findViewById(R.id.username);
+        TextView emailTextView = (TextView) findViewById(R.id.email);
+        usernameTextView.setText(userSession.getLoginFirstName(this.getApplicationContext()) + " " +
+                userSession.getLoginLastName(this.getApplicationContext()));
+        emailTextView.setText(userSession.getLoginUsername(this.getApplicationContext()));
         new LoadInvites().execute();
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -81,6 +93,31 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.menu = menu;
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint(getApplicationContext().getString(R.string.search_hint));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println(query);
+                //COLLAPSE KEYBOARD AND SEARCHVIEW -.-
+                searchView.setIconified(true);
+                searchView.setIconified(true);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+
+
         return true;
     }
 
@@ -93,6 +130,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         switch (id) {
+            case R.id.action_refresh:
+                new refreshInvites(this).execute();
+                return true;
             case R.id.action_settings:
                 Toast.makeText(MainActivity.this.getApplicationContext(), "jowf", Toast.LENGTH_LONG).show();
                 return true;
@@ -149,6 +189,42 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         Invite selectedInvite = inviteList.get(position);
         //Toast.makeText(this, "You've selected :\n Invite from : " + selectedInvite.getFrom() + "\n Place : " + selectedInvite.getPlace(), Toast.LENGTH_SHORT).show();
+    }
+
+    public class refreshInvites extends AsyncTask<Void, Void, Void> {
+        private Context mCon;
+
+        public refreshInvites(Context con) {
+            mCon = con;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog=null;
+            pDialog = new ProgressDialog(mCon);
+            pDialog.setMessage(getApplicationContext().getString(R.string.refreshing_invites));
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                // TODO Refreshing invites
+                Thread.sleep(4000);
+                return null;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void params) {
+            if(pDialog!=null)
+                pDialog.dismiss();
+        }
     }
 
     /**
