@@ -34,6 +34,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
+import com.whosup.android.whosup.utils.Utility;
 import com.whosup.drawer.FragmentDrawer;
 import com.whosup.drawer.fragments.CreateInviteActivity;
 import com.whosup.drawer.fragments.Friends;
@@ -48,6 +49,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, AdapterView.OnItemClickListener, GoogleApiClient.ConnectionCallbacks,
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         inviteList = new ArrayList<>();
-
+        inviteListView = (ListView) findViewById(R.id.list_invites);
         //GET USERNAME AND EMAIL
         SPreferences userSession = new SPreferences();
         TextView usernameTextView = (TextView) findViewById(R.id.username);
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         usernameTextView.setText(userSession.getLoginFirstName(this.getApplicationContext()) + " " +
                 userSession.getLoginLastName(this.getApplicationContext()));
         emailTextView.setText(userSession.getLoginUsername(this.getApplicationContext()));
-        new LoadInvites().execute();
+
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -99,7 +102,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // Building the GoogleApi client
             buildGoogleApiClient();
         }
+
         requestLocationUpdate();
+        if(mLastLocation!=null){
+            new LoadInvites().execute();
+        }else{
+            Utility.displayPromptForEnablingGPS(this);
+        }
 
 
         /*
@@ -135,6 +144,19 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public boolean onQueryTextSubmit(String query) {
                 System.out.println(query);
+                ArrayList<Invite> inviteListFiltered = new ArrayList<Invite>();
+
+                for(Invite i : inviteList){
+                    String name = i.getFirstName() + " "+ i.getLastName();
+                    if( name.toLowerCase().contains(query) || i.getSubcategory().toLowerCase().contains(query) || i.getAddress().toLowerCase().contains(query)){
+                        inviteListFiltered.add(i);
+                    }
+                }
+                sortListByDistance(inviteListFiltered);
+                InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteListFiltered, mLastLocation);
+                inviteListView.setAdapter(adapter);
+
+
                 //COLLAPSE KEYBOARD AND SEARCHVIEW -.-
                 searchView.setIconified(true);
                 searchView.setIconified(true);
@@ -142,7 +164,19 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String query) {
+                System.out.println(query);
+                ArrayList<Invite> inviteListFiltered = new ArrayList<Invite>();
+
+                for(Invite i : inviteList){
+                    String name = i.getFirstName() + " "+ i.getLastName();
+                    if( name.toLowerCase().contains(query) || i.getSubcategory().toLowerCase().contains(query) || i.getAddress().toLowerCase().contains(query)){
+                        inviteListFiltered.add(i);
+                    }
+                }
+
+                InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteListFiltered, mLastLocation);
+                inviteListView.setAdapter(adapter);
                 return true;
             }
         });
@@ -161,7 +195,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_refresh:
-                new refreshInvites(this).execute();
+//                new refreshInvites(this).execute();
+                requestLocationUpdate();
+                new LoadInvites().execute();
                 return true;
             case R.id.action_settings:
                 Toast.makeText(MainActivity.this.getApplicationContext(), "jowf", Toast.LENGTH_LONG).show();
@@ -221,41 +257,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         //Toast.makeText(this, "You've selected :\n Invite from : " + selectedInvite.getFrom() + "\n Place : " + selectedInvite.getPlace(), Toast.LENGTH_SHORT).show();
     }
 
-    public class refreshInvites extends AsyncTask<Void, Void, Void> {
-        private Context mCon;
 
-        public refreshInvites(Context con) {
-            mCon = con;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog=null;
-            pDialog = new ProgressDialog(mCon);
-            pDialog.setMessage(getApplicationContext().getString(R.string.refreshing_invites));
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                // TODO Refreshing invites
-                Thread.sleep(4000);
-                return null;
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Void params) {
-            if(pDialog!=null)
-                pDialog.dismiss();
-        }
-    }
 
 
 
@@ -293,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
             // Check your log cat for JSON reponse
             Log.d("Albums JSON: ", "> " + json.toString());
-
+            inviteList.clear();
             try {
                 invitesList = json.getJSONArray("Invites");
                 Log.d("Albums JSONArray: ", "> " + invitesList);
@@ -348,8 +350,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                      * Updating parsed JSON data into ListView
                      * */
 
-                    inviteListView = (ListView) findViewById(R.id.list_invites);
+                    sortListByDistance(inviteList);
                     InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteList, mLastLocation);
+
                     inviteListView.setAdapter(adapter);
 
                     inviteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -380,8 +383,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         crta.setBearingRequired(true);
         crta.setCostAllowed(true);
         crta.setPowerRequirement(Criteria.POWER_LOW);
-//        String provider = locationManager.getBestProvider(crta, true);
-        String provider = LocationManager.NETWORK_PROVIDER;
+        String provider = locationManager.getBestProvider(crta, true);
+        //String provider = LocationManager.NETWORK_PROVIDER;
+        if(provider==null){
+            provider=LocationManager.NETWORK_PROVIDER;
+        }
         Log.d("","provider : "+provider);
 //        // String provider = LocationManager.GPS_PROVIDER;
 //        locationManager.requestLocationUpdates(provider, 1000, 0, new LocationListener() {
@@ -475,5 +481,19 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public void onConnectionSuspended(int arg0) {
         mGoogleApiClient.connect();
     }
+
+    public void sortListByDistance(ArrayList<Invite> list){
+        Collections.sort(list, new Comparator<Invite>() {
+            @Override
+            public int compare(Invite i1, Invite i2) {
+                if(i1.getDistanceFromMe()==i2.getDistanceFromMe())
+                    return 0;
+                return i1.getDistanceFromMe()<i2.getDistanceFromMe()?-1:1;
+            }
+        });
+
+
+    }
+
 
 }

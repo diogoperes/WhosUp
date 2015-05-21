@@ -100,7 +100,7 @@ public class CreateInviteActivity extends Fragment {
 
     private static final String CREATE_INVITE_URL = "http://whosup.host22.com/create_invite.php";
     ConnectionDetector cd;
-
+    private boolean pause;
 
 
     public CreateInviteActivity() {
@@ -138,8 +138,11 @@ public class CreateInviteActivity extends Fragment {
                 String label = parent.getItemAtPosition(position).toString();
                 categorySelected = mCategoryList.get(position);
                 categorySelectedIndex = position;
+                if(!pause){
+                    updateSubCategory();
+                }
+                pause=false;
 
-                updateSubCategory();
             }
 
             @Override
@@ -148,6 +151,8 @@ public class CreateInviteActivity extends Fragment {
             }
         });
 
+
+
         spinnerSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -155,7 +160,7 @@ public class CreateInviteActivity extends Fragment {
                 String label = parent.getItemAtPosition(position).toString();
                 subCategorySelected = categorySelected.getSubcategories().get(position);
                 subCategorySelectedIndex = position;
-                Log.v("SubCategory Selected P",subCategorySelectedIndex+"");
+                Log.v("SubCategorySelected LIS",subCategorySelectedIndex+"");
 
             }
 
@@ -216,21 +221,24 @@ public class CreateInviteActivity extends Fragment {
     public void onStart() {
 
         super.onStart();
+        System.out.println("START");
         updateCategoryList();
         updateSubCategory();
     }
 
     @Override
     public void onStop() {
-        getActivity().setTitle(R.string.app_name);
+        System.out.println("STOP");
+        //getActivity().setTitle(R.string.app_name);
         super.onStop();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        System.out.println("RESUME");
         SharedPreferences seti = getActivity().getSharedPreferences( "create_invite", 0);
-
+        getActivity().setTitle(R.string.create_invite);
         if(seti.contains("initialized")) {
 
             categorySelectedIndex = seti.getInt("categorySelectedIndex", 0);
@@ -238,26 +246,28 @@ public class CreateInviteActivity extends Fragment {
             categorySelected = mCategoryList.get(categorySelectedIndex);
             subCategorySelected = categorySelected.getSubcategories().get(subCategorySelectedIndex);
             spinnerCategory.setSelection(categorySelectedIndex, false);
-            spinnerSubCategory.setSelection(subCategorySelectedIndex, false);
 
-            Log.v("Category Selected",categorySelected.getName() + "");
-            Log.v("SubCategory Selected",subCategorySelected.getName() + "");
-            Log.v("SubCategory SelectedI",subCategorySelectedIndex + "");
+
+            //Log.v("Category Selected",categorySelected.getName() + "");
+            Log.v("SubCategory Selected R",subCategorySelected.getName() + "");
+            Log.v("SubCategory Selected RI",subCategorySelectedIndex + "");
         }
         mMapView.onResume();
-        getActivity().setTitle(R.string.create_invite);
+        spinnerSubCategory.setSelection(subCategorySelectedIndex, false);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        System.out.println("PAUSE");
+        pause = true;
         SharedPreferences seti = getActivity().getSharedPreferences( "create_invite", 0);
         SharedPreferences.Editor edito = seti.edit();
         edito.putBoolean("initialized", true);
         edito.putInt("categorySelectedIndex", categorySelectedIndex);
         edito.putInt("subcategorySelectedIndex", subCategorySelectedIndex);
-        Log.v("SubCategory Selected P",categorySelectedIndex+"");
-        Log.v("SubCategory Selected I",subCategorySelectedIndex + "");
+        //Log.v("Category Selected P",categorySelectedIndex+"");
+        Log.v("SubCategory Selected PI",subCategorySelectedIndex + "");
 
         edito.commit();
 
@@ -266,6 +276,7 @@ public class CreateInviteActivity extends Fragment {
 
     @Override
     public void onDestroy() {
+        System.out.println("DESTROY");
         getActivity().setTitle(R.string.app_name);
         mMapView.onDestroy();
         super.onDestroy();

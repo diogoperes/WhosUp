@@ -18,6 +18,7 @@ public class Invite {
     private String longitude;
     private String placeID;
     private String address;
+    private double distanceFromMe;
 
 
     public Invite(String username, String firstName, String lastName, String gender, String birthday, String postDay, String postHour, String meetDay, String meetHour, String category
@@ -108,4 +109,15 @@ public class Invite {
     public String getAddress() {
         return address;
     }
+
+    public double getDistanceFromMe() {
+        return distanceFromMe;
+    }
+
+    public void setDistanceFromMe(double distanceFromMe) {
+        this.distanceFromMe = distanceFromMe;
+    }
+
+
+
 }

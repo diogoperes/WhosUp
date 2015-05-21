@@ -79,15 +79,15 @@ public class InviteAdapter extends BaseAdapter {
         Location inviteLocation = new Location("");
         inviteLocation.setLatitude(Double.parseDouble(invite.getLatitude()));
         inviteLocation.setLongitude(Double.parseDouble(invite.getLongitude()));
-        Log.v("CURRENT LOCATION", "" + myLocation);
+        //Log.v("CURRENT LOCATION", "" + myLocation);
 
 
         float distanceInMeters = inviteLocation.distanceTo(myLocation);
 
-        Log.v("DISTANCE TO", "" + distanceInMeters);
+        //Log.v("DISTANCE TO", "" + distanceInMeters);
         double distanceInKm = distanceInMeters / 1000;
         distanceInKm = Math.round(distanceInKm * 100.0) / 100.0;
-
+        invite.setDistanceFromMe(distanceInKm);
         return distanceInKm;
     }
 
