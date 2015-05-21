@@ -15,7 +15,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"/>
 
-    <!-- Movie Title -->
+
     <TextView
         android:id="@+id/inviteFrom"
         android:layout_width="wrap_content"
@@ -26,9 +26,9 @@
         android:textSize="@dimen/title"
         android:textStyle="bold" />
 
-    <!-- Rating -->
+
     <TextView
-        android:id="@+id/invitePlace"
+        android:id="@+id/inviteSubcategory"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/inviteFrom"
@@ -36,6 +36,17 @@
         android:layout_toRightOf="@+id/inviterProfilePic"
         android:layout_toEndOf="@+id/inviterProfilePic"
         android:textSize="@dimen/rating" />
+
+    <TextView
+        android:id="@+id/inviteLocation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inviteSubcategory"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/inviterProfilePic"
+        android:layout_toEndOf="@+id/inviterProfilePic"
+        android:textSize="@dimen/rating" />
+
 
     <!--&lt;!&ndash; Genre &ndash;&gt;-->
     <!--<TextView-->

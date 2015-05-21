@@ -582,7 +582,7 @@ public class CreateInviteActivity extends Fragment {
             if (file_url != null){
                 Toast.makeText(getActivity(), file_url, Toast.LENGTH_LONG).show();
                 //Toast.makeText(getApplicationContext(), R.string.account_successfully_created, Toast.LENGTH_LONG).show();
-
+                getActivity().getSupportFragmentManager().popBackStack();
 
             }else{
                 Toast.makeText(getActivity(), R.string.noConnection, Toast.LENGTH_LONG).show();

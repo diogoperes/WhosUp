@@ -1,7 +1,12 @@
 package com.whosup.android.whosup;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +23,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.drawer.FragmentDrawer;
@@ -36,7 +46,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, AdapterView.OnItemClickListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+    private Location mLastLocation;
+    // Google client to interact with Google API
+    private GoogleApiClient mGoogleApiClient;
 
     private ArrayList<Invite> inviteList;
     private ProgressDialog pDialog;
@@ -49,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private String myLongitude = "-9";
     private String myRay = "2";
     JSONArray invitesList = null;
+    private ListView inviteListView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +82,24 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // First we need to check availability of play services
+        if (checkPlayServices()) {
+            // Building the GoogleApi client
+            buildGoogleApiClient();
+        }
+        requestLocationUpdate();
+
+
+        /*
         // Get the ListView by Id and instantiate the adapter with
         // invite data and then set it the ListView
         ListView inviteListView = (ListView) findViewById(R.id.list_invites);
-        InviteAdapter adapter = new InviteAdapter(this, inviteList);
+        InviteAdapter adapter = new InviteAdapter(this, inviteList, my);
         inviteListView.setAdapter(adapter);
         // Set the onItemClickListener on the ListView to listen for items clicks
-        inviteListView.setOnItemClickListener(this);
+        */
+
+
 
         FragmentDrawer drawerFragment = (FragmentDrawer) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
@@ -150,6 +180,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         Invite selectedInvite = inviteList.get(position);
         //Toast.makeText(this, "You've selected :\n Invite from : " + selectedInvite.getFrom() + "\n Place : " + selectedInvite.getPlace(), Toast.LENGTH_SHORT).show();
     }
+
+
 
     /**
      * Background Async Task to Load all Albums by making http request
@@ -240,16 +272,132 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                      * Updating parsed JSON data into ListView
                      * */
 
-                    ListView inviteListView = (ListView) findViewById(R.id.list_invites);
-                    InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteList);
+                    inviteListView = (ListView) findViewById(R.id.list_invites);
+                    InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteList, mLastLocation);
                     inviteListView.setAdapter(adapter);
 
+                    inviteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        }
+                    });
 
 
                 }
             });
 
         }
+    }
+
+
+
+
+
+
+
+    private void requestLocationUpdate() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria crta = new Criteria();
+        crta.setAccuracy(Criteria.ACCURACY_COARSE);
+        crta.setAltitudeRequired(true);
+        crta.setBearingRequired(true);
+        crta.setCostAllowed(true);
+        crta.setPowerRequirement(Criteria.POWER_LOW);
+//        String provider = locationManager.getBestProvider(crta, true);
+        String provider = LocationManager.NETWORK_PROVIDER;
+        Log.d("","provider : "+provider);
+//        // String provider = LocationManager.GPS_PROVIDER;
+//        locationManager.requestLocationUpdates(provider, 1000, 0, new LocationListener() {
+//            @Override
+//            public void onLocationChanged(Location location) {
+//                System.out.println("MY LOCATION HAS CHANGED: "+location);
+//            }
+//
+//            @Override
+//            public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//            }
+//
+//            @Override
+//            public void onProviderEnabled(String provider) {
+//
+//            }
+//
+//            @Override
+//            public void onProviderDisabled(String provider) {
+//
+//            }
+//        });
+        mLastLocation = locationManager.getLastKnownLocation(provider);
+        System.out.println("MY FIRST LAST LOCATION: "+mLastLocation);
+    }
+
+    /**
+     * Creating google api client object
+     * */
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+    }
+
+    /**
+     * Method to verify google play services on the device
+     * */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "This device is not supported.", Toast.LENGTH_LONG)
+                        .show();
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        checkPlayServices();
+    }
+
+    /**
+     * Google api callback methods
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = "
+                + result.getErrorCode());
+    }
+
+    @Override
+    public void onConnected(Bundle arg0) {
+
+        // Once connected with google api, get the location
+//        displayLocation();
+    }
+
+    @Override
+    public void onConnectionSuspended(int arg0) {
+        mGoogleApiClient.connect();
     }
 
 }

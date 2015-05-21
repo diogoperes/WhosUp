@@ -22,6 +22,7 @@ import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.Utility;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -273,6 +274,7 @@ public class RegisterActivity extends Activity {
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
+
                 params.add(new BasicNameValuePair("username", usernameStr));
                 params.add(new BasicNameValuePair("email", emailStr));
                 params.add(new BasicNameValuePair("password", passwordMD5));
@@ -281,6 +283,7 @@ public class RegisterActivity extends Activity {
                 params.add(new BasicNameValuePair("lastName", lastNameStr));
                 params.add(new BasicNameValuePair("gender", gender));
                 params.add(new BasicNameValuePair("bday", birthdateStr));
+
 
                 Log.d("request!", "starting");
                 // getting product details by making HTTP request

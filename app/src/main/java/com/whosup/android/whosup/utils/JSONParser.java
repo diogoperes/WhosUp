@@ -116,8 +116,7 @@ public class JSONParser {
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
-                httpPost.setEntity(new UrlEncodedFormEntity(params));
-
+                httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
@@ -135,7 +134,7 @@ public class JSONParser {
             }
 
         } catch (UnsupportedEncodingException e) {
-            Log.e("UnsupportedEncodingException", e.toString());
+            Log.e("UnsupportedEncodingExc", e.toString());
             e.printStackTrace();
         } catch (ClientProtocolException e) {
             Log.e("ClientProtocolException", e.toString());

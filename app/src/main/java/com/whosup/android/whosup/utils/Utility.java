@@ -3,6 +3,15 @@ package com.whosup.android.whosup.utils;
 //string to md5
 
 
+import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utility {
+
 
     public static String MD5(String md5) {
         try {
@@ -114,6 +124,7 @@ public class Utility {
 
         return differenceTime;
     }
+
 
 
 }
