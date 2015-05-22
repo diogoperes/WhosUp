@@ -44,7 +44,7 @@ public class ViewProfileFragment extends Fragment {
 
         usernameTextView.setText(SPreferences.getInstance().getLoginUsername(rootview.getContext()));
         emailTextView.setText(SPreferences.getInstance().getLoginEmail(rootview.getContext()));
-        customPhraseTextView.setText(SPreferences.getInstance().getLoginCustomPhrase(rootview.getContext()));
+        customPhraseTextView.setText("'"+SPreferences.getInstance().getLoginCustomPhrase(rootview.getContext())+"'");
         firstNameTextView.setText(SPreferences.getInstance().getLoginFirstName(rootview.getContext()));
         lastNameTextView.setText(SPreferences.getInstance().getLoginLastName(rootview.getContext()));
         cityCountryTextView.setText(SPreferences.getInstance().getLoginCity(rootview.getContext()) +

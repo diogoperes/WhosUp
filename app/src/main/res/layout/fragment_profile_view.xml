@@ -33,7 +33,7 @@
         android:layout_toEndOf="@+id/imageView" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="&quot;People can add here a custom phrase whatever they like :D&quot;"
@@ -59,6 +59,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="António"
+        android:gravity="end"
         android:id="@+id/firstNameText"
         android:layout_above="@+id/textView2"
         android:layout_alignRight="@+id/lastNameText"
@@ -80,6 +81,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Raimundo"
+        android:gravity="end"
         android:id="@+id/lastNameText"
         android:layout_alignBottom="@+id/textView2"
         android:layout_alignRight="@+id/customPhraseText"
@@ -101,6 +103,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="21 years"
+        android:gravity="end"
         android:id="@+id/ageText"
         android:layout_alignTop="@+id/textView3"
         android:layout_alignRight="@+id/lastNameText"
@@ -122,6 +125,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Assentiz, Portugal"
+        android:gravity="end"
         android:id="@+id/cityCountryText"
         android:layout_alignTop="@+id/textView5"
         android:layout_alignRight="@+id/ageText"
