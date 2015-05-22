@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF">
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="&quot;People can add here a custom phrase whatever they like :D&quot;"
-        android:id="@+id/titleText"
+        android:id="@+id/customPhraseText"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_margin="30dp"
@@ -50,7 +50,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="First name:"
         android:id="@+id/textView"
-        android:layout_below="@+id/titleText"
+        android:layout_below="@+id/customPhraseText"
         android:layout_alignLeft="@+id/imageView"
         android:layout_alignStart="@+id/imageView" />
 
@@ -82,8 +82,8 @@
         android:text="Raimundo"
         android:id="@+id/lastNameText"
         android:layout_alignBottom="@+id/textView2"
-        android:layout_alignRight="@+id/titleText"
-        android:layout_alignEnd="@+id/titleText" />
+        android:layout_alignRight="@+id/customPhraseText"
+        android:layout_alignEnd="@+id/customPhraseText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -110,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Country:"
+        android:text="City:"
         android:id="@+id/textView5"
         android:layout_below="@+id/textView3"
         android:layout_alignLeft="@+id/textView3"
@@ -121,10 +121,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Portugal"
-        android:id="@+id/textView4"
+        android:text="Assentiz, Portugal"
+        android:id="@+id/cityCountryText"
         android:layout_alignTop="@+id/textView5"
-        android:layout_alignRight="@+id/ageText" />
+        android:layout_alignRight="@+id/ageText"
+        android:layout_alignEnd="@+id/ageText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -132,7 +133,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="About me:"
         android:id="@+id/textView6"
-        android:layout_below="@+id/textView4"
+        android:layout_below="@+id/cityCountryText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp" />
 
@@ -141,7 +142,7 @@
         android:layout_height="match_parent"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing."
         android:layout_margin="20dp"
-        android:id="@+id/textView7"
+        android:id="@+id/aboutMeText"
         android:layout_below="@+id/textView6" />
 
 </RelativeLayout>

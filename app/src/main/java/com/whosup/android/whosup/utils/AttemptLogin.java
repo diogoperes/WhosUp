@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.whosup.android.whosup.LoginActivity;
 import com.whosup.android.whosup.MainActivity;
 import com.whosup.android.whosup.R;
-import com.whosup.android.whosup.SplashScreenActivity;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -34,6 +33,11 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
     private static final String TAG_LASTNAME = "lastName";
     private static final String TAG_GENDER = "gender";
     private static final String TAG_BIRTHDAY = "birthday";
+    private static final String TAG_CITY = "city";
+    private static final String TAG_COUNTRY = "country";
+    private static final String TAG_CUSTOMPHRASE = "customPhrase";
+    private static final String TAG_ABOUTME = "aboutMe";
+    private static final String TAG_PHOTOLINK = "photoLink";
 
     private String eMail, password;
     private Activity a=null;
@@ -97,8 +101,14 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
                     String lastName = json.getString(TAG_LASTNAME);
                     String gender = json.getString(TAG_GENDER);
                     String birthday = json.getString(TAG_BIRTHDAY);
+                    String city = json.getString(TAG_CITY);
+                    String country = json.getString(TAG_COUNTRY);
+                    String customPhrase = json.getString(TAG_CUSTOMPHRASE);
+                    String aboutMe = json.getString(TAG_ABOUTME);
+                    String photoLink = json.getString(TAG_PHOTOLINK);
                     Log.v("BIRTHDAY", birthday);
-                    SPreferences.getInstance().saveLogin(a.getApplicationContext(), eMail, password, username, firstName, lastName, gender, birthday);
+                    SPreferences.getInstance().saveLogin(a.getApplicationContext(), eMail, password, username, firstName,
+                            lastName, gender, birthday, city, country, customPhrase, aboutMe, photoLink);
                 }
                 Intent i = new Intent(a, MainActivity.class);
                 a.finish();

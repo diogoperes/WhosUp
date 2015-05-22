@@ -1,13 +1,11 @@
 package com.whosup.android.whosup;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,15 +28,14 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.Utility;
 import com.whosup.drawer.FragmentDrawer;
 import com.whosup.drawer.fragments.CreateInviteActivity;
-import com.whosup.drawer.fragments.Friends;
 import com.whosup.drawer.fragments.Messages;
+import com.whosup.drawer.fragments.ViewProfileFragment;
 import com.whosup.listview.Invite;
 import com.whosup.listview.InviteAdapter;
 
@@ -229,11 +226,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.create_invite);
                 break;
             case 1:
-                fragment = new Friends();
-                title = getString(R.string.title_friends);
+                fragment = new ViewProfileFragment();
+                title = getString(R.string.view_profile);
                 break;
             case 2:
-                fragment = new Messages(    );
+                fragment = new Messages();
                 title = getString(R.string.title_messages);
                 break;
             default:

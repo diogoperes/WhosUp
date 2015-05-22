@@ -3,8 +3,6 @@ package com.whosup.android.whosup.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.renderscript.Sampler;
-
 
 public class SPreferences {
 
@@ -16,6 +14,11 @@ public class SPreferences {
     public static final String PREFS_LOGIN_LASTNAME_KEY = "LASTNAME" ;
     public static final String PREFS_LOGIN_GENDER_KEY = "GENDER" ;
     public static final String PREFS_LOGIN_BIRTHDAY_KEY = "BIRTHDAY" ;
+    public static final String PREFS_LOGIN_CITY_KEY = "CITY";
+    public static final String PREFS_LOGIN_COUNTRY_KEY = "COUNTRY";
+    public static final String PREFS_LOGIN_CUSTOMPHRASE_KEY = "CUSTOMPHRASE";
+    public static final String PREFS_LOGIN_ABOUTME_KEY = "ABOUTME";
+    public static final String PREFS_LOGIN_PHOTOLINK_KEY = "PHOTOLINK";
 
 
     public static SPreferences getInstance(){
@@ -25,17 +28,23 @@ public class SPreferences {
         return sPreferences;
     }
 
-    public void saveLogin(Context c, String email, String pass, String user, String firstName, String lastName, String gender, String birthday){
+    public void saveLogin(Context c, String email, String pass, String user, String firstName, String lastName, String gender, String birthday,
+                            String city, String country, String customPhrase, String aboutMe, String photoLink){
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
         final SharedPreferences.Editor editor = sp.edit();
-        editor.putString(PREFS_LOGIN_EMAIL_KEY, email.toString());
+        editor.putString(PREFS_LOGIN_EMAIL_KEY, email);
         editor.putString(PREFS_LOGIN_PASSWORD_KEY, pass);
         editor.putString(PREFS_LOGIN_USERNAME_KEY, user);
         editor.putString(PREFS_LOGIN_FIRSTNAME_KEY, firstName);
         editor.putString(PREFS_LOGIN_LASTNAME_KEY, lastName);
         editor.putString(PREFS_LOGIN_GENDER_KEY, gender);
         editor.putString(PREFS_LOGIN_BIRTHDAY_KEY, birthday);
-        editor.commit();
+        editor.putString(PREFS_LOGIN_CITY_KEY, city);
+        editor.putString(PREFS_LOGIN_COUNTRY_KEY, country);
+        editor.putString(PREFS_LOGIN_CUSTOMPHRASE_KEY, customPhrase);
+        editor.putString(PREFS_LOGIN_ABOUTME_KEY, aboutMe);
+        editor.putString(PREFS_LOGIN_PHOTOLINK_KEY, photoLink);
+        editor.apply();
 
     }
 
@@ -93,6 +102,51 @@ public class SPreferences {
         }
     }
 
+    public String getLoginCity(Context c){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
+        try {
+            return sharedPrefs.getString(PREFS_LOGIN_CITY_KEY, null);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getLoginCountry(Context c){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
+        try {
+            return sharedPrefs.getString(PREFS_LOGIN_COUNTRY_KEY, null);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getLoginCustomPhrase(Context c){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
+        try {
+            return sharedPrefs.getString(PREFS_LOGIN_CUSTOMPHRASE_KEY, null);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getLoginAboutMe(Context c){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
+        try {
+            return sharedPrefs.getString(PREFS_LOGIN_ABOUTME_KEY, null);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getLoginPhotoLink(Context c){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
+        try {
+            return sharedPrefs.getString(PREFS_LOGIN_PHOTOLINK_KEY, null);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public String getLoginBirthday(Context c){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
         try {
@@ -103,9 +157,9 @@ public class SPreferences {
     }
 
     public void discardLoginCredentials(Context c){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 }
