@@ -53,7 +53,7 @@
                       android:textColorHint="#ffffffff"
                       android:textColor="#ffffffff" />
             <!--  Email Label -->
-            <EditText android:id="@+id/editTextUserEmail"
+            <AutoCompleteTextView android:id="@+id/editTextUserEmail"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:hint="@string/email"

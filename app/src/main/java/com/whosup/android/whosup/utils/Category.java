@@ -8,13 +8,15 @@ public class Category {
     private String name;
     private String value;
     private int id;
+    private String drawableID;
 
     public Category(){}
 
-    public Category(Integer id, String name, String value){
+    public Category(Integer id, String name, String value, String drawableID){
         this.name = name;
         this.value = value;
         this.id = id;
+        this.drawableID=drawableID;
     }
 
     public String getName(){
@@ -33,7 +35,7 @@ public class Category {
         return subcategories;
     }
 
-
-
-
+    public String getDrawableID() {
+        return drawableID;
+    }
 }

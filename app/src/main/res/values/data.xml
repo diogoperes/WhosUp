@@ -16,6 +16,13 @@
         <item name="culture_art">culture_art</item>
     </string-array>
 
+    <string-array name="categories_drawablesID">
+        <item name="restaurant">"@mipmap/ic_restaurant_symbol"</item>
+        <item name="bar_cafe">"@mipmap/ic_bar_cafe_symbol"</item>
+        <item name="outdoor_sport">"@drawable/whosup_logo_small"</item>
+        <item name="culture_art">"@drawable/whosup_logo_small"</item>
+    </string-array>
+
 
     <!--SUBCATEGORIES-->
     <string-array name="restaurant">

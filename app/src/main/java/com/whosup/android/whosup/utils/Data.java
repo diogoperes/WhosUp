@@ -28,12 +28,14 @@ public class Data {
             String[] mySubCatArray;
             int subcategoryResourceId;
             String value;
+            String drawableId;
             int id = 0;
             for (String s : myCatArray) {
                 value=c.getResources().getStringArray(R.array.categories_identifier)[id];
+                drawableId=c.getResources().getStringArray(R.array.categories_drawablesID)[id];
                 subcategoryResourceId=c.getResources().getIdentifier(value, "array", c.getPackageName());
                 mySubCatArray = c.getResources().getStringArray(subcategoryResourceId);
-                Category cat = new Category(id, s, value);
+                Category cat = new Category(id, s, value, drawableId);
                 categories.add(cat);
                 for (String sc : mySubCatArray) {
                     SubCategory subcat = new SubCategory(sc);

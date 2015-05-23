@@ -1,5 +1,7 @@
 package com.whosup.android.whosup;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -34,12 +38,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 
 public class RegisterActivity extends Activity {
 
-    EditText username,email,password,confirmPassword, firstName, lastName;
+    EditText username,password,confirmPassword, firstName, lastName;
+    AutoCompleteTextView email;
     String gender;
     CheckBox terms;
     Boolean checkedGender=false, checkedTerms=false;
@@ -51,7 +59,7 @@ public class RegisterActivity extends Activity {
 
     String usernameStr,emailStr,passwordStr,confirmPasswordStr,firstNameStr,lastNameStr,birthdateStr;
 
-
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", Pattern.CASE_INSENSITIVE);
     private static final String REGISTER_URL = "http://whosup.host22.com/register.php";
 
     //testing from a real server:
@@ -77,7 +85,7 @@ public class RegisterActivity extends Activity {
         TextView loginScreen = (TextView) findViewById(R.id.link_to_login);
         Button button_register_new_account = (Button) findViewById(R.id.button_register_new_account);
         username=(EditText)findViewById(R.id.editTextUserName);
-        email=(EditText)findViewById(R.id.editTextUserEmail);
+        email=(AutoCompleteTextView)findViewById(R.id.editTextUserEmail);
         password=(EditText)findViewById(R.id.editTextPassword);
         confirmPassword=(EditText)findViewById(R.id.editTextConfirmPassword);
         firstName=(EditText)findViewById(R.id.editTextFirstName);
@@ -85,6 +93,15 @@ public class RegisterActivity extends Activity {
         birthdate=(DateDisplayPicker)findViewById(R.id.clientEditCreate_BirthDateDayPicker);
         terms = (CheckBox) findViewById(R.id.agree_terms_and_conditions);
 
+
+        Account[] accounts = AccountManager.get(this).getAccounts();
+        Set<String> emailSet = new HashSet<String>();
+        for (Account account : accounts) {
+            if (EMAIL_PATTERN.matcher(account.name).matches()) {
+                emailSet.add(account.name);
+            }
+        }
+        email.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>(emailSet)));
 
 
         terms.setOnClickListener(new View.OnClickListener() {

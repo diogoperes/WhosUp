@@ -197,7 +197,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case R.id.action_refresh:
 //                new refreshInvites(this).execute();
                 requestLocationUpdate();
-                new LoadInvites().execute();
+                if(mLastLocation!=null){
+                    new LoadInvites().execute();
+                }else{
+                    Utility.displayPromptForEnablingGPS(this);
+                }
                 return true;
             case R.id.action_settings:
                 Toast.makeText(MainActivity.this.getApplicationContext(), "jowf", Toast.LENGTH_LONG).show();
@@ -294,11 +298,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     params);
 
             // Check your log cat for JSON reponse
-            Log.d("Albums JSON: ", "> " + json.toString());
+            //Log.d("Invites JSON: ", "> " + json.toString());
             inviteList.clear();
             try {
                 invitesList = json.getJSONArray("Invites");
-                Log.d("Albums JSONArray: ", "> " + invitesList);
+                //Log.d("Invites JSONArray: ", "> " + invitesList);
                 if (invitesList != null) {
                     // looping through All albums
                     for (int i = 0; i < invitesList.length(); i++) {
@@ -349,8 +353,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     /**
                      * Updating parsed JSON data into ListView
                      * */
-
+                    updateDistances(inviteList);
                     sortListByDistance(inviteList);
+                    System.out.println("INVITE LIST FIRST: " + inviteList.get(0).getDistanceFromMe());
                     InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteList, mLastLocation);
 
                     inviteListView.setAdapter(adapter);
@@ -486,6 +491,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         Collections.sort(list, new Comparator<Invite>() {
             @Override
             public int compare(Invite i1, Invite i2) {
+                //System.out.println("A ORGANIZAR: " + i1.getDistanceFromMe());
                 if(i1.getDistanceFromMe()==i2.getDistanceFromMe())
                     return 0;
                 return i1.getDistanceFromMe()<i2.getDistanceFromMe()?-1:1;
@@ -495,5 +501,24 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     }
 
+    public void updateDistances(ArrayList<Invite> il){
+
+        for(Invite invite : il) {
+            Location inviteLocation = new Location("");
+            inviteLocation.setLatitude(Double.parseDouble(invite.getLatitude()));
+            inviteLocation.setLongitude(Double.parseDouble(invite.getLongitude()));
+            //Log.v("CURRENT LOCATION", "" + myLocation);
+
+
+            float distanceInMeters = inviteLocation.distanceTo(mLastLocation);
+
+            //Log.v("DISTANCE TO", "" + distanceInMeters);
+            double distanceInKm = distanceInMeters / 1000;
+            distanceInKm = Math.round(distanceInKm * 100.0) / 100.0;
+            invite.setDistanceFromMe(distanceInKm);
+            //System.out.println("SET DISTANCE FROM ME: " + distanceInKm);
+        }
+
+    }
 
 }

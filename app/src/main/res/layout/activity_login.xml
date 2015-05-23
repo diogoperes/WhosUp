@@ -45,7 +45,7 @@
                            <!--android:maxWidth="200dp"
                            android:maxHeight="200dp"-->
 
-                    <EditText android:id="@+id/email" android:layout_width="match_parent"
+                    <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
                                           android:layout_height="wrap_content"
                                           android:hint="@string/email"
                                           android:inputType="textEmailAddress"

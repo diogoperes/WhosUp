@@ -6,7 +6,7 @@
 
     <!-- Thumbnail Image -->
     <ImageView
-        android:id="@+id/inviterProfilePic"
+        android:id="@+id/imgCategory"
         android:contentDescription="profilePic"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -15,14 +15,35 @@
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"/>
 
+    <ImageView
+        android:id="@+id/hostGender"
+        android:contentDescription="hostGender"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@id/inviteFrom"
+        android:layout_toLeftOf="@+id/hostAge"
+        android:layout_marginRight="2dp"
+        android:layout_marginEnd="2dp"/>
+
+    <TextView
+        android:id="@+id/hostAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/inviteFrom"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/year"
+        android:textSize="@dimen/year" />
+    <!-- android:layout_alignParentTop="true" -->
 
     <TextView
         android:id="@+id/inviteFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/inviterProfilePic"
-        android:layout_toRightOf="@+id/inviterProfilePic"
-        android:layout_toEndOf="@+id/inviterProfilePic"
+        android:layout_alignTop="@+id/imgCategory"
+        android:layout_toRightOf="@+id/imgCategory"
+        android:layout_toEndOf="@+id/imgCategory"
         android:textSize="@dimen/title"
         android:textStyle="bold" />
 
@@ -33,8 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/inviteFrom"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/inviterProfilePic"
-        android:layout_toEndOf="@+id/inviterProfilePic"
+        android:layout_toRightOf="@+id/imgCategory"
+        android:layout_toEndOf="@+id/imgCategory"
         android:textSize="@dimen/rating" />
 
     <TextView
@@ -43,8 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/inviteSubcategory"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/inviterProfilePic"
-        android:layout_toEndOf="@+id/inviterProfilePic"
+        android:layout_toRightOf="@+id/imgCategory"
+        android:layout_toEndOf="@+id/imgCategory"
         android:textSize="@dimen/rating" />
 
 
