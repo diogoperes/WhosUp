@@ -19,8 +19,8 @@
     <string-array name="categories_drawablesID">
         <item name="restaurant">"@mipmap/ic_restaurant_symbol"</item>
         <item name="bar_cafe">"@mipmap/ic_bar_cafe_symbol"</item>
-        <item name="outdoor_sport">"@drawable/whosup_logo_small"</item>
-        <item name="culture_art">"@drawable/whosup_logo_small"</item>
+        <item name="outdoor_sport">"@mipmap/ic_outdoor_sport_symbol"</item>
+        <item name="culture_art">"@mipmap/ic_culture_art_symbol"</item>
     </string-array>
 
 
