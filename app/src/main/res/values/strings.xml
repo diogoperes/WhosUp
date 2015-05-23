@@ -41,7 +41,7 @@
 
     <!-- navigation drawer item labels  -->
     <string name="nav_item_create_invite">Create Invite</string>
-    <string name="nav_item_friends">Friends</string>
+    <string name="nav_item_friends">My Profile</string>
     <string name="nav_item_notifications">Messages</string>
 
     <string-array name="nav_drawer_labels">
@@ -50,16 +50,18 @@
         <item>@string/nav_item_notifications</item>
     </string-array>
 
+    <!-- NAV DRAWER ITEMS TITLE-->
+    <string name="create_invite">Create Invite</string>
+    <string name="view_profile">My Profile</string>
     <string name="title_messages">Messages</string>
-    <string name="title_friends">Friends</string>
-    <string name="title_home">Home</string>
+
+    <!-- CREATE INVITE STRINGS -->
     <string name="restaurant">Restaurant</string>
     <string name="select_a_category">Select a Category</string>
     <string name="meet_hour">Meet Hour:</string>
     <string name="meet_day">Meet Day:</string>
     <string name="select_a_subcategory">Select a Subcategory</string>
     <string name="enter_a_description_max_250_char">Enter a description (max 250 char)</string>
-    <string name="create_invite">Create Invite</string>
 
     <!-- GOOGLE PLACE AUTOCOMPLETE STRINGS -->
     <string name="autocomplete_hint">Enter place name or address</string>
@@ -92,7 +94,6 @@
     <string name="action_exit">Exit</string>
 
     <!-- LOADING DIALOGS MESSAGES -->
-    <string name="refreshing_invites">Refreshing invites…</string>
 
 
 </resources>
