@@ -2,7 +2,6 @@ package com.whosup.drawer.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -18,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,7 +115,6 @@ public class CreateInviteActivity extends Fragment {
         // Inflate the layout for this fragment
         final View rootview = inflater.inflate(R.layout.fragment_create_invite, container,
                 false);
-
         final ObservableScrollView sv = (ObservableScrollView) rootview.findViewById(R.id.scrollView_create_invite);
         sv.setScrollViewListener(new ScrollViewListener() {
             @Override
@@ -185,6 +182,7 @@ public class CreateInviteActivity extends Fragment {
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         mMapView.setClickable(false);
+
         return rootview;
     }
 
@@ -416,10 +414,12 @@ public class CreateInviteActivity extends Fragment {
         // Changing marker icon
         marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
-        // adding marker
+        // Clear any other marker (if exists) and add actual marker
+        map.clear();
         map.addMarker(marker);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(14).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        map.getUiSettings().setMapToolbarEnabled(false);
         mMapView.invalidate();
     }
 
