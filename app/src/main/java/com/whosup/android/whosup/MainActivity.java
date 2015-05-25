@@ -29,6 +29,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.GPSTracker;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     JSONArray invitesList = null;
     private ListView inviteListView;
     private GPSTracker gps;
+    LocationManager locationManager;
+    ConnectionDetector cd;
 
 
 
@@ -97,26 +100,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         gps = new GPSTracker(this);
-        if(gps.canGetLocation()){
-            mLastLocation=gps.getLocation();
-        }else{
-            gps.showSettingsAlert();
-        }
 
-
+        TryLoad();
         // First we need to check availability of play services
         if (checkPlayServices()) {
             // Building the GoogleApi client
             buildGoogleApiClient();
         }
 
-        //requestLocationUpdate();
-        if(mLastLocation!=null){
-            new LoadInvites().execute();
-        }else{
-            Toast.makeText(this, "GPS can´t get location. Refresh the page.", Toast.LENGTH_SHORT).show();
-            //Utility.displayPromptForEnablingGPS(this);
-        }
 
         inviteListView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
@@ -166,6 +157,35 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     }
 
+    public void TryLoad(){
+        mLastLocation=gps.getLocation();
+        if(gps.canGetLocation()){
+
+        }/*else{
+            gps.showSettingsAlert();
+        }*/
+        //requestLocationUpdate();
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean isNetworkEnabled, isGPSEnabled;
+
+        cd= new ConnectionDetector(getApplicationContext());
+
+
+        isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        System.out.println("GPS STATE: " + isGPSEnabled);
+        if(!cd.isConnectingToInternet()) {
+            Toast.makeText(this, "Can't connect to the network.", Toast.LENGTH_SHORT).show();
+        }else if(!isGPSEnabled){
+            gps.showSettingsAlert();
+        }else if(mLastLocation==null){
+            gps.turnOnHighPrecisionMode();
+        }else{
+            new LoadInvites().execute();
+            //Utility.displayPromptForEnablingGPS(this);
+        }
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -181,19 +201,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                System.out.println(query);
-                ArrayList<Invite> inviteListFiltered = new ArrayList<>();
-
-                for(Invite i : inviteList){
-                    String name = i.getFirstName() + " "+ i.getLastName();
-                    if( name.toLowerCase().contains(query) || i.getSubcategory().toLowerCase().contains(query) || i.getAddress().toLowerCase().contains(query)){
-                        inviteListFiltered.add(i);
-                    }
-                }
-                sortListByDistance(inviteListFiltered);
-                InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteListFiltered, mLastLocation);
-                inviteListView.setAdapter(adapter);
-
 
                 //COLLAPSE KEYBOARD AND SEARCHVIEW -.-
                 searchView.setIconified(true);
@@ -208,7 +215,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
                 for(Invite i : inviteList){
                     String name = i.getFirstName() + " "+ i.getLastName();
-                    if( name.toLowerCase().contains(query) || i.getSubcategory().toLowerCase().contains(query) || i.getAddress().toLowerCase().contains(query)){
+                    String date = Utility.arrangeDate(i.getMeetDay());
+                    String time = Utility.arrangeHour(i.getMeetHour());
+                    //System.out.println("INVITE DAY: " + date + " TIME: " + time);
+                    if( name.toLowerCase().contains(query) || i.getSubcategory().toLowerCase().contains(query) || i.getAddress().toLowerCase().contains(query)
+                            || date.contains(query) || time.contains(query)){
                         inviteListFiltered.add(i);
                     }
                 }
@@ -234,19 +245,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         switch (id) {
             case R.id.action_refresh:
 //                new refreshInvites(this).execute();
-                if(gps.canGetLocation()){
-                    mLastLocation=gps.getLocation();
-                }else{
-                    gps.showSettingsAlert();
-                }
-
-                //requestLocationUpdate();
-                if(mLastLocation!=null){
-                    new LoadInvites().execute();
-                }else{
-                    Toast.makeText(this, "GPS can´t get location. Refresh the page.", Toast.LENGTH_SHORT).show();
-                    //Utility.displayPromptForEnablingGPS(this);
-                }
+                TryLoad();
 
                 return true;
             case R.id.action_viewmap:

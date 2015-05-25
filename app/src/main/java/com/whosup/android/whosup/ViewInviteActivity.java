@@ -49,8 +49,8 @@ public class ViewInviteActivity extends Activity {
             genderSymbol = getResources().getDrawable(R.mipmap.ic_male_symbol);
         }
         hostGender.setImageDrawable(genderSymbol);
-        hostMeetDay.setText(arrangeDate(i.getStringExtra("invite_meetDay")));
-        hostMeetTime.setText(arrangeHour(i.getStringExtra("invite_meetHour")));
+        hostMeetDay.setText(Utility.arrangeDate(i.getStringExtra("invite_meetDay")));
+        hostMeetTime.setText(Utility.arrangeHour(i.getStringExtra("invite_meetHour")));
 
 
     }
@@ -73,20 +73,6 @@ public class ViewInviteActivity extends Activity {
         }
     };
 
-    public String arrangeDate(String meetDay){
-        String[] divider = meetDay.split("-");
-        String year = divider[0];
-        String month = divider[1];
-        String day = divider[2];
-        return day + "/" + month + "/" + year;
-    }
 
-    public String arrangeHour(String meetHour){
-        String[] divider = meetHour.split(":");
-        String hour = divider[0];
-        String minute = divider[1];
-        String second = divider[2];
-        return hour + "h" + minute;
-    }
 
 }

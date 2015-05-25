@@ -143,11 +143,11 @@
         android:layout_below="@+id/descriptionText"
         android:layout_alignLeft="@+id/hostMeetTimeText"
         android:layout_alignStart="@+id/hostMeetTimeText"
-        android:lines="5"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:text="Host meet description"
         android:background="@drawable/edit_text_style"
         />
+
 
 
 </RelativeLayout>

@@ -17,6 +17,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.whosup.listview.Invite;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,7 +65,21 @@ public class Utility {
         return isValid;
     }
 
+    public static String arrangeDate(String meetDay){
+        String[] divider = meetDay.split("-");
+        String year = divider[0];
+        String month = divider[1];
+        String day = divider[2];
+        return day + "/" + month + "/" + year;
+    }
 
+    public static String arrangeHour(String meetHour){
+        String[] divider = meetHour.split(":");
+        String hour = divider[0];
+        String minute = divider[1];
+        String second = divider[2];
+        return hour + "h" + minute;
+    }
 
     //Compare dates
     public static int getDiffYears(Date first, Date last) {

@@ -87,8 +87,8 @@ public class InviteAdapter extends BaseAdapter {
         holder.distance.setText(invite.getDistanceFromMe() + " Km");
         holder.address.setText(invite.getAddress());
         holder.imgCategory.setImageDrawable(getImage(invite));
-        holder.meetDay.setText(arrangeDate(invite));
-        holder.meetHour.setText(arrangeHour(invite));
+        holder.meetDay.setText(Utility.arrangeDate(invite.getMeetDay()));
+        holder.meetHour.setText(Utility.arrangeHour(invite.getMeetHour()));
 
         /*
         //today date
@@ -170,23 +170,7 @@ public class InviteAdapter extends BaseAdapter {
         return res;
     }
 
-    public String arrangeDate(Invite invite){
-        String meetDay = invite.getMeetDay();
-        String[] divider = meetDay.split("-");
-        String year = divider[0];
-        String month = divider[1];
-        String day = divider[2];
-        return day + "/" + month;
-    }
 
-    public String arrangeHour(Invite invite){
-        String meetHour = invite.getMeetHour();
-        String[] divider = meetHour.split(":");
-        String hour = divider[0];
-        String minute = divider[1];
-        String second = divider[2];
-        return hour + "h" + minute;
-    }
 
 
 }

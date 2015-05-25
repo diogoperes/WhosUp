@@ -53,10 +53,11 @@ public class GPSTracker extends Service implements LocationListener {
             // getting GPS status
             isGPSEnabled = locationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
-
+            System.out.println("isGPSEnabled: " + isGPSEnabled);
             // getting network status
             isNetworkEnabled = locationManager
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            System.out.println("isNetworkEnabled: " + isNetworkEnabled);
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
@@ -161,10 +162,38 @@ public class GPSTracker extends Service implements LocationListener {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
         // Setting Dialog Title
-        alertDialog.setTitle("GPS is settings");
+        alertDialog.setTitle("Turn On GPS");
 
         // Setting Dialog Message
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                mContext.startActivity(intent);
+            }
+        });
+
+        // on pressing cancel button
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+    public void turnOnHighPrecisionMode(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("Turn On High Precision");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("GPS is taking too long. If possible, please turn on GPS on 'High Precision' mode and refresh the page.");
 
         // On pressing Settings button
         alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
