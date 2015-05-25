@@ -29,6 +29,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.whosup.android.whosup.utils.GPSTracker;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.Utility;
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private String myRay = "2";
     JSONArray invitesList = null;
     private ListView inviteListView;
+    private GPSTracker gps;
+
 
 
     @Override
@@ -93,6 +96,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        gps = new GPSTracker(this);
+        if(gps.canGetLocation()){
+            mLastLocation=gps.getLocation();
+        }else{
+            gps.showSettingsAlert();
+        }
+
 
         // First we need to check availability of play services
         if (checkPlayServices()) {
@@ -100,13 +110,44 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             buildGoogleApiClient();
         }
 
-        requestLocationUpdate();
+        //requestLocationUpdate();
         if(mLastLocation!=null){
             new LoadInvites().execute();
         }else{
-            Utility.displayPromptForEnablingGPS(this);
+            Toast.makeText(this, "GPS can´t get location. Refresh the page.", Toast.LENGTH_SHORT).show();
+            //Utility.displayPromptForEnablingGPS(this);
         }
 
+        inviteListView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int position,
+                                    long arg3) {
+                // on selecting a single album
+                // TrackListActivity will be launched to show tracks inside the album
+                Intent i = new Intent(getApplicationContext(), ViewInviteActivity.class);
+
+                i.putExtra("invite_id", inviteList.get(position).getId());
+                i.putExtra("invite_username", inviteList.get(position).getUsername());
+                i.putExtra("invite_firstName", inviteList.get(position).getFirstName());
+                i.putExtra("invite_lastName", inviteList.get(position).getLastName());
+                i.putExtra("invite_gender", inviteList.get(position).getGender());
+                i.putExtra("invite_birthday", inviteList.get(position).getBirthday());
+                //System.out.println( inviteList.get(position).getBirthday() + "");
+                i.putExtra("invite_postDay", inviteList.get(position).getPostDay());
+                i.putExtra("invite_postHour", inviteList.get(position).getPostHour());
+                i.putExtra("invite_meetDay", inviteList.get(position).getMeetDay());
+                i.putExtra("invite_meetHour", inviteList.get(position).getMeetHour());
+                i.putExtra("invite_category", inviteList.get(position).getCategory());
+                i.putExtra("invite_subcategory", inviteList.get(position).getSubcategory());
+                i.putExtra("invite_description", inviteList.get(position).getDescription());
+                i.putExtra("invite_latitude", inviteList.get(position).getLatitude());
+                i.putExtra("invite_longitude", inviteList.get(position).getLongitude());
+                i.putExtra("invite_placeID", inviteList.get(position).getPlaceID());
+                i.putExtra("invite_address", inviteList.get(position).getAddress());
+
+                startActivity(i);
+            }
+        });
 
         /*
         // Get the ListView by Id and instantiate the adapter with
@@ -193,12 +234,20 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         switch (id) {
             case R.id.action_refresh:
 //                new refreshInvites(this).execute();
-                requestLocationUpdate();
+                if(gps.canGetLocation()){
+                    mLastLocation=gps.getLocation();
+                }else{
+                    gps.showSettingsAlert();
+                }
+
+                //requestLocationUpdate();
                 if(mLastLocation!=null){
                     new LoadInvites().execute();
                 }else{
-                    Utility.displayPromptForEnablingGPS(this);
+                    Toast.makeText(this, "GPS can´t get location. Refresh the page.", Toast.LENGTH_SHORT).show();
+                    //Utility.displayPromptForEnablingGPS(this);
                 }
+
                 return true;
             case R.id.action_settings:
                 Toast.makeText(MainActivity.this.getApplicationContext(), "jowf", Toast.LENGTH_LONG).show();
@@ -307,6 +356,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
 
                         // Storing each json item values in variable
+                        String id = c.getString("id");
                         String username = c.getString("username");
                         String firstName = c.getString("firstName");
                         String lastName = c.getString("lastName");
@@ -323,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         String longitude = c.getString("longitude");
                         String placeID = c.getString("placeID");
                         String address = c.getString("address");
-                        inviteList.add(new Invite(username, firstName, lastName, gender, birthday, postDay, postHour, meetDay, meetHour, category, subcategory, description, latitude,
+                        inviteList.add(new Invite(id, username, firstName, lastName, gender, birthday, postDay, postHour, meetDay, meetHour, category, subcategory, description, latitude,
                                 longitude, placeID, address));
                     }
                 } else {
@@ -350,19 +400,19 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     /**
                      * Updating parsed JSON data into ListView
                      * */
-                    updateDistances(inviteList);
-                    sortListByDistance(inviteList);
-                    System.out.println("INVITE LIST FIRST: " + inviteList.get(0).getDistanceFromMe());
-                    InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteList, mLastLocation);
+                    try{
+                        updateDistances(inviteList);
+                        sortListByDistance(inviteList);
+                        System.out.println("INVITE LIST FIRST: " + inviteList.get(0).getDistanceFromMe());
+                        InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteList, mLastLocation);
 
-                    inviteListView.setAdapter(adapter);
+                        inviteListView.setAdapter(adapter);
+                    }catch (Exception ex){
+                        Toast.makeText(getApplicationContext(), "Can't load invites, try refreshing", Toast.LENGTH_SHORT).show();
+                    }
 
-                    inviteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        }
-                    });
+
 
 
                 }
@@ -376,7 +426,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
 
 
-
+/*
     private void requestLocationUpdate() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria crta = new Criteria();
@@ -416,6 +466,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         mLastLocation = locationManager.getLastKnownLocation(provider);
         System.out.println("MY FIRST LAST LOCATION: "+mLastLocation);
     }
+*/
 
     /**
      * Creating google api client object
@@ -517,5 +568,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
 
     }
+
+
+
+
+
 
 }

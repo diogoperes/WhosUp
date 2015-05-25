@@ -10,6 +10,7 @@
         android:contentDescription="profilePic"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:src="@mipmap/ic_restaurant_symbol"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginRight="8dp"
@@ -18,29 +19,58 @@
     <ImageView
         android:id="@+id/hostGender"
         android:contentDescription="hostGender"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_below="@id/inviteFrom"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_male_symbol"
+        android:layout_alignBottom="@+id/hostAge"
         android:layout_toLeftOf="@+id/hostAge"
         android:layout_marginRight="2dp"
         android:layout_marginEnd="2dp"/>
+    <!-- android:layout_below="@id/inviteFrom"
+    android:layout_alignBaseline="@+id/inviteFrom"-->
 
     <TextView
         android:id="@+id/hostAge"
+        android:layout_alignBaseline="@+id/inviteFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_below="@id/inviteFrom"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:text="20"
         android:textColor="@color/year"
         android:textSize="@dimen/year" />
-    <!-- android:layout_alignParentTop="true" -->
+    <!-- android:layout_alignParentTop="true"
+    android:layout_below="@id/inviteFrom"
+
+        android:layout_alignParentEnd="true"-->
+
+    <TextView
+        android:id="@+id/meetDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:layout_toLeftOf="@+id/meetHour"
+        android:layout_alignBaseline="@+id/inviteSubcategory"
+        android:layout_below="@id/inviteFrom"
+        android:textSize="@dimen/year"
+        android:text="23/3"/>
+
+    <TextView
+        android:id="@+id/meetHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/inviteSubcategory"
+        android:text="22:00"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/inviteFrom"
+        android:textSize="@dimen/year" />
+    <!--
+        android:layout_alignParentEnd="true" -->
 
     <TextView
         android:id="@+id/inviteFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="host name"
         android:layout_alignTop="@+id/imgCategory"
         android:layout_toRightOf="@+id/imgCategory"
         android:layout_toEndOf="@+id/imgCategory"
@@ -55,6 +85,7 @@
         android:layout_below="@id/inviteFrom"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/imgCategory"
+        android:text="Vegetarian"
         android:layout_toEndOf="@+id/imgCategory"
         android:textSize="@dimen/rating" />
 
@@ -66,6 +97,7 @@
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/imgCategory"
         android:layout_toEndOf="@+id/imgCategory"
+        android:text="location"
         android:textSize="@dimen/rating" />
 
 
@@ -90,6 +122,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textColor="@color/year"
+        android:text="4km"
         android:textSize="@dimen/year" />
 
 </RelativeLayout>

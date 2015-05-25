@@ -17,6 +17,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -65,6 +67,34 @@ public class Utility {
 
     //Compare dates
     public static int getDiffYears(Date first, Date last) {
+        Calendar a = getCalendar(first);
+        Calendar b = getCalendar(last);
+        int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
+        if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) ||
+                (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE))) {
+            diff--;
+        }
+        return diff;
+    }
+
+    public static int getDiffYears(String date) {
+        //today date
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(c.getTime());
+        Date last = null;
+
+        //date String formated
+        Date first = null;
+
+        try {
+            last = df.parse(formattedDate);
+            first = df.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         Calendar a = getCalendar(first);
         Calendar b = getCalendar(last);
         int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);

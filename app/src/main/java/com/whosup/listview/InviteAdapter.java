@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.utils.Category;
 import com.whosup.android.whosup.utils.Data;
+import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.Utility;
 
 import org.w3c.dom.Text;
@@ -69,6 +70,8 @@ public class InviteAdapter extends BaseAdapter {
             holder.distance = (TextView) convertView.findViewById(R.id.inviteDistance);
             holder.address = (TextView) convertView.findViewById(R.id.inviteLocation);
             holder.hostAge = (TextView) convertView.findViewById(R.id.hostAge);
+            holder.meetDay = (TextView) convertView.findViewById(R.id.meetDay);
+            holder.meetHour = (TextView) convertView.findViewById(R.id.meetHour);
             holder.imgCategory = (ImageView) convertView.findViewById(R.id.imgCategory);
             holder.imgHostGender = (ImageView) convertView.findViewById(R.id.hostGender);
 
@@ -84,7 +87,10 @@ public class InviteAdapter extends BaseAdapter {
         holder.distance.setText(invite.getDistanceFromMe() + " Km");
         holder.address.setText(invite.getAddress());
         holder.imgCategory.setImageDrawable(getImage(invite));
+        holder.meetDay.setText(arrangeDate(invite));
+        holder.meetHour.setText(arrangeHour(invite));
 
+        /*
         //today date
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -99,9 +105,9 @@ public class InviteAdapter extends BaseAdapter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        */
 
-
-        holder.hostAge.setText(Utility.getDiffYears(hostBirthdateFormated, currentDate) + " years");
+        holder.hostAge.setText(Utility.getDiffYears(invite.getBirthday()) + "Y");
 
         Drawable genderSymbol = null;
         if(invite.getGender().equals("Female")){
@@ -140,6 +146,8 @@ public class InviteAdapter extends BaseAdapter {
         TextView distance;
         TextView address;
         TextView hostAge;
+        TextView meetDay;
+        TextView meetHour;
         ImageView imgCategory;
         ImageView imgHostGender;
     }
@@ -162,7 +170,23 @@ public class InviteAdapter extends BaseAdapter {
         return res;
     }
 
+    public String arrangeDate(Invite invite){
+        String meetDay = invite.getMeetDay();
+        String[] divider = meetDay.split("-");
+        String year = divider[0];
+        String month = divider[1];
+        String day = divider[2];
+        return day + "/" + month;
+    }
 
+    public String arrangeHour(Invite invite){
+        String meetHour = invite.getMeetHour();
+        String[] divider = meetHour.split(":");
+        String hour = divider[0];
+        String minute = divider[1];
+        String second = divider[2];
+        return hour + "h" + minute;
+    }
 
 
 }

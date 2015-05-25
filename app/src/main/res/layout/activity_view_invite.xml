@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#FFFFFF">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hostImage"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="FirstName"
+        android:id="@+id/hostFirstName"
+        android:layout_alignTop="@+id/hostImage"
+        android:layout_toRightOf="@+id/hostImage"
+        android:layout_toEndOf="@+id/hostImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="LastName"
+        android:id="@+id/hostLastName"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/hostImage"
+        android:layout_toRightOf="@+id/hostFirstName"
+        android:layout_toEndOf="@+id/hostImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="20 years"
+        android:id="@+id/hostAge"
+        android:layout_below="@+id/hostFirstName"
+        android:layout_toRightOf="@+id/hostImage"
+        android:layout_toEndOf="@+id/hostImage" />
+
+    <ImageView
+        android:id="@+id/hostGender"
+        android:contentDescription="hostGender"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_male_symbol"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/hostFirstName"
+        android:layout_toRightOf="@+id/hostAge"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Category"
+        android:id="@+id/hostMeetCategory"
+        android:layout_below="@+id/hostImage"
+        android:layout_alignLeft="@+id/hostImage"
+        android:layout_alignStart="@+id/hostImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Subcategory"
+        android:gravity="end"
+        android:id="@+id/hostMeetSubcategory"
+        android:layout_below="@+id/hostImage"
+        android:layout_toRightOf="@+id/hostMeetCategory"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/meet_day"
+        android:id="@+id/hostMeetDayText"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/hostMeetCategory"
+        android:layout_alignLeft="@+id/hostMeetCategory"
+        android:layout_alignStart="@+id/hostMeetCategory" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="30/2/2015"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/hostMeetDay"
+        android:layout_below="@+id/hostMeetCategory"
+        android:layout_toRightOf="@+id/hostMeetDayText"
+        android:layout_alignBaseline="@+id/hostMeetDayText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/meet_time"
+        android:id="@+id/hostMeetTimeText"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/hostMeetDayText"
+        android:layout_alignLeft="@+id/hostMeetDayText"
+        android:layout_alignStart="@+id/hostMeetDayText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="22:15"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/hostMeetTime"
+        android:layout_below="@+id/hostMeetTimeText"
+        android:layout_toRightOf="@+id/hostMeetTimeText"
+        android:layout_alignBaseline="@+id/hostMeetTimeText"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="10dp"
+        android:text="Description"
+        android:id="@+id/descriptionText"
+        android:layout_below="@+id/hostMeetTimeText"
+        android:layout_centerHorizontal="true" />
+
+
+    <TextView
+        android:id="@+id/hostMeetDescription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20sp"
+        android:layout_marginTop="10dp"
+        android:padding="4dp"
+        android:layout_below="@+id/descriptionText"
+        android:layout_alignLeft="@+id/hostMeetTimeText"
+        android:layout_alignStart="@+id/hostMeetTimeText"
+        android:lines="5"
+        android:textSize="20dp"
+        android:text="Host meet description"
+        android:background="@drawable/edit_text_style"
+        />
+
+
+</RelativeLayout>
+</ScrollView>

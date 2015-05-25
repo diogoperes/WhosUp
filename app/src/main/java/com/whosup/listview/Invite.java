@@ -2,6 +2,7 @@ package com.whosup.listview;
 
 public class Invite {
 
+    private String id;
     private String username;
     private String firstName;
     private String lastName;
@@ -21,9 +22,10 @@ public class Invite {
     private double distanceFromMe;
 
 
-    public Invite(String username, String firstName, String lastName, String gender, String birthday, String postDay, String postHour, String meetDay, String meetHour, String category
+    public Invite(String id, String username, String firstName, String lastName, String gender, String birthday, String postDay, String postHour, String meetDay, String meetHour, String category
             , String subcategory, String description, String latitude, String longitude, String placeID, String address) {
         super();
+        this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -112,6 +114,10 @@ public class Invite {
 
     public double getDistanceFromMe() {
         return distanceFromMe;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void setDistanceFromMe(double distanceFromMe) {

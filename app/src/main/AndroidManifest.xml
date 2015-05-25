@@ -86,6 +86,15 @@
         </activity>
 
         <!-- SEARCHABLE ACTIVITY FOR INVITES SEARCH -->
+        <activity
+            android:name=".ViewInviteActivity"
+            android:label="@string/title_activity_view_invite"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.whosup.android.whosup.MainActivity" />
+        </activity>
+
 
     </application>
 
