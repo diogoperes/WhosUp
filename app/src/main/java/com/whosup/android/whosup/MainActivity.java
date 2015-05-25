@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     // Google client to interact with Google API
     private GoogleApiClient mGoogleApiClient;
 
-    private ArrayList<Invite> inviteList;
+    private static ArrayList<Invite> inviteList;
     private Menu menu;
     private ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public boolean onQueryTextSubmit(String query) {
                 System.out.println(query);
-                ArrayList<Invite> inviteListFiltered = new ArrayList<Invite>();
+                ArrayList<Invite> inviteListFiltered = new ArrayList<>();
 
                 for(Invite i : inviteList){
                     String name = i.getFirstName() + " "+ i.getLastName();
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public boolean onQueryTextChange(String query) {
                 System.out.println(query);
-                ArrayList<Invite> inviteListFiltered = new ArrayList<Invite>();
+                ArrayList<Invite> inviteListFiltered = new ArrayList<>();
 
                 for(Invite i : inviteList){
                     String name = i.getFirstName() + " "+ i.getLastName();
@@ -249,8 +249,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 }
 
                 return true;
-            case R.id.action_settings:
-                Toast.makeText(MainActivity.this.getApplicationContext(), "jowf", Toast.LENGTH_LONG).show();
+            case R.id.action_viewmap:
+                Intent intent = new Intent(MainActivity.this, ViewMapActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.action_exit:
                 System.exit(0);
@@ -306,10 +307,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         Invite selectedInvite = inviteList.get(position);
         //Toast.makeText(this, "You've selected :\n Invite from : " + selectedInvite.getFrom() + "\n Place : " + selectedInvite.getPlace(), Toast.LENGTH_SHORT).show();
     }
-
-
-
-
 
     /**
      * Background Async Task to Load all Albums by making http request
@@ -540,9 +537,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public int compare(Invite i1, Invite i2) {
                 //System.out.println("A ORGANIZAR: " + i1.getDistanceFromMe());
-                if(i1.getDistanceFromMe()==i2.getDistanceFromMe())
+                if (i1.getDistanceFromMe() == i2.getDistanceFromMe())
                     return 0;
-                return i1.getDistanceFromMe()<i2.getDistanceFromMe()?-1:1;
+                return i1.getDistanceFromMe() < i2.getDistanceFromMe() ? -1 : 1;
             }
         });
 
@@ -567,6 +564,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             //System.out.println("SET DISTANCE FROM ME: " + distanceInKm);
         }
 
+    }
+
+    public static ArrayList<Invite> getInviteList() {
+        return inviteList;
     }
 
 

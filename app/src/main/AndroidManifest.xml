@@ -84,6 +84,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.whosup.drawer.placepicker.PlacePicker" />
         </activity>
+        <activity
+            android:name=".ViewMapActivity"
+            android:label="View map">
+        </activity>
 
         <!-- SEARCHABLE ACTIVITY FOR INVITES SEARCH -->
         <activity
