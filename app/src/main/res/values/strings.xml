@@ -94,6 +94,9 @@
     <string name="action_logout">Logout</string>
     <string name="action_exit">Exit</string>
     <string name="title_activity_view_invite">View Invite</string>
+    <string name="description">Description</string>
+    <string name="attend">ATTEND</string>
+    <string name="place">Place: </string>
 
     <!-- LOADING DIALOGS MESSAGES -->
 

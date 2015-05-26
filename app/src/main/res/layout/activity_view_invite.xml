@@ -6,13 +6,25 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="#FFFFFF">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_activity_view_invite"
+        android:id="@+id/viewInviteTitleBar"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:height="56dp"
+        android:textColor="#ffffff"
+        android:background="#000000"
+        android:textStyle="bold"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/hostImage"
         android:layout_margin="20dp"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/ic_launcher"
+        android:layout_below="@+id/viewInviteTitleBar"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -125,11 +137,32 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/place"
+        android:id="@+id/placeTextView"
+        android:layout_below="@+id/hostMeetTime"
+        android:layout_alignLeft="@+id/hostMeetDayText"
+        android:layout_alignStart="@+id/hostMeetDayText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="place address"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/place"
+        android:layout_below="@+id/hostMeetTime"
+        android:layout_toRightOf="@+id/placeTextView"
+        android:layout_alignBaseline="@+id/placeTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginTop="10dp"
-        android:text="Description"
+        android:text="@string/description"
         android:id="@+id/descriptionText"
-        android:layout_below="@+id/hostMeetTimeText"
+        android:layout_below="@+id/placeTextView"
         android:layout_centerHorizontal="true" />
 
 
@@ -140,6 +173,7 @@
         android:layout_marginRight="20sp"
         android:layout_marginTop="10dp"
         android:padding="4dp"
+        android:minLines="5"
         android:layout_below="@+id/descriptionText"
         android:layout_alignLeft="@+id/hostMeetTimeText"
         android:layout_alignStart="@+id/hostMeetTimeText"
@@ -148,6 +182,18 @@
         android:background="@drawable/edit_text_style"
         />
 
+    <Button android:id="@+id/attend_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:minHeight="45dp"
+            android:layout_margin="20dp"
+            android:layout_below="@+id/hostMeetDescription"
+            android:textColor="@color/create_invite_text"
+            android:background="@drawable/edit_text_style"
+            android:text="@string/attend"/>
 
 
 </RelativeLayout>

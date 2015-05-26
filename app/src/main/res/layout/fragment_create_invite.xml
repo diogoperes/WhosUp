@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.whosup.android.whosup.utils.ObservableScrollView
+<!--<com.whosup.android.whosup.utils.ObservableScrollView-->
+<ScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:id="@+id/scrollView_create_invite"
@@ -100,7 +101,16 @@
 
     </LinearLayout>
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="10dp"
+        android:text="@string/description"
+        android:id="@+id/descriptionText"
+        android:layout_gravity="center"
+        android:layout_below="@+id/hostMeetTimeText"
+        android:layout_centerHorizontal="true" />
 
         <EditText
             android:id="@+id/description"
@@ -109,7 +119,7 @@
             android:layout_height="fill_parent"
             android:layout_margin="5dp"
             android:padding="2dp"
-            android:lines="5"
+            android:minLines="5"
             android:inputType="textMultiLine"
             android:maxLength="250"
             android:gravity="start|top"
@@ -148,12 +158,26 @@
         android:textSize="14sp"
         android:maxLines="2"/>
 
-    <com.google.android.gms.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mapView"
+     <RelativeLayout
+        android:id="@+id/map_layout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:clickable="false" />
+        android:layout_height="200dp">
+
+         <com.google.android.gms.maps.MapView
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/mapView"
+             android:layout_width="match_parent"
+             android:layout_height="200dp"
+             android:clickable="false" />
+
+        <ImageView
+            android:id="@+id/transparent_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/temp_transparent" />
+
+    </RelativeLayout>
+
 
     <Button android:id="@+id/create_invite"
             android:layout_width="wrap_content"
@@ -171,4 +195,4 @@
 
 </LinearLayout>
 
-</com.whosup.android.whosup.utils.ObservableScrollView>
+</ScrollView>

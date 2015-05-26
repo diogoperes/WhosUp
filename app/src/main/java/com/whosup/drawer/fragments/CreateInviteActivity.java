@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -115,14 +119,14 @@ public class CreateInviteActivity extends Fragment {
         // Inflate the layout for this fragment
         final View rootview = inflater.inflate(R.layout.fragment_create_invite, container,
                 false);
-        final ObservableScrollView sv = (ObservableScrollView) rootview.findViewById(R.id.scrollView_create_invite);
+        /*final ObservableScrollView sv = (ObservableScrollView) rootview.findViewById(R.id.scrollView_create_invite);
         sv.setScrollViewListener(new ScrollViewListener() {
             @Override
             public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
                 sv.setVisibility(View.GONE);
                 sv.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
 
         spinnerCategory = (Spinner) rootview.findViewById(R.id.spinnerCategory);
         spinnerSubCategory = (Spinner) rootview.findViewById(R.id.spinnerSubCategory);
@@ -169,7 +173,7 @@ public class CreateInviteActivity extends Fragment {
 
         editTextDescription = (EditText) rootview.findViewById(R.id.description);
         editTextDescription.setMovementMethod(new ScrollingMovementMethod());
-        editTextDescription.setOnTouchListener(touchListener);
+        //editTextDescription.setOnTouchListener(touchListener);
         mPickPlace = (Button) rootview.findViewById(R.id.pick_place);
         mPickPlace.setOnClickListener(new PickPlaceOnClickListener());
         placeDescription = (TextView) rootview.findViewById(R.id.place_description);
@@ -177,6 +181,11 @@ public class CreateInviteActivity extends Fragment {
         mCreateInviteButton.setOnClickListener(new CreateInviteOnClickListener());
         meetDay=(DateDisplayPicker)rootview.findViewById(R.id.clientEditCreate_MeetDayPicker);
         meetTime=(TimeDisplayPicker)rootview.findViewById(R.id.clientEditCreate_MeetTimePicker);
+
+        //Making map scrollable
+        ImageView transparentImageView = (ImageView) rootview.findViewById(R.id.transparent_image);
+        transparentImageView.setOnTouchListener(touchListener);
+
         // DEFINING MAPVIEW
         mMapView = (MapView) rootview.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
