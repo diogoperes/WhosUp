@@ -131,13 +131,19 @@ public class ViewInviteActivity extends Activity {
         protected String doInBackground(String... args) {
 
             // Check for success tag
+            Intent i = getIntent();
+            String idInviteStr = i.getStringExtra("invite_id");
+            String hostUsernameStr = i.getStringExtra("invite_username");
+            String invitedUsernameStr = SPreferences.getInstance().getLoginUsername(ViewInviteActivity.this);
+
 
             Log.v("Attend Invite", "Attend Invite");
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
-                //params.add(new BasicNameValuePair("birthday",birthdayStr));
-
+                params.add(new BasicNameValuePair("idInvite",idInviteStr));
+                params.add(new BasicNameValuePair("hostUsername",hostUsernameStr));
+                params.add(new BasicNameValuePair("invitedUsername",invitedUsernameStr));
 
 
 
@@ -147,15 +153,15 @@ public class ViewInviteActivity extends Activity {
                         CREATE_INVITE_URL, "POST", params);
 
                 // check your log for json response
-                Log.d("Creating Invite attempt", json.toString());
+                Log.d("Sending request", json.toString());
 
                 // json success tag
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
-                    Log.d("Invite Created!", json.toString());
+                    Log.d("Request Sent", json.toString());
                     return json.getString(TAG_MESSAGE);
                 }else{
-                    Log.d("Invite Failure!", json.getString(TAG_MESSAGE));
+                    Log.d("Request Failed", json.getString(TAG_MESSAGE));
 
                     return json.getString(TAG_MESSAGE);
 

@@ -42,18 +42,18 @@
     <!-- navigation drawer item labels  -->
     <string name="nav_item_create_invite">Create Invite</string>
     <string name="nav_item_friends">My Profile</string>
-    <string name="nav_item_notifications">Messages</string>
+    <string name="nav_item_my_invites">My Invites</string>
 
     <string-array name="nav_drawer_labels">
-        <item>@string/create_invite</item>
+        <item>@string/nav_item_create_invite</item>
         <item>@string/nav_item_friends</item>
-        <item>@string/nav_item_notifications</item>
+        <item>@string/nav_item_my_invites</item>
     </string-array>
 
     <!-- NAV DRAWER ITEMS TITLE-->
     <string name="create_invite">Create Invite</string>
     <string name="view_profile">My Profile</string>
-    <string name="title_messages">Messages</string>
+    <string name="my_invites">My Invites</string>
 
     <!-- CREATE INVITE STRINGS -->
     <string name="restaurant">Restaurant</string>
@@ -97,6 +97,7 @@
     <string name="description">Description</string>
     <string name="attend">ATTEND</string>
     <string name="place">Place: </string>
+
 
     <!-- LOADING DIALOGS MESSAGES -->
 

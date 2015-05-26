@@ -19,11 +19,13 @@ public class Invite {
     private String longitude;
     private String placeID;
     private String address;
+    private String isOpen;
     private double distanceFromMe;
 
 
+
     public Invite(String id, String username, String firstName, String lastName, String gender, String birthday, String postDay, String postHour, String meetDay, String meetHour, String category
-            , String subcategory, String description, String latitude, String longitude, String placeID, String address) {
+            , String subcategory, String description, String latitude, String longitude, String placeID, String address, String isOpen) {
         super();
         this.id = id;
         this.username = username;
@@ -42,6 +44,7 @@ public class Invite {
         this.longitude = longitude;
         this.placeID = placeID;
         this.address = address;
+        this.isOpen=isOpen;
 
 
 
@@ -124,6 +127,7 @@ public class Invite {
         this.distanceFromMe = distanceFromMe;
     }
 
-
-
+    public String getIsOpen() {
+        return isOpen;
+    }
 }

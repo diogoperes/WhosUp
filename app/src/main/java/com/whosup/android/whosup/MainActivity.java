@@ -5,12 +5,10 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -39,7 +37,7 @@ import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.Utility;
 import com.whosup.drawer.FragmentDrawer;
 import com.whosup.drawer.fragments.CreateInviteActivity;
-import com.whosup.drawer.fragments.Messages;
+import com.whosup.drawer.fragments.MyInvitesFragment;
 import com.whosup.drawer.fragments.ViewProfileFragment;
 import com.whosup.listview.Invite;
 import com.whosup.listview.InviteAdapter;
@@ -289,8 +287,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.view_profile);
                 break;
             case 2:
-                fragment = new Messages();
-                title = getString(R.string.title_messages);
+                fragment = new MyInvitesFragment();
+                title = getString(R.string.my_invites);
                 break;
             default:
                 break;
@@ -397,8 +395,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         String longitude = c.getString("longitude");
                         String placeID = c.getString("placeID");
                         String address = c.getString("address");
+                        String isOpen = c.getString("isOpen");
                         inviteList.add(new Invite(id, username, firstName, lastName, gender, birthday, postDay, postHour, meetDay, meetHour, category, subcategory, description, latitude,
-                                longitude, placeID, address));
+                                longitude, placeID, address, isOpen));
                     }
                 } else {
                     Log.d("Invites: ", "null");
