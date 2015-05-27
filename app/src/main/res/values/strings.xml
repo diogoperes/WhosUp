@@ -97,6 +97,11 @@
     <string name="description">Description</string>
     <string name="attend">ATTEND</string>
     <string name="place">Place: </string>
+    <string name="status">Status:</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
+    <string name="confirmed">Confirmed:</string>
+    <string name="pending">Pending:</string>
 
 
     <!-- LOADING DIALOGS MESSAGES -->

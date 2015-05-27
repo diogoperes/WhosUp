@@ -203,4 +203,15 @@ public class Utility {
         builder.create().show();
     }
 
+
+    public static int getNumberCountStatus(Invite invite, String key){
+        int number = 0;
+        for (InviteAttend ia : invite.getInviteAttends()){
+            if(ia.getState().equals(key)){
+                number++;
+            }
+        }
+        return number;
+    }
+
 }

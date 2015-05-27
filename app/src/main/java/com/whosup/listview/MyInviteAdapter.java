@@ -1,6 +1,7 @@
 package com.whosup.listview;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.utils.Category;
 import com.whosup.android.whosup.utils.Data;
+import com.whosup.android.whosup.utils.InviteAttend;
 import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.Utility;
 
@@ -67,7 +69,9 @@ public class MyInviteAdapter extends BaseAdapter {
             holder.meetDay = (TextView) convertView.findViewById(R.id.meetDay);
             holder.meetHour = (TextView) convertView.findViewById(R.id.meetHour);
             holder.imgCategory = (ImageView) convertView.findViewById(R.id.imgCategory);
-
+            holder.status = (TextView) convertView.findViewById(R.id.status);
+            holder.pending = (TextView) convertView.findViewById(R.id.pending);
+            holder.confirmed = (TextView) convertView.findViewById(R.id.confirmed);
 
             convertView.setTag(holder);
         } else {
@@ -81,22 +85,16 @@ public class MyInviteAdapter extends BaseAdapter {
         holder.meetDay.setText(Utility.arrangeDate(invite.getMeetDay()));
         holder.meetHour.setText(Utility.arrangeHour(invite.getMeetHour()));
 
-        /*
-        //today date
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = df.format(c.getTime());
-        Date currentDate = null;
-        //birthdate of the host formated to date
-        Date hostBirthdateFormated = null;
-        String hostBirthdate = invite.getBirthday();
-        try {
-            currentDate = df.parse(formattedDate);
-            hostBirthdateFormated = df.parse(hostBirthdate);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(invite.getIsOpen().equals("1")){
+            holder.status.setText(R.string.open);
+            holder.status.setTextColor(Color.rgb(0, 255, 0));
+        }else{
+            holder.status.setText(R.string.closed);
+            holder.status.setTextColor(Color.rgb(255, 0, 0));
         }
-        */
+
+        holder.pending.setText(Utility.getNumberCountStatus(invite, "pending")+"");
+        holder.confirmed.setText(Utility.getNumberCountStatus(invite, "confirmed")+"");
 
 
 
@@ -129,6 +127,9 @@ public class MyInviteAdapter extends BaseAdapter {
         TextView meetDay;
         TextView meetHour;
         ImageView imgCategory;
+        TextView status;
+        TextView pending;
+        TextView confirmed;
     }
 
     public Drawable getImage(Invite invite){

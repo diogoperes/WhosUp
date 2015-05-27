@@ -2,6 +2,7 @@ package com.whosup.drawer.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,11 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.whosup.android.whosup.MyInviteInformationActivity;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.InviteAttend;
@@ -21,7 +22,6 @@ import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.User;
 import com.whosup.listview.Invite;
-import com.whosup.listview.InviteAdapter;
 import com.whosup.listview.MyInviteAdapter;
 
 
@@ -33,7 +33,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 public class MyInvitesFragment extends Fragment {
     private ListView inviteListView;
@@ -60,12 +59,23 @@ public class MyInvitesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootview = inflater.inflate(R.layout.fragment_my_invites, null);
+        final View rootview = inflater.inflate(R.layout.fragment_my_invites, null);
         /*FrameLayout fl = (FrameLayout) rootview.findViewById(R.id.my_invites_fragment);
         fl.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         */
         inviteList = new ArrayList<>();
         inviteListView = (ListView) rootview.findViewById(R.id.list_invites);
+        inviteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(rootview.getContext(), MyInviteInformationActivity.class);
+                i.putExtra("invite", inviteList.get(position));
+                startActivity(i);
+
+            }
+        });
+
+
 
         cd= new ConnectionDetector(getActivity());
         if(!cd.isConnectingToInternet()) {

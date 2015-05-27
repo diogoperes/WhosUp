@@ -59,11 +59,78 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/inviteSubcategory"
         android:layout_marginTop="1dip"
+        android:maxLines="1"
         android:layout_toRightOf="@+id/imgCategory"
         android:layout_toEndOf="@+id/imgCategory"
         android:text="location"
         android:textSize="@dimen/rating" />
 
+    <TextView
+        android:id="@+id/pendingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inviteLocation"
+        android:layout_marginTop="1dip"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/imgCategory"
+        android:layout_toEndOf="@+id/imgCategory"
+        android:text="@string/pending"
+        android:textSize="@dimen/rating" />
+
+    <TextView
+        android:id="@+id/pending"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inviteLocation"
+        android:layout_marginTop="1dip"
+        android:maxLines="1"
+        android:layout_toRightOf="@+id/pendingTextView"
+        android:layout_alignBaseline="@+id/pendingTextView"
+        android:text="0"
+        android:textSize="@dimen/rating" />
+
+    <TextView
+        android:id="@+id/confirmedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pendingTextView"
+        android:layout_marginTop="1dip"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/imgCategory"
+        android:layout_toEndOf="@+id/imgCategory"
+        android:text="@string/confirmed"
+        android:textSize="@dimen/rating" />
+
+    <TextView
+        android:id="@+id/confirmed"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inviteLocation"
+        android:layout_marginTop="1dip"
+        android:maxLines="1"
+        android:layout_toRightOf="@+id/confirmedTextView"
+        android:layout_alignBaseline="@+id/confirmedTextView"
+        android:text="0"
+        android:textSize="@dimen/rating" />
+
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/status"
+        android:layout_alignBaseline="@+id/status"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="5dp"
+        android:text="@string/status" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="Open" />
 
     <!--&lt;!&ndash; Genre &ndash;&gt;-->
     <!--<TextView-->

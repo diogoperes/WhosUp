@@ -22,5 +22,27 @@ public class InviteAttend {
 
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public String getIdInvite() {
+        return idInvite;
+    }
+
+    public String getHostUsername() {
+        return hostUsername;
+    }
+
+    public String getInvitedUsername() {
+        return invitedUsername;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public User getUserProfile() {
+        return userProfile;
+    }
 }

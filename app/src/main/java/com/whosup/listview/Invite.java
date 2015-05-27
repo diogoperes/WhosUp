@@ -2,9 +2,10 @@ package com.whosup.listview;
 
 import com.whosup.android.whosup.utils.InviteAttend;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Invite {
+public class Invite implements Serializable {
 
     private String id;
     private String username;

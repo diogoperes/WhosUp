@@ -88,6 +88,11 @@
             android:name=".ViewMapActivity"
             android:label="View map">
         </activity>
+        <activity
+            android:name=".MyInviteInformationActivity"
+            android:label="My Invite Information">
+        </activity>
+
 
         <!-- SEARCHABLE ACTIVITY FOR INVITES SEARCH -->
         <activity
