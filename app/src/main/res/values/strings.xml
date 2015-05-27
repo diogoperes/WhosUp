@@ -93,11 +93,24 @@
     <string name="action_viewmap">View map</string>
     <string name="action_logout">Logout</string>
     <string name="action_exit">Exit</string>
+
+    <!-- UPDATE PROFILE LABELS -->
+    <string name="change_profile_avatar">Profile avatar:</string>
+    <string name="change_custom_phrase">Custom phrase:</string>
+    <string name="change_city">City:</string>
+    <string name="change_country">Country:</string>
+    <string name="change_password">Password:</string>
+    <string name="change_password_old">Old password…</string>
+    <string name="change_password_new">New password…</string>
+    <string name="change_about_me">About me:</string>
+    <string name="upload_image_gallery">Upload from gallery</string>
+
+    <!-- MISCELLANEOUS -->
     <string name="title_activity_view_invite">View Invite</string>
     <string name="description">Description</string>
     <string name="attend">ATTEND</string>
     <string name="place">Place: </string>
-
+    <string name="update_profile">Update Profile</string>
 
     <!-- LOADING DIALOGS MESSAGES -->
 

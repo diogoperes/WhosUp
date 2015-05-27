@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/scrollView_create_invite"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" >
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:clickable="true">
@@ -150,4 +157,17 @@
         android:id="@+id/aboutMeText"
         android:layout_below="@+id/textView6" />
 
+    <Button android:id="@+id/change_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:minHeight="45dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/create_invite_text"
+        android:background="@drawable/edit_text_style"
+        android:text="@string/update_profile"
+        android:layout_below="@+id/aboutMeText" />
+
 </RelativeLayout>
+</ScrollView>
