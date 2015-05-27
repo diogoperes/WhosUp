@@ -3,15 +3,14 @@
     package="com.whosup.android.whosup" >
 
     <!-- Allow to connect with internet and to know the current network state -->
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
 
     <!-- Maps API needs OpenGL ES 2.0. -->
     <uses-feature
@@ -27,10 +26,10 @@
         <!-- GOOGLE API AUTOCOMPLETE KEY -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD4WCjKy_vxt2Qgml0KnLg6lO37HOwtaPs"/>
+            android:value="AIzaSyD4WCjKy_vxt2Qgml0KnLg6lO37HOwtaPs" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
 
         <!-- Splash screen -->
         <activity
@@ -40,6 +39,7 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -86,7 +86,11 @@
         </activity>
         <activity
             android:name=".ViewMapActivity"
-            android:label="View map">
+            android:label="View map" >
+        </activity>
+        <activity
+            android:name=".UpdateMyProfileActivity"
+            android:label="Update profile" >
         </activity>
         <activity
             android:name=".MyInviteInformationActivity"
@@ -103,8 +107,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.whosup.android.whosup.MainActivity" />
         </activity>
-
-
     </application>
 
 </manifest>

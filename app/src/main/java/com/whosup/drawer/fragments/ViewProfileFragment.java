@@ -1,15 +1,18 @@
 package com.whosup.drawer.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whosup.android.whosup.R;
+import com.whosup.android.whosup.UpdateMyProfileActivity;
 import com.whosup.android.whosup.utils.SPreferences;
 
 import java.util.Calendar;
@@ -41,6 +44,7 @@ public class ViewProfileFragment extends Fragment {
         TextView ageTextView = (TextView) rootview.findViewById(R.id.ageText);
         TextView cityCountryTextView = (TextView) rootview.findViewById(R.id.cityCountryText);
         TextView aboutMeText = (TextView) rootview.findViewById(R.id.aboutMeText);
+        Button changeProfile = (Button) rootview.findViewById(R.id.change_profile);
 
         usernameTextView.setText(SPreferences.getInstance().getLoginUsername(rootview.getContext()));
         emailTextView.setText(SPreferences.getInstance().getLoginEmail(rootview.getContext()));
@@ -50,6 +54,7 @@ public class ViewProfileFragment extends Fragment {
         cityCountryTextView.setText(SPreferences.getInstance().getLoginCity(rootview.getContext()) +
                 ", " + SPreferences.getInstance().getLoginCountry(rootview.getContext()));
         aboutMeText.setText(SPreferences.getInstance().getLoginAboutMe(rootview.getContext()));
+        changeProfile.setOnClickListener(new ChangeProfileOnClickListener());
 
         String birthdateFromDB = SPreferences.getInstance().getLoginBirthday(rootview.getContext());
         String[] divider = birthdateFromDB.split("-");
@@ -94,5 +99,13 @@ public class ViewProfileFragment extends Fragment {
     public void onPause() {
         getActivity().setTitle(R.string.app_name);
         super.onPause();
+    }
+
+    private class ChangeProfileOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(getActivity(), UpdateMyProfileActivity.class);
+            startActivity(i);
+        }
     }
 }
