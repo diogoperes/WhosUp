@@ -16,32 +16,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"/>
 
-    <ImageView
-        android:id="@+id/hostGender"
-        android:contentDescription="hostGender"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@mipmap/ic_male_symbol"
-        android:layout_alignBottom="@+id/hostAge"
-        android:layout_toLeftOf="@+id/hostAge"
-        android:layout_marginRight="2dp"
-        android:layout_marginEnd="2dp"/>
-    <!-- android:layout_below="@id/inviteFrom"
-    android:layout_alignBaseline="@+id/inviteFrom"-->
-
-    <TextView
-        android:id="@+id/hostAge"
-        android:layout_alignBaseline="@+id/inviteFrom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="20"
-        android:textColor="@color/year"
-        android:textSize="@dimen/year" />
-    <!-- android:layout_alignParentTop="true"
-    android:layout_below="@id/inviteFrom"
-
-        android:layout_alignParentEnd="true"-->
 
     <TextView
         android:id="@+id/meetDay"
@@ -66,16 +40,6 @@
     <!--
         android:layout_alignParentEnd="true" -->
 
-    <TextView
-        android:id="@+id/inviteFrom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="host name"
-        android:layout_alignTop="@+id/imgCategory"
-        android:layout_toRightOf="@+id/imgCategory"
-        android:layout_toEndOf="@+id/imgCategory"
-        android:textSize="@dimen/title"
-        android:textStyle="bold" />
 
 
     <TextView
@@ -113,16 +77,6 @@
     <!--android:textColor="@color/genre"-->
     <!--android:textSize="@dimen/genre" />-->
 
-    <!-- Release Year -->
-    <TextView
-        android:id="@+id/inviteDistance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/year"
-        android:text="4km"
-        android:textSize="@dimen/year" />
+
 
 </RelativeLayout>

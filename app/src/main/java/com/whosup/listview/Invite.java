@@ -1,5 +1,9 @@
 package com.whosup.listview;
 
+import com.whosup.android.whosup.utils.InviteAttend;
+
+import java.util.ArrayList;
+
 public class Invite {
 
     private String id;
@@ -21,6 +25,7 @@ public class Invite {
     private String address;
     private String isOpen;
     private double distanceFromMe;
+    private ArrayList<InviteAttend> inviteAttends = new ArrayList<>();
 
 
 
@@ -129,5 +134,13 @@ public class Invite {
 
     public String getIsOpen() {
         return isOpen;
+    }
+
+    public ArrayList<InviteAttend> getInviteAttends() {
+        return inviteAttends;
+    }
+
+    public void setInviteAttends(ArrayList<InviteAttend> inviteAttends) {
+        this.inviteAttends = inviteAttends;
     }
 }

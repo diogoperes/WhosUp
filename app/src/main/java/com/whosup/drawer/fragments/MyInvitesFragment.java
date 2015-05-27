@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.utils.ConnectionDetector;
+import com.whosup.android.whosup.utils.InviteAttend;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
+import com.whosup.android.whosup.utils.User;
 import com.whosup.listview.Invite;
 import com.whosup.listview.InviteAdapter;
 import com.whosup.listview.MyInviteAdapter;
@@ -42,6 +44,7 @@ public class MyInvitesFragment extends Fragment {
     JSONParser jsonParser = new JSONParser();
     private static ArrayList<Invite> inviteList;
     JSONArray invitesList = null;
+
 
 
     public MyInvitesFragment() {
@@ -130,7 +133,6 @@ public class MyInvitesFragment extends Fragment {
                     params);
 
 
-
             // Check your log cat for JSON reponse
             //Log.d("Invites JSON: ", "> " + json.toString());
             inviteList.clear();
@@ -141,8 +143,6 @@ public class MyInvitesFragment extends Fragment {
                     // looping through All albums
                     for (int i = 0; i < invitesList.length(); i++) {
                         JSONObject c = invitesList.getJSONObject(i);
-
-
                         // Storing each json item values in variable
                         String id = c.getString("id");
                         String username = c.getString("username");
@@ -162,9 +162,47 @@ public class MyInvitesFragment extends Fragment {
                         String placeID = c.getString("placeID");
                         String address = c.getString("address");
                         String isOpen = c.getString("isOpen");
-                        inviteList.add(new Invite(id, username, firstName, lastName, gender, birthday, postDay, postHour, meetDay, meetHour, category, subcategory, description, latitude,
-                                longitude, placeID, address, isOpen));
+
+                        Invite newInvite = new Invite(id, username, firstName, lastName, gender, birthday, postDay, postHour, meetDay, meetHour, category, subcategory, description, latitude,
+                                longitude, placeID, address, isOpen);
+                        inviteList.add(newInvite);
+
+
+                        JSONArray inviteAttendees = c.getJSONArray("InviteAttendees");
+                        ArrayList<InviteAttend> inviteAttends = new ArrayList<>();
+                        if (inviteAttendees != null) {
+                            for (int j = 0; j < inviteAttendees.length(); j++) {
+                                JSONObject ia = inviteAttendees.getJSONObject(j);
+                                String idAttend = ia.getString("id");
+                                String idInviteAttend = ia.getString("idInvite");
+                                String hostUsernameAttend = ia.getString("hostUsername");
+                                String invitedUsernameAttend = ia.getString("invitedUsername");
+                                String stateAttend = ia.getString("state");
+
+                                String usernameAttend = ia.getString("username");
+                                String firstNameAttend = ia.getString("firstName");
+                                String lastNameAttend = ia.getString("lastName");
+                                String genderAttend = ia.getString("gender");
+                                String birthdayAttend = ia.getString("birthday");
+                                String cityAttend = ia.getString("city");
+                                String countryAttend = ia.getString("country");
+                                String photoLinkAttend = ia.getString("photoLink");
+                                String aboutMeAttend = ia.getString("aboutMe");
+                                String customPhraseAttend = ia.getString("customPhrase");
+                                User userAttend = new User(usernameAttend, firstNameAttend, lastNameAttend, genderAttend,
+                                        birthdayAttend, cityAttend, countryAttend, photoLinkAttend, aboutMeAttend, customPhraseAttend);
+
+                                InviteAttend inviteAttend = new InviteAttend(idAttend, idInviteAttend, hostUsernameAttend, invitedUsernameAttend,
+                                        stateAttend, userAttend);
+
+                                inviteAttends.add(inviteAttend);
+                                System.out.println("ADDED ATTEND");
+
+                            }
+                        }
+                        newInvite.setInviteAttends(inviteAttends);
                     }
+                    System.out.println("INVITE LIST: " + inviteList);
                 } else {
                     Log.d("Invites: ", "null");
                 }
@@ -193,9 +231,8 @@ public class MyInvitesFragment extends Fragment {
              * */
             try{
 
-                System.out.println("INVITE LIST FIRST: " + inviteList.get(0).getDistanceFromMe());
+                //System.out.println("INVITE LIST FIRST: " + inviteList.get(0).getDistanceFromMe());
                 MyInviteAdapter adapter = new MyInviteAdapter(getActivity(), inviteList);
-
                 inviteListView.setAdapter(adapter);
             }catch (Exception ex){
                 Toast.makeText(getActivity(), "Can't load invites, try refreshing", Toast.LENGTH_SHORT).show();
@@ -214,6 +251,8 @@ public class MyInvitesFragment extends Fragment {
             Toast.makeText(getActivity(), "Can't retrieve invites, try refreshing", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 
 }

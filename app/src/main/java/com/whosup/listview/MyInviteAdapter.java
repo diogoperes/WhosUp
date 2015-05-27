@@ -62,16 +62,11 @@ public class MyInviteAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.list_row_my_invites, parent, false);
-
-            holder.name = (TextView) convertView.findViewById(R.id.inviteFrom);
             holder.subcategory = (TextView) convertView.findViewById(R.id.inviteSubcategory);
-            holder.distance = (TextView) convertView.findViewById(R.id.inviteDistance);
             holder.address = (TextView) convertView.findViewById(R.id.inviteLocation);
-            holder.hostAge = (TextView) convertView.findViewById(R.id.hostAge);
             holder.meetDay = (TextView) convertView.findViewById(R.id.meetDay);
             holder.meetHour = (TextView) convertView.findViewById(R.id.meetHour);
             holder.imgCategory = (ImageView) convertView.findViewById(R.id.imgCategory);
-            holder.imgHostGender = (ImageView) convertView.findViewById(R.id.hostGender);
 
 
             convertView.setTag(holder);
@@ -80,9 +75,7 @@ public class MyInviteAdapter extends BaseAdapter {
         }
 
         Invite invite = inviteList.get(position);
-        holder.name.setText(invite.getFirstName()+ " "+ invite.getLastName());
         holder.subcategory.setText(invite.getSubcategory());
-        holder.distance.setText(invite.getDistanceFromMe() + " Km");
         holder.address.setText(invite.getAddress());
         holder.imgCategory.setImageDrawable(getImage(invite));
         holder.meetDay.setText(Utility.arrangeDate(invite.getMeetDay()));
@@ -105,15 +98,7 @@ public class MyInviteAdapter extends BaseAdapter {
         }
         */
 
-        holder.hostAge.setText(Utility.getDiffYears(invite.getBirthday()) + "Y");
 
-        Drawable genderSymbol = null;
-        if(invite.getGender().equals("Female")){
-            genderSymbol = context.getResources().getDrawable(R.mipmap.ic_female_symbol);
-        }else{
-            genderSymbol = context.getResources().getDrawable(R.mipmap.ic_male_symbol);
-        }
-        holder.imgHostGender.setImageDrawable(genderSymbol);
 
         return convertView;
     }
@@ -139,15 +124,11 @@ public class MyInviteAdapter extends BaseAdapter {
     */
 
     private static class ViewHolder {
-        TextView name;
         TextView subcategory;
-        TextView distance;
         TextView address;
-        TextView hostAge;
         TextView meetDay;
         TextView meetHour;
         ImageView imgCategory;
-        ImageView imgHostGender;
     }
 
     public Drawable getImage(Invite invite){

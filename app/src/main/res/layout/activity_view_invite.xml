@@ -140,6 +140,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/place"
+        android:layout_marginTop="-15dp"
         android:id="@+id/placeTextView"
         android:layout_below="@+id/hostMeetTime"
         android:layout_alignLeft="@+id/hostMeetDayText"

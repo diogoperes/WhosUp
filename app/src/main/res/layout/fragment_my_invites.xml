@@ -4,7 +4,8 @@
               android:id="@+id/my_invites_fragment"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:background="#ffffff">
+              android:background="#ffffff"
+              android:clickable="true">
 
 
     <ListView
