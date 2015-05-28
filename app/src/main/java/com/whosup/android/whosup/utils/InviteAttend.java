@@ -47,4 +47,8 @@ public class InviteAttend implements Serializable{
     public User getUserProfile() {
         return userProfile;
     }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

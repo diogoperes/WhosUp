@@ -4,12 +4,27 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/change_status"
-    android:layout_centerHorizontal="true"
-    android:text="status"/>
 
+
+
+
+
+    <ListView
+        android:id="@+id/attends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/list_divider"
+        android:layout_above="@+id/change_status"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </ListView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/change_status"
+        android:text="status"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
