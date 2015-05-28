@@ -6,8 +6,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,21 +31,25 @@ import android.widget.Toast;
 import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
+import com.whosup.android.whosup.utils.User;
 import com.whosup.android.whosup.utils.Utility;
+import com.whosup.drawer.fragments.ViewProfileFragment;
 import com.whosup.listview.Invite;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import com.whosup.android.whosup.utils.InviteAttend;
 import com.whosup.listview.MyInviteAdapter;
 
-public class MyInviteInformationActivity extends Activity{
+public class MyInviteInformationActivity extends AppCompatActivity{
 
     private Button change_status_button;
+    MyInviteInformationActivity thisActivity;
     private boolean changing_status = false;
     ConnectionDetector cd;
     Invite invite;
@@ -55,11 +66,14 @@ public class MyInviteInformationActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        thisActivity = MyInviteInformationActivity.this;
         setContentView(R.layout.activity_my_invite_information);
         change_status_button = (Button) findViewById(R.id.change_status);
         Intent i = getIntent();
         invite = (Invite) i.getSerializableExtra("invite");
         inviteAttendeesListView = (ListView) findViewById(R.id.attends);
+        inviteAttendeesListView.setClickable(true);
+        inviteAttendeesListView.setOnItemClickListener(new inviteAttendeesListViewOnItemClickListener());
         if(invite.getInviteAttends()!=null){
             try{
 
@@ -85,6 +99,9 @@ public class MyInviteInformationActivity extends Activity{
 
     }
 
+
+
+
     private class ChangeStatusOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -106,10 +123,13 @@ public class MyInviteInformationActivity extends Activity{
     public class ChangeAttendeeStatus extends AsyncTask<String, String, String> {
         private String statusTAG;
         private int position;
+        private Button confirm, reject;
 
-        public ChangeAttendeeStatus(int position, String statusTAG){
+        public ChangeAttendeeStatus(int position, String statusTAG, Button confirm, Button reject){
             this.statusTAG = statusTAG;
             this.position = position;
+            this.confirm = confirm;
+            this.reject = reject;
         }
 
 
@@ -191,8 +211,20 @@ public class MyInviteInformationActivity extends Activity{
                 Toast.makeText(MyInviteInformationActivity.this, file_url, Toast.LENGTH_LONG).show();
                 if (statusTAG.equals("confirm")){
                     invite.getInviteAttends().get(position).setState("confirmed");
+                    reject.setText("REJECT");
+                    reject.setBackgroundResource(R.drawable.edit_text_style);
+                    GradientDrawable backgroundGradientReject = (GradientDrawable) reject.getBackground();
+                    backgroundGradientReject.setStroke(3, Color.parseColor("#ffc51818"));
+                    confirm.setBackgroundColor(Color.parseColor("#ff3ac726"));
+                    confirm.setText("CONFIRMED");
                 }else{
                     invite.getInviteAttends().get(position).setState("rejected");
+                    confirm.setText("CONFIRM");
+                    confirm.setBackgroundResource(R.drawable.edit_text_style);
+                    GradientDrawable backgroundGradientConfirm = (GradientDrawable) confirm.getBackground();
+                    backgroundGradientConfirm.setStroke(3, Color.parseColor("#ff3ac726"));
+                    reject.setBackgroundColor(Color.parseColor("#ffc51818"));
+                    reject.setText("REJECTED");
                 }
             }else{
                 Toast.makeText(MyInviteInformationActivity.this, R.string.noConnection, Toast.LENGTH_LONG).show();
@@ -334,24 +366,48 @@ public class MyInviteInformationActivity extends Activity{
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
+            final ViewHolder holder;
             if (convertView == null || convertView.getTag() == null) {
 
                 holder = new ViewHolder();
                 convertView = mInflater.inflate(R.layout.list_row_invite_attend, parent, false);
-                holder.name = (TextView) convertView.findViewById(R.id.attendeeName);
+                holder.firstName = (TextView) convertView.findViewById(R.id.attendeeFirstName);
+                holder.lastName = (TextView) convertView.findViewById(R.id.attendeeLastName);
                 holder.confirm = (Button) convertView.findViewById(R.id.confirmButton);
                 holder.reject = (Button) convertView.findViewById(R.id.rejectButton);
+
+
+                GradientDrawable backgroundGradientConfirm = (GradientDrawable) holder.confirm.getBackground();
+                backgroundGradientConfirm.setStroke(3, Color.parseColor("#ff3ac726"));
+                GradientDrawable backgroundGradientReject = (GradientDrawable) holder.reject.getBackground();
+                backgroundGradientReject.setStroke(3, Color.parseColor("#ffc51818"));
+                if(invite.getInviteAttends().get(position).getState().equals("confirmed")) {
+                    holder.confirm.setBackgroundColor(Color.parseColor("#ff3ac726"));
+                    holder.confirm.setText("CONFIRMED");
+
+
+                }else if(invite.getInviteAttends().get(position).getState().equals("rejected")){
+                    holder.reject.setBackgroundColor(Color.parseColor("#ffc51818"));
+                    holder.reject.setText("REJECTED");
+                }
+
+
+
+
                 holder.confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new ChangeAttendeeStatus(position, "confirm").execute();
+                    if(!invite.getInviteAttends().get(position).getState().equals("confirmed")) {
+                        new ChangeAttendeeStatus(position, "confirm", holder.confirm, holder.reject).execute();
+                    }
                     }
                 });
                 holder.reject.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new ChangeAttendeeStatus(position, "reject").execute();
+                    if(!invite.getInviteAttends().get(position).getState().equals("rejected")) {
+                        new ChangeAttendeeStatus(position, "reject", holder.confirm, holder.reject).execute();
+                    }
                     }
                 });
 
@@ -363,8 +419,8 @@ public class MyInviteInformationActivity extends Activity{
             }
 
             InviteAttend attendee = attendeesList.get(position);
-            holder.name.setText(attendee.getUserProfile().getFirstName() + " " + attendee.getUserProfile().getLastName());
-
+            holder.firstName.setText(attendee.getUserProfile().getFirstName());
+            holder.lastName.setText(attendee.getUserProfile().getLastName());
 
 
 
@@ -372,7 +428,8 @@ public class MyInviteInformationActivity extends Activity{
         }
 
         private class ViewHolder {
-            TextView name;
+            TextView firstName;
+            TextView lastName;
             Button confirm;
             Button reject;
 
@@ -380,4 +437,38 @@ public class MyInviteInformationActivity extends Activity{
 
     }
 
+    private class inviteAttendeesListViewOnItemClickListener implements AdapterView.OnItemClickListener {
+        Fragment fragment = null;
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            System.out.println("Criar User Profile");
+            User myUser = new User(false,
+                    invite.getInviteAttends().get(position).getUserProfile().getUsername(),
+                    invite.getInviteAttends().get(position).getUserProfile().getFirstName(),
+                    invite.getInviteAttends().get(position).getUserProfile().getLastName(),
+                    invite.getInviteAttends().get(position).getUserProfile().getGender(),
+                    invite.getInviteAttends().get(position).getUserProfile().getBirthday(),
+                    invite.getInviteAttends().get(position).getUserProfile().getCity(),
+                    invite.getInviteAttends().get(position).getUserProfile().getCountry(),
+                    invite.getInviteAttends().get(position).getUserProfile().getPhotoLink(),
+                    invite.getInviteAttends().get(position).getUserProfile().getAboutMe(),
+                    invite.getInviteAttends().get(position).getUserProfile().getCustomPhrase());
+            //i.putExtra("user", myUser);
+
+            Bundle args = new Bundle();
+            args.putSerializable("user", myUser);
+
+            fragment = new ViewProfileFragment();
+            fragment.setArguments(args);
+            if (fragment != null) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.my_profile_fragment, fragment);
+                fragmentTransaction.addToBackStack(null);
+                System.out.println("ADD TO BACKSTACK");
+                fragmentTransaction.commit();
+
+            }
+        }
+    }
 }

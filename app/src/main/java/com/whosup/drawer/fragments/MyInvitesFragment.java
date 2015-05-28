@@ -204,7 +204,7 @@ public class MyInvitesFragment extends Fragment {
                                 String photoLinkAttend = ia.getString("photoLink");
                                 String aboutMeAttend = ia.getString("aboutMe");
                                 String customPhraseAttend = ia.getString("customPhrase");
-                                User userAttend = new User(usernameAttend, firstNameAttend, lastNameAttend, genderAttend,
+                                User userAttend = new User(false,usernameAttend, firstNameAttend, lastNameAttend, genderAttend,
                                         birthdayAttend, cityAttend, countryAttend, photoLinkAttend, aboutMeAttend, customPhraseAttend);
 
                                 InviteAttend inviteAttend = new InviteAttend(idAttend, idInviteAttend, hostUsernameAttend, invitedUsernameAttend,

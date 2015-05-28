@@ -34,6 +34,7 @@ import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.GPSTracker;
 import com.whosup.android.whosup.utils.JSONParser;
 import com.whosup.android.whosup.utils.SPreferences;
+import com.whosup.android.whosup.utils.User;
 import com.whosup.android.whosup.utils.Utility;
 import com.whosup.drawer.FragmentDrawer;
 import com.whosup.drawer.fragments.CreateInviteActivity;
@@ -283,7 +284,29 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.create_invite);
                 break;
             case 1:
+                //Intent i = new Intent(MainActivity.this, ViewProfileFragment.class );
+                User myUser = new User(true,
+                        SPreferences.getInstance().getLoginUsername(MainActivity.this),
+                        SPreferences.getInstance().getLoginFirstName(MainActivity.this),
+                        SPreferences.getInstance().getLoginLastName(MainActivity.this),
+                        SPreferences.getInstance().getLoginGender(MainActivity.this),
+                        SPreferences.getInstance().getLoginBirthday(MainActivity.this),
+                        SPreferences.getInstance().getLoginCity(MainActivity.this),
+                        SPreferences.getInstance().getLoginCountry(MainActivity.this),
+                        SPreferences.getInstance().getLoginPhotoLink(MainActivity.this),
+                        SPreferences.getInstance().getLoginAboutMe(MainActivity.this),
+                        SPreferences.getInstance().getLoginCustomPhrase(MainActivity.this));
+                //i.putExtra("user", myUser);
+
+                Bundle args = new Bundle();
+                args.putSerializable("user", myUser);
+
                 fragment = new ViewProfileFragment();
+                fragment.setArguments(args);
+
+
+
+
                 title = getString(R.string.view_profile);
                 break;
             case 2:

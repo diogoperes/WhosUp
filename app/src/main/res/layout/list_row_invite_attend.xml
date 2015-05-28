@@ -5,32 +5,53 @@
                 android:padding="8dp" >
 
     <TextView
-        android:id="@+id/attendeeName"
+        android:id="@+id/attendeeFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:text="Name"
-        android:layout_centerVertical="true"
+        android:textColor="#ff000000"
+        android:text="First Name"
+        android:layout_marginBottom="3dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/attendeeLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#ff000000"
+        android:text="Last Name"
+        android:layout_below="@id/attendeeFirstName"
+        android:layout_alignLeft="@id/attendeeFirstName"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirm"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
         android:id="@+id/confirmButton"
+        android:focusable="false"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/rejectButton"
-        android:layout_toStartOf="@+id/rejectButton"/>
+        android:layout_toStartOf="@+id/rejectButton"
+        android:background="@drawable/edit_text_style"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/reject"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:focusable="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/rejectButton"/>
+        android:id="@+id/rejectButton"
+        android:background="@drawable/edit_text_style"/>
 
 
 </RelativeLayout>

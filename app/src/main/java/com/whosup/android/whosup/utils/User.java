@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class User implements Serializable{
 
+    private boolean isMyProfile;
     private String username;
     private String firstName;
     private String lastName;
@@ -16,9 +17,10 @@ public class User implements Serializable{
     private String aboutMe;
     private String customPhrase;
 
-    public User(String username, String firstName, String lastName, String gender, String birthday, String city, String country,
+    public User(boolean isMyProfile, String username, String firstName, String lastName, String gender, String birthday, String city, String country,
                   String photoLink, String aboutMe, String customPhrase) {
         super();
+        this.isMyProfile=isMyProfile;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -69,5 +71,9 @@ public class User implements Serializable{
 
     public String getCustomPhrase() {
         return customPhrase;
+    }
+
+    public boolean isMyProfile() {
+        return isMyProfile;
     }
 }

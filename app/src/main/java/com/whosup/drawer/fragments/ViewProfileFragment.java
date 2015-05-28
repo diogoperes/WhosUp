@@ -2,6 +2,7 @@ package com.whosup.drawer.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,12 +15,17 @@ import android.widget.TextView;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.UpdateMyProfileActivity;
 import com.whosup.android.whosup.utils.SPreferences;
+import com.whosup.android.whosup.utils.User;
+import com.whosup.listview.Invite;
 
 import java.util.Calendar;
 
 public class ViewProfileFragment extends Fragment {
 
     private ImageView photoLinkImageView;
+    private User user;
+
+
 
     public ViewProfileFragment() {
         // Required empty public constructor
@@ -35,6 +41,9 @@ public class ViewProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_profile_view, container, false);
+        //Intent i = getActivity().getIntent();
+        user = (User) getArguments().getSerializable("user");
+
 
         TextView usernameTextView = (TextView) rootview.findViewById(R.id.usernameText);
         TextView emailTextView = (TextView) rootview.findViewById(R.id.emailText);
@@ -44,17 +53,37 @@ public class ViewProfileFragment extends Fragment {
         TextView ageTextView = (TextView) rootview.findViewById(R.id.ageText);
         TextView cityCountryTextView = (TextView) rootview.findViewById(R.id.cityCountryText);
         TextView aboutMeText = (TextView) rootview.findViewById(R.id.aboutMeText);
+        ImageView gender = (ImageView) rootview.findViewById(R.id.userGender);
+        Drawable genderSymbol = null;
+        if(user.getGender().equals("Female")){
+            genderSymbol = getResources().getDrawable(R.mipmap.ic_female_symbol);
+        }else{
+            genderSymbol = getResources().getDrawable(R.mipmap.ic_male_symbol);
+        }
+        gender.setImageDrawable(genderSymbol);
+
+
+
         Button changeProfile = (Button) rootview.findViewById(R.id.change_profile);
 
-        usernameTextView.setText(SPreferences.getInstance().getLoginUsername(rootview.getContext()));
-        emailTextView.setText(SPreferences.getInstance().getLoginEmail(rootview.getContext()));
-        customPhraseTextView.setText("'"+SPreferences.getInstance().getLoginCustomPhrase(rootview.getContext())+"'");
-        firstNameTextView.setText(SPreferences.getInstance().getLoginFirstName(rootview.getContext()));
-        lastNameTextView.setText(SPreferences.getInstance().getLoginLastName(rootview.getContext()));
-        cityCountryTextView.setText(SPreferences.getInstance().getLoginCity(rootview.getContext()) +
-                ", " + SPreferences.getInstance().getLoginCountry(rootview.getContext()));
-        aboutMeText.setText(SPreferences.getInstance().getLoginAboutMe(rootview.getContext()));
-        changeProfile.setOnClickListener(new ChangeProfileOnClickListener());
+
+
+        usernameTextView.setText(user.getUsername());
+        if(user.isMyProfile()){
+            emailTextView.setText(SPreferences.getInstance().getLoginEmail(rootview.getContext()));
+        }
+        customPhraseTextView.setText("'"+user.getCustomPhrase()+"'");
+        firstNameTextView.setText(user.getFirstName());
+        lastNameTextView.setText(user.getLastName());
+        cityCountryTextView.setText(user.getCity()+
+                ", " + user.getCountry());
+        aboutMeText.setText(user.getAboutMe());
+
+        if(user.isMyProfile()){
+            System.out.println("IS MY PROFILE, ADD UPDATE PROFILE BUTTON");
+            changeProfile.setOnClickListener(new ChangeProfileOnClickListener());
+        }
+
 
         String birthdateFromDB = SPreferences.getInstance().getLoginBirthday(rootview.getContext());
         String[] divider = birthdateFromDB.split("-");

@@ -119,8 +119,8 @@
     <string name="update_profile">Update Profile</string>
     <string name="close_invite">Close Invite</string>
     <string name="open_invite">Open Invite</string>
-    <string name="confirm">Confirm</string>
-    <string name="reject">Reject</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="reject">REJECT</string>
 
     <!-- LOADING DIALOGS MESSAGES -->
 

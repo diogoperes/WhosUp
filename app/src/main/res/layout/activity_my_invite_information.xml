@@ -13,7 +13,8 @@
         android:id="@+id/attends"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/list_divider"
+        android:divider="#ff95978b"
+        android:dividerHeight="2px"
         android:layout_above="@+id/change_status"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -26,5 +27,11 @@
         android:text="status"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
+
+    <FrameLayout
+        android:background="#ffffff"
+        android:id="@+id/my_profile_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
