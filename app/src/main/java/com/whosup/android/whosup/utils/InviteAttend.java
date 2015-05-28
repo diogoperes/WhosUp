@@ -1,7 +1,9 @@
 package com.whosup.android.whosup.utils;
 
 
-public class InviteAttend {
+import java.io.Serializable;
+
+public class InviteAttend implements Serializable{
 
     private String id;
     private String idInvite;

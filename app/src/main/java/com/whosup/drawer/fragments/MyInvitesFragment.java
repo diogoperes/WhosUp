@@ -37,6 +37,7 @@ import java.util.List;
 public class MyInvitesFragment extends Fragment {
     private ListView inviteListView;
     private ProgressDialog pDialog;
+    private boolean refreshing = false;
     private final String TAG_USERNAME = "username";
     private final String GET_INVITES_URL = "http://whosup.host22.com/get_my_invites.php";
     ConnectionDetector cd;
@@ -77,12 +78,7 @@ public class MyInvitesFragment extends Fragment {
 
 
 
-        cd= new ConnectionDetector(getActivity());
-        if(!cd.isConnectingToInternet()) {
-            Toast.makeText(getActivity(), "Can't connect to the network.", Toast.LENGTH_SHORT).show();
-        }else{
-            new LoadMyInvites().execute();
-        }
+
 
         return rootview;
     }
@@ -100,6 +96,14 @@ public class MyInvitesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(refreshing==false) {
+            cd = new ConnectionDetector(getActivity());
+            if (!cd.isConnectingToInternet()) {
+                Toast.makeText(getActivity(), "Can't connect to the network.", Toast.LENGTH_SHORT).show();
+            } else {
+                new LoadMyInvites().execute();
+            }
+        }
         getActivity().setTitle(R.string.my_invites);
     }
 
@@ -121,6 +125,7 @@ public class MyInvitesFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            refreshing=true;
             pDialog = new ProgressDialog(getActivity());
             pDialog.setMessage("Listing My Invites ...");
             pDialog.setIndeterminate(false);
@@ -231,7 +236,7 @@ public class MyInvitesFragment extends Fragment {
          */
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all albums
-
+            refreshing=false;
             pDialog.dismiss();
             // updating UI from Background Thread
             /*runOnUiThread(new Runnable() {

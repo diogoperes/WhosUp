@@ -117,6 +117,8 @@
     <string name="pending">Pending:</string>
 
     <string name="update_profile">Update Profile</string>
+    <string name="close_invite">Close Invite</string>
+    <string name="open_invite">Open Invite</string>
 
     <!-- LOADING DIALOGS MESSAGES -->
 

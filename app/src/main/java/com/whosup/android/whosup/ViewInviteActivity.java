@@ -35,6 +35,7 @@ public class ViewInviteActivity extends Activity {
     ConnectionDetector cd;
     JSONParser jsonParser = new JSONParser();
 
+
     private ProgressDialog pDialog=null;
     //JSON element ids from repsonse of php script:
     private static final String TAG_SUCCESS = "success";

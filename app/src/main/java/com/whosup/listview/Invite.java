@@ -1,5 +1,8 @@
 package com.whosup.listview;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.whosup.android.whosup.utils.InviteAttend;
 
 import java.io.Serializable;
@@ -143,5 +146,9 @@ public class Invite implements Serializable {
 
     public void setInviteAttends(ArrayList<InviteAttend> inviteAttends) {
         this.inviteAttends = inviteAttends;
+    }
+
+    public void setIsOpen(String isOpen) {
+        this.isOpen = isOpen;
     }
 }

@@ -194,6 +194,14 @@
             android:background="@drawable/edit_text_style"
             android:text="@string/create_invite"/>
 
+    <ImageView
+        android:id="@+id/transparent_image_fill"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/list_invites"
+        android:src="@drawable/temp_transparent" />
+
 </LinearLayout>
 
 </ScrollView>
