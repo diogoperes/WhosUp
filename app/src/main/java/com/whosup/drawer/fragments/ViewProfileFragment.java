@@ -71,6 +71,8 @@ public class ViewProfileFragment extends Fragment {
         usernameTextView.setText(user.getUsername());
         if(user.isMyProfile()){
             emailTextView.setText(SPreferences.getInstance().getLoginEmail(rootview.getContext()));
+        }else{
+            emailTextView.setVisibility(View.GONE);
         }
         customPhraseTextView.setText("'"+user.getCustomPhrase()+"'");
         firstNameTextView.setText(user.getFirstName());
@@ -82,6 +84,8 @@ public class ViewProfileFragment extends Fragment {
         if(user.isMyProfile()){
             System.out.println("IS MY PROFILE, ADD UPDATE PROFILE BUTTON");
             changeProfile.setOnClickListener(new ChangeProfileOnClickListener());
+        }else {
+            changeProfile.setVisibility(View.GONE);
         }
 
 

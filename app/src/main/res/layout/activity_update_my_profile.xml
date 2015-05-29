@@ -62,6 +62,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText_custom_phrase"
         android:layout_below="@+id/textView7"
+        android:maxLines="1"
+        android:singleLine="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -81,6 +83,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText_city"
         android:layout_below="@+id/textView8"
+        android:maxLines="1"
+        android:singleLine="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -101,6 +105,8 @@
         android:id="@+id/editText_country"
         android:layout_below="@+id/textView9"
         android:layout_alignParentLeft="true"
+        android:maxLines="1"
+        android:singleLine="true"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -145,6 +151,8 @@
         android:inputType="textPassword"
         android:maxLength="32"
         android:hint="@string/change_password_old"
+        android:maxLines="1"
+        android:singleLine="true"
         android:id="@+id/editText_password_old"
         android:layout_below="@+id/textView10"
         android:layout_alignParentLeft="true"
@@ -156,12 +164,27 @@
         android:inputType="textPassword"
         android:maxLength="32"
         android:hint="@string/change_password_new"
+        android:maxLines="1"
+        android:singleLine="true"
         android:id="@+id/editText_password_new"
         android:layout_below="@+id/editText_password_old"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button android:id="@+id/update_profile"
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:maxLength="32"
+        android:hint="@string/confirm_new_password"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:id="@+id/editText_password_confirm"
+        android:layout_below="@+id/editText_password_new"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button android:id="@+id/update_profile_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -171,7 +194,7 @@
         android:textColor="@color/create_invite_text"
         android:background="@drawable/edit_text_style"
         android:text="@string/update_profile"
-        android:layout_below="@+id/editText_password_new" />
+        android:layout_below="@+id/editText_password_confirm" />
 
 </RelativeLayout>
 </ScrollView>

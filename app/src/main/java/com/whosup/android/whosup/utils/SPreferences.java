@@ -66,6 +66,14 @@ public class SPreferences {
         }
     }
 
+    public void setLoginPassword(Context c, String password) {
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
+        final SharedPreferences.Editor editor = sp.edit();
+        editor.putString(PREFS_LOGIN_PASSWORD_KEY, password);
+        editor.apply();
+    }
+
+
     public String getLoginUsername(Context c){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
         try {
@@ -111,6 +119,13 @@ public class SPreferences {
         }
     }
 
+    public void setLoginCity(Context c, String city) {
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
+        final SharedPreferences.Editor editor = sp.edit();
+        editor.putString(PREFS_LOGIN_CITY_KEY, city);
+        editor.apply();
+    }
+
     public String getLoginCountry(Context c){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
         try {
@@ -118,6 +133,13 @@ public class SPreferences {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public void setLoginCountry(Context c, String country) {
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
+        final SharedPreferences.Editor editor = sp.edit();
+        editor.putString(PREFS_LOGIN_COUNTRY_KEY, country);
+        editor.apply();
     }
 
     public String getLoginCustomPhrase(Context c){
@@ -129,6 +151,13 @@ public class SPreferences {
         }
     }
 
+    public void setLoginCustomPhrase(Context c, String customPhrase) {
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
+        final SharedPreferences.Editor editor = sp.edit();
+        editor.putString(PREFS_LOGIN_CUSTOMPHRASE_KEY, customPhrase);
+        editor.apply();
+    }
+
     public String getLoginAboutMe(Context c){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
         try {
@@ -138,6 +167,13 @@ public class SPreferences {
         }
     }
 
+    public void setLoginAboutMe(Context c, String aboutMe) {
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
+        final SharedPreferences.Editor editor = sp.edit();
+        editor.putString(PREFS_LOGIN_ABOUTME_KEY, aboutMe);
+        editor.apply();
+    }
+
     public String getLoginPhotoLink(Context c){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
         try {
@@ -145,6 +181,13 @@ public class SPreferences {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public void setLoginPhotoLink(Context c, String photoLink) {
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
+        final SharedPreferences.Editor editor = sp.edit();
+        editor.putString(PREFS_LOGIN_PHOTOLINK_KEY, photoLink);
+        editor.apply();
     }
 
     public String getLoginBirthday(Context c){
@@ -162,4 +205,8 @@ public class SPreferences {
         editor.clear();
         editor.apply();
     }
+
+
+
+
 }

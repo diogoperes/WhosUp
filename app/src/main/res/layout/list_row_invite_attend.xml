@@ -38,7 +38,8 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/rejectButton"
         android:layout_toStartOf="@+id/rejectButton"
-        android:background="@drawable/edit_text_style"/>
+        android:background="@drawable/border_layout"
+        android:layout_marginRight="5dp"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -51,7 +52,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/rejectButton"
-        android:background="@drawable/edit_text_style"/>
+        android:background="@drawable/border_layout"/>
 
 
 </RelativeLayout>

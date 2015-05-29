@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     LocationManager locationManager;
     ConnectionDetector cd;
     private final int DO_IN_BACKGROUND_TIMEOUT = 5 * 1000;
+    private boolean myInvitesFragmentIsOpen = false, myProfileIsOpen = false;
 
 
     @Override
@@ -278,12 +279,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private void displayView(int position) {
         Fragment fragment = null;
         String title = getString(R.string.app_name);
+        FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
             case 0:
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                System.out.println("BACK STACK CLEARED" + "286");
+                myInvitesFragmentIsOpen=false;
+                myProfileIsOpen=false;
                 fragment = new CreateInviteActivity();
                 title = getString(R.string.create_invite);
                 break;
             case 1:
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                System.out.println("BACK STACK CLEARED" + "294");
+                myInvitesFragmentIsOpen=false;
+                myProfileIsOpen=true;
                 //Intent i = new Intent(MainActivity.this, ViewProfileFragment.class );
                 User myUser = new User(true,
                         SPreferences.getInstance().getLoginUsername(MainActivity.this),
@@ -310,15 +320,22 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.view_profile);
                 break;
             case 2:
-                fragment = new MyInvitesFragment();
-                title = getString(R.string.my_invites);
+                if (!myInvitesFragmentIsOpen){
+                    fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    System.out.println("BACK STACK CLEARED" + "325");
+                    myInvitesFragmentIsOpen = true;
+                    myProfileIsOpen=false;
+                    fragment = new MyInvitesFragment();
+                    title = getString(R.string.my_invites);
+                }
                 break;
             default:
                 break;
         }
 
+
         if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
+
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_body, fragment);
             fragmentTransaction.addToBackStack(null);
@@ -562,7 +579,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     @Override
     protected void onResume() {
         super.onResume();
-
+        System.out.println("My Profile Fragment open: " + myProfileIsOpen);
+        System.out.println("My Invites Fragment open: " + myInvitesFragmentIsOpen);
+        if(myProfileIsOpen){
+            myProfileIsOpen=false;
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            System.out.println("BACK STACK CLEARED" + 588);
+        }
+        System.out.println("MAIN RESUMED");
         checkPlayServices();
     }
 
@@ -644,6 +669,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     .setNegativeButton("No", null)
                     .show();
         } else {
+            myInvitesFragmentIsOpen=false;
+            myProfileIsOpen=false;
             getSupportFragmentManager().popBackStack();
         }
 

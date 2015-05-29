@@ -212,7 +212,7 @@ public class MyInviteInformationActivity extends AppCompatActivity{
                 if (statusTAG.equals("confirm")){
                     invite.getInviteAttends().get(position).setState("confirmed");
                     reject.setText("REJECT");
-                    reject.setBackgroundResource(R.drawable.edit_text_style);
+                    reject.setBackgroundResource(R.drawable.border_layout);
                     GradientDrawable backgroundGradientReject = (GradientDrawable) reject.getBackground();
                     backgroundGradientReject.setStroke(3, Color.parseColor("#ffc51818"));
                     confirm.setBackgroundColor(Color.parseColor("#ff3ac726"));
@@ -220,7 +220,7 @@ public class MyInviteInformationActivity extends AppCompatActivity{
                 }else{
                     invite.getInviteAttends().get(position).setState("rejected");
                     confirm.setText("CONFIRM");
-                    confirm.setBackgroundResource(R.drawable.edit_text_style);
+                    confirm.setBackgroundResource(R.drawable.border_layout);
                     GradientDrawable backgroundGradientConfirm = (GradientDrawable) confirm.getBackground();
                     backgroundGradientConfirm.setStroke(3, Color.parseColor("#ff3ac726"));
                     reject.setBackgroundColor(Color.parseColor("#ffc51818"));

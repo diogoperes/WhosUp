@@ -102,6 +102,7 @@
     <string name="change_password">Password:</string>
     <string name="change_password_old">Old password…</string>
     <string name="change_password_new">New password…</string>
+    <string name="confirm_new_password">Confirm new password…</string>
     <string name="change_about_me">About me:</string>
     <string name="upload_image_gallery">Upload from gallery</string>
 
@@ -121,6 +122,8 @@
     <string name="open_invite">Open Invite</string>
     <string name="confirm">CONFIRM</string>
     <string name="reject">REJECT</string>
+    <string name="old_password_is_wrong">Old password is wrong</string>
+
 
     <!-- LOADING DIALOGS MESSAGES -->
 
