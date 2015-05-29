@@ -86,7 +86,7 @@ public class InviteAdapter extends BaseAdapter {
         holder.subcategory.setText(invite.getSubcategory());
         holder.distance.setText(invite.getDistanceFromMe() + " Km");
         holder.address.setText(invite.getAddress());
-        holder.imgCategory.setImageDrawable(getImage(invite));
+        holder.imgCategory.setImageDrawable(Utility.getImage(context, invite));
         holder.meetDay.setText(Utility.arrangeDate(invite.getMeetDay()));
         holder.meetHour.setText(Utility.arrangeHour(invite.getMeetHour()));
 
@@ -152,23 +152,7 @@ public class InviteAdapter extends BaseAdapter {
         ImageView imgHostGender;
     }
 
-    public Drawable getImage(Invite invite){
-        ArrayList<Category> categoriesList= Data.getInstance().getCategories(context.getApplicationContext());
-        int imageResource = 0;
 
-        for (Category category : categoriesList){
-
-            //System.out.println(category.getName() + " == " + invite.getCategory());
-            if(category.getName().equals(invite.getCategory())){
-
-                imageResource = context.getResources().getIdentifier(category.getDrawableID(), null, context.getPackageName());
-
-            }
-
-        }
-        Drawable res = context.getResources().getDrawable(imageResource);
-        return res;
-    }
 
 
 

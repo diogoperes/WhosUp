@@ -38,6 +38,7 @@ import com.whosup.android.whosup.utils.User;
 import com.whosup.android.whosup.utils.Utility;
 import com.whosup.drawer.FragmentDrawer;
 import com.whosup.drawer.fragments.CreateInviteActivity;
+import com.whosup.drawer.fragments.MyAttendeesFragment;
 import com.whosup.drawer.fragments.MyInvitesFragment;
 import com.whosup.drawer.fragments.ViewProfileFragment;
 import com.whosup.listview.Invite;
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 // on selecting a single album
                 // TrackListActivity will be launched to show tracks inside the album
                 Intent i = new Intent(getApplicationContext(), ViewInviteActivity.class);
-
+                i.putExtra("can_attend", "1");
                 i.putExtra("invite_id", inviteList.get(position).getId());
                 i.putExtra("invite_username", inviteList.get(position).getUsername());
                 i.putExtra("invite_firstName", inviteList.get(position).getFirstName());
@@ -329,6 +330,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     title = getString(R.string.my_invites);
                 }
                 break;
+            case 3:
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragment = new MyAttendeesFragment();
+
+                title = getString(R.string.my_attendees);
+                break;
             default:
                 break;
         }
@@ -369,7 +376,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     /**
      * Background Async Task to Load all Albums by making http request
      * */
-
+     @SuppressWarnings("deprecation")
      class LoadInvites extends AsyncTask<String, String, String> {
 
         /**

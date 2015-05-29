@@ -370,7 +370,7 @@ public class MyInviteInformationActivity extends AppCompatActivity{
             if (convertView == null || convertView.getTag() == null) {
 
                 holder = new ViewHolder();
-                convertView = mInflater.inflate(R.layout.list_row_invite_attend, parent, false);
+                convertView = mInflater.inflate(R.layout.list_row, parent, false);
                 holder.firstName = (TextView) convertView.findViewById(R.id.attendeeFirstName);
                 holder.lastName = (TextView) convertView.findViewById(R.id.attendeeLastName);
                 holder.confirm = (Button) convertView.findViewById(R.id.confirmButton);

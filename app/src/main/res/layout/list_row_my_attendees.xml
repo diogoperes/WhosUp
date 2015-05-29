@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp" >
+
+    <!-- Thumbnail Image -->
+    <ImageView
+        android:id="@+id/imgCategory"
+        android:contentDescription="profilePic"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/ic_restaurant_symbol"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <ImageView
+        android:id="@+id/hostGender"
+        android:contentDescription="hostGender"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_male_symbol"
+        android:layout_alignBottom="@+id/hostAge"
+        android:layout_toLeftOf="@+id/hostAge"
+        android:layout_marginRight="2dp"
+        android:layout_marginEnd="2dp"/>
+    <!-- android:layout_below="@id/inviteFrom"
+    android:layout_alignBaseline="@+id/inviteFrom"-->
+
+    <TextView
+        android:id="@+id/hostAge"
+        android:layout_alignBaseline="@+id/inviteFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="20"
+        android:textColor="@color/year"
+        android:textSize="@dimen/year" />
+    <!-- android:layout_alignParentTop="true"
+    android:layout_below="@id/inviteFrom"
+
+        android:layout_alignParentEnd="true"-->
+
+    <TextView
+        android:id="@+id/meetDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:layout_toLeftOf="@+id/meetHour"
+        android:layout_alignBaseline="@+id/inviteSubcategory"
+        android:layout_below="@id/inviteFrom"
+        android:textSize="@dimen/year"
+        android:text="23/3"/>
+
+    <TextView
+        android:id="@+id/meetHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/inviteSubcategory"
+        android:text="22:00"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/inviteFrom"
+        android:textSize="@dimen/year" />
+    <!--
+        android:layout_alignParentEnd="true" -->
+
+    <TextView
+        android:id="@+id/inviteFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="host name"
+        android:layout_alignTop="@+id/imgCategory"
+        android:layout_toRightOf="@+id/imgCategory"
+        android:layout_toEndOf="@+id/imgCategory"
+        android:textSize="@dimen/title"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/inviteSubcategory"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inviteFrom"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/imgCategory"
+        android:text="Vegetarian"
+        android:layout_toEndOf="@+id/imgCategory"
+        android:textSize="@dimen/rating" />
+
+    <TextView
+        android:id="@+id/inviteLocation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inviteSubcategory"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/imgCategory"
+        android:layout_toEndOf="@+id/imgCategory"
+        android:text="location"
+        android:textSize="@dimen/rating" />
+
+
+    <!--&lt;!&ndash; Genre &ndash;&gt;-->
+    <!--<TextView-->
+    <!--android:id="@+id/genre"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@id/inviteDistance"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:layout_toRightOf="@+id/inviterProfilePic"-->
+    <!--android:layout_toEndOf="@+id/inviterProfilePic"-->
+    <!--android:textColor="@color/genre"-->
+    <!--android:textSize="@dimen/genre" />-->
+
+    <!-- Release Year -->
+    <TextView
+        android:id="@+id/inviteStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/year"
+        android:text="status"
+        android:textSize="@dimen/year" />
+
+</RelativeLayout>

@@ -6,13 +6,13 @@
 
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/rowIcon"
         android:paddingStart="16dp"
         android:paddingLeft="16dp"
         android:contentDescription="Item Icon"
-        android:src="@drawable/ic_launcher"/>
+        android:src="@mipmap/ic_pointer"/>
 
     <TextView
         android:id="@+id/title"

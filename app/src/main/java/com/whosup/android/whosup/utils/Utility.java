@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -212,6 +213,24 @@ public class Utility {
             }
         }
         return number;
+    }
+
+    public static Drawable getImage(Context context, Invite invite){
+        ArrayList<Category> categoriesList= Data.getInstance().getCategories(context.getApplicationContext());
+        int imageResource = 0;
+
+        for (Category category : categoriesList){
+
+            //System.out.println(category.getName() + " == " + invite.getCategory());
+            if(category.getName().equals(invite.getCategory())){
+
+                imageResource = context.getResources().getIdentifier(category.getDrawableID(), null, context.getPackageName());
+
+            }
+
+        }
+        Drawable res = context.getResources().getDrawable(imageResource);
+        return res;
     }
 
 }

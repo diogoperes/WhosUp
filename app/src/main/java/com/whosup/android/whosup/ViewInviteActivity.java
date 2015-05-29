@@ -61,7 +61,13 @@ public class ViewInviteActivity extends Activity {
         TextView hostMeetTime = (TextView) findViewById(R.id.hostMeetTime);
         TextView hostPlace = (TextView) findViewById(R.id.place);
         attend_button = (Button) findViewById(R.id.attend_button);
-        attend_button.setOnClickListener(new AttendInviteOnClickListener());
+        if(i.getStringExtra("can_attend").equals("1")){
+            attend_button.setOnClickListener(new AttendInviteOnClickListener());
+        }else{
+            attend_button.setVisibility(View.GONE);
+        }
+
+
         hostMeetDescription.setMovementMethod(new ScrollingMovementMethod());
         //hostMeetDescription.setOnTouchListener(touchListener);
 

@@ -37,6 +37,7 @@ public class UpdateMyProfileActivity extends Activity {
 
     ConnectionDetector cd;
     DateDisplayPicker birthdate;
+    private Uri fileUri;
     private static final String UPDATE_PROFILE_URL = "http://whosup.host22.com/update_profile.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -78,6 +79,8 @@ public class UpdateMyProfileActivity extends Activity {
         //Detects request codes
         if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
+            fileUri = selectedImage;
+            System.out.println("FILE URI: " + fileUri);
             Bitmap bitmap = null;
             int[] maxSize = new int[1];
             GLES10.glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE, maxSize, 0);
