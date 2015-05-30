@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clickable="true">
+
+    <RelativeLayout
+        android:background="#ffffff"
+        android:id="@+id/relative_layout_filters"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radius"
+            android:id="@+id/radiusTextView"
+            android:paddingTop="5dp"
+            android:textSize="30dp"
+            android:paddingRight="5dp"/>
+
+        <EditText
+            android:layout_width="57dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:maxLength="3"
+            android:background="@drawable/edit_text_style"
+            android:id="@+id/radiusEditText"
+            android:layout_toRightOf="@+id/radiusTextView"
+            android:textSize="30dp"
+            android:padding="3dp"
+            android:layout_alignBaseline="@+id/radiusTextView"
+            android:text="100"
+
+
+            android:focusableInTouchMode="true"
+            android:inputType="number" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/km"
+            android:id="@+id/kmTextView"
+            android:layout_alignBaseline="@+id/radiusTextView"
+            android:layout_toRightOf="@+id/radiusEditText"
+            android:textSize="30dp"
+            android:paddingRight="5dp"/>
+
+        <LinearLayout
+
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/radio_categories"
+            android:layout_below="@+id/kmTextView">
+        <CheckBox  android:id="@+id/radio_restaurant"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/restaurant"
+                     android:textSize="20sp"/>
+        <CheckBox  android:id="@+id/radio_bar_cafe"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/bar_cafe"
+                     android:textSize="20sp"/>
+        <CheckBox  android:id="@+id/radio_outdoor_sport"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/outdoor_sport"
+                     android:textSize="20sp"/>
+        <CheckBox  android:id="@+id/radio_culture_art"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/culture_art"
+                     android:textSize="20sp"/>
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter"
+            android:id="@+id/filter_button"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="20dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

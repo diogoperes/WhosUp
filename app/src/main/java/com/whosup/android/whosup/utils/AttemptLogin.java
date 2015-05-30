@@ -66,7 +66,7 @@ public class AttemptLogin extends AsyncTask<String, String, String> {
             pDialog = new ProgressDialog(a);
             pDialog.setMessage("Attempting login...");
             pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
+            pDialog.setCancelable(false);
             pDialog.show();
         }
     }

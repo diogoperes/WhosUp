@@ -5,4 +5,5 @@
     <item name="invitePlace" type="id">Invite place</item>
     <item name="inviteDistance" type="id">Invite distance</item>
     <item name="inviterProfilePic" type="id">Inviter profile pic</item>
+    <item name="filters" type="id">Filters</item>
 </resources>

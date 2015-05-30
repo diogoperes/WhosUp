@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:divider="@color/list_divider"
                 android:dividerHeight="1dp"
+                android:layout_above="@+id/relative_layout_filters"
                 android:layout_alignParentTop="true" >
             </ListView>
 
@@ -43,7 +44,68 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
 
+            <FrameLayout
+                android:background="#ffffff"
+                android:id="@+id/filter_fragment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <!--<RelativeLayout
+                android:background="#ffffff"
+                android:id="@+id/relative_layout_filters"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radius"
+                    android:id="@+id/radiusTextView"
+                    android:textSize="20dp"
+                    android:paddingRight="5dp"/>
+
+                <EditText
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="3"
+                    android:id="@+id/radiusEditText"
+                    android:layout_toRightOf="@+id/radiusTextView"
+                    android:textSize="20dp"
+                    android:padding="3dp"
+                    android:layout_alignBaseline="@+id/radiusTextView"
+                    android:text="100"
+
+
+                    android:focusableInTouchMode="true"
+                    android:inputType="number" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/km"
+                    android:id="@+id/kmTextView"
+                    android:layout_alignBaseline="@+id/radiusTextView"
+                    android:layout_toRightOf="@+id/radiusEditText"
+                    android:textSize="20dp"
+                    android:paddingRight="5dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter"
+                    android:id="@+id/filter_button"
+                    android:layout_alignBaseline="@+id/radiusTextView"
+                    android:layout_toRightOf="@+id/kmTextView"
+                    android:textSize="10dp"/>
+
+            </RelativeLayout>-->
+
         </RelativeLayout>
+
+
 
     </LinearLayout>
 

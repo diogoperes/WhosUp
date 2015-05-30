@@ -24,6 +24,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_filter"
+        android:orderInCategory="100"
+        android:title="@string/filter"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_viewmap"
         android:orderInCategory="100"
         android:title="@string/action_viewmap"
