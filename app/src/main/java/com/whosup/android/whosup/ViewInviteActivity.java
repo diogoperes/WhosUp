@@ -126,7 +126,7 @@ public class ViewInviteActivity extends Activity {
 
             pDialog=null;
             pDialog = new ProgressDialog(ViewInviteActivity.this);
-            pDialog.setMessage("Creating Invite...");
+            pDialog.setMessage("Attending Invite...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
