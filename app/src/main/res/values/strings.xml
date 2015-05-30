@@ -126,6 +126,12 @@
     <string name="confirm">CONFIRM</string>
     <string name="reject">REJECT</string>
     <string name="old_password_is_wrong">Old password is wrong</string>
+    <string name="radius">Radius:</string>
+    <string name="km">Km</string>
+    <string name="filter">Filter</string>
+    <string name="bar_cafe">Bar / Cafe</string>
+    <string name="outdoor_sport">Outdoor / Sport</string>
+    <string name="culture_art">Culture / Art</string>
 
 
     <!-- LOADING DIALOGS MESSAGES -->

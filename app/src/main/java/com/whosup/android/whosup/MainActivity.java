@@ -18,10 +18,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,14 +83,16 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private final String GET_INVITES_URL = "http://whosup.host22.com/get_invites.php";
     private String myLatitude = "0";
     private String myLongitude = "0";
-    private String myRay = "2";
+    public String myRay = "2";
     JSONArray invitesList = null;
     private ListView inviteListView;
+    private ArrayList<String> categoriesSelected = new ArrayList<>();
     private GPSTracker gps;
     LocationManager locationManager;
     ConnectionDetector cd;
     private final int DO_IN_BACKGROUND_TIMEOUT = 5 * 1000;
     private boolean myInvitesFragmentIsOpen = false, myProfileIsOpen = false;
+    private EditText radiusEditText;
 
 
     @Override
@@ -100,8 +108,19 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         usernameTextView.setText(userSession.getLoginFirstName(this.getApplicationContext()) + " " +
                 userSession.getLoginLastName(this.getApplicationContext()));
         emailTextView.setText(userSession.getLoginUsername(this.getApplicationContext()));
+        /*radiusEditText = (EditText) findViewById(R.id.radiusEditText);
+        Button filter_button = (Button) findViewById(R.id.filter_button);
+        filter_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
+            }
+        });*/
+
+        /*radiusEditText.clearFocus();
+        usernameTextView.requestFocus();*/
+        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
@@ -164,7 +183,31 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     }
 
+    public void refreshWithFilters(String ray, ArrayList<String> categories){
+        categoriesSelected = categories;
+        double km = Integer.parseInt(ray) / 100.0;
+        myRay=km+"";
+        System.out.println("RAY ENTERED: " + myRay);
+        TryLoad();
+    }
+
+
     public void TryLoad(){
+        /*System.out.println("RADIUS EDIT TEXT INPUT: " + radiusEditText.getText().toString());
+        radiusEditText.clearFocus();
+        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        if(radiusEditText.getText().toString().length()>0){
+            System.out.println("RADIUS INT PARSE: " + Integer.parseInt(radiusEditText.getText().toString()));
+
+            double km = Integer.parseInt(radiusEditText.getText().toString()) / 90.0;
+            String.format("%.2f", km);
+            System.out.println("KM DISTANCE VIEW: " + km);
+            myRay = km + "";
+        }else{
+            myRay="0";
+        }*/
+        System.out.println("MY RAY: " + myRay);
+
         mLastLocation=gps.getLocation();
         if(gps.canGetLocation()){
 
@@ -253,7 +296,16 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case R.id.action_refresh:
 //                new refreshInvites(this).execute();
                 TryLoad();
-
+                return true;
+            case R.id.action_filter:
+                Fragment fragment = null;
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragment = new FilterFragment();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.filter_fragment, fragment);
+                fragmentTransaction.addToBackStack(null);
+                System.out.println("ADD TO BACKSTACK");
+                fragmentTransaction.commit();
                 return true;
             case R.id.action_viewmap:
                 Intent intent = new Intent(MainActivity.this, ViewMapActivity.class);
@@ -392,6 +444,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             pDialog.show();
         }
 
+
+        public void filterCategories(){
+            ArrayList<Invite> invitesListFiltered = new ArrayList<Invite>();
+            if (categoriesSelected.size()>0) {
+                for (Invite i : inviteList) {
+                    for (String cs : categoriesSelected) {
+                        if (i.getCategory().equals(cs)) {
+                            invitesListFiltered.add(i);
+                        }
+                    }
+                }
+                inviteList = invitesListFiltered;
+            }
+        }
+
         /**
          * getting Albums JSON
          */
@@ -475,6 +542,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     try{
                         updateDistances(inviteList);
                         sortListByDistance(inviteList);
+                        filterCategories();
                         System.out.println("INVITE LIST FIRST: " + inviteList.get(0).getDistanceFromMe());
                         InviteAdapter adapter = new InviteAdapter(MainActivity.this, inviteList, mLastLocation);
 
@@ -496,6 +564,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             Toast.makeText(getApplicationContext(), "Can't retrieve invites, try refreshing", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+
 
 
 
@@ -683,6 +755,117 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     }
 
+
+    public static class FilterFragment extends Fragment {
+        EditText radius;
+        ArrayList<String> categoriesSelected = new ArrayList<>();
+        Button filterButton;
+        String ray = "100";
+        boolean radio_restaurant = false, radio_bar_cafe = false, radio_outdoor_sport=false,  radio_culture_art=false;
+
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            final View rootview = inflater.inflate(R.layout.fragment_filters, null);
+            radius = (EditText) rootview.findViewById(R.id.radiusEditText);
+            filterButton = (Button) rootview.findViewById(R.id.filter_button);
+            filterButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(radio_restaurant)categoriesSelected.add("Restaurant");
+                    if(radio_bar_cafe)categoriesSelected.add("Bar / Cafe");
+                    if(radio_outdoor_sport)categoriesSelected.add("Outdoor / Sport");
+                    if(radio_culture_art)categoriesSelected.add("Culture / Art");
+
+
+                    ray = radius.getText().toString();
+
+                    ((MainActivity) getActivity()).refreshWithFilters(ray, categoriesSelected);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
+            });
+
+            CheckBox radio_restaurant = (CheckBox) rootview.findViewById(R.id.radio_restaurant);
+            radio_restaurant.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    onClickButton(v);//THIS IS THE METHOD YOU WROTE ON THE ATTACHED CODE!!
+                }
+            });
+            CheckBox radio_bar_cafe = (CheckBox) rootview.findViewById(R.id.radio_bar_cafe);
+            radio_bar_cafe.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    onClickButton(v);//THIS IS THE METHOD YOU WROTE ON THE ATTACHED CODE!!
+                }
+            });
+            CheckBox radio_outdoor_sport = (CheckBox) rootview.findViewById(R.id.radio_outdoor_sport);
+            radio_outdoor_sport.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    onClickButton(v);//THIS IS THE METHOD YOU WROTE ON THE ATTACHED CODE!!
+                }
+            });
+            CheckBox radio_culture_art = (CheckBox) rootview.findViewById(R.id.radio_culture_art);
+            radio_culture_art.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    onClickButton(v);//THIS IS THE METHOD YOU WROTE ON THE ATTACHED CODE!!
+                }
+            });
+
+
+
+            return rootview;
+        }
+
+
+
+        public void onClickButton(View view) {
+            // Is the view now checked?
+            boolean checked = ((CheckBox) view).isChecked();
+
+            // Check which checkbox was clicked
+            switch(view.getId()) {
+                case R.id.radio_restaurant:
+                    if (checked) {
+                        radio_restaurant=true;
+                    }else {
+                        radio_restaurant=false;
+                    }
+                    break;
+                case R.id.radio_bar_cafe:
+                    if (checked) {
+                        radio_bar_cafe=true;
+                    }else {
+                        radio_bar_cafe=false;
+                    }
+                    break;
+                case R.id.radio_outdoor_sport:
+                    if (checked) {
+                        radio_outdoor_sport=true;
+                    }else {
+                        radio_outdoor_sport=false;
+                    }
+                    break;
+                case R.id.radio_culture_art:
+                    if (checked) {
+                        radio_culture_art=true;
+                    }else {
+                        radio_culture_art=false;
+                    }
+                    break;
+
+            }
+        }
+
+    }
 
 
 
