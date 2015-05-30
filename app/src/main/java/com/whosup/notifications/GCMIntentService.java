@@ -32,8 +32,14 @@ public class GCMIntentService extends IntentService {
             String serverTime = extras.getString("timestamp");
             String invitedUsername = extras.getString("attendant");
             String inviteAddress = extras.getString("inviteAddress");
-            sendNotification("User: " + invitedUsername  + " attended your invite in: " + "\n"
-                    + inviteAddress);
+            System.out.println("IS REGISTER: " + extras.getString("isRegister"));
+            if(extras.getString("isRegister")!=null && extras.getString("isRegister").equals("0")){
+                sendNotification("User: " + invitedUsername  + " attended your invite in: " + "\n"
+                        + inviteAddress);
+            }else{
+                sendNotification("Welcome to Who'sUp");
+            }
+
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GCMBroadcastReceiver.completeWakefulIntent(intent);
