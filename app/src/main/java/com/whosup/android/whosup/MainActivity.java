@@ -253,7 +253,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case R.id.action_refresh:
 //                new refreshInvites(this).execute();
                 TryLoad();
-
+            case R.id.action_testgcm:
+                Intent it = new Intent(MainActivity.this, GCMActivity.class);
+                startActivity(it);
                 return true;
             case R.id.action_viewmap:
                 Intent intent = new Intent(MainActivity.this, ViewMapActivity.class);

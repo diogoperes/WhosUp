@@ -1,21 +1,17 @@
 package com.whosup.android.whosup;
 
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,16 +19,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whosup.android.whosup.utils.ConnectionDetector;
+import com.whosup.android.whosup.utils.InviteAttend;
 import com.whosup.android.whosup.utils.JSONParser;
-import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.User;
-import com.whosup.android.whosup.utils.Utility;
 import com.whosup.drawer.fragments.ViewProfileFragment;
 import com.whosup.listview.Invite;
 
@@ -40,11 +34,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
-import com.whosup.android.whosup.utils.InviteAttend;
-import com.whosup.listview.MyInviteAdapter;
 
 public class MyInviteInformationActivity extends AppCompatActivity{
 
@@ -370,7 +361,7 @@ public class MyInviteInformationActivity extends AppCompatActivity{
             if (convertView == null || convertView.getTag() == null) {
 
                 holder = new ViewHolder();
-                convertView = mInflater.inflate(R.layout.list_row, parent, false);
+                convertView = mInflater.inflate(R.layout.list_row_invite_attend, parent, false);
                 holder.firstName = (TextView) convertView.findViewById(R.id.attendeeFirstName);
                 holder.lastName = (TextView) convertView.findViewById(R.id.attendeeLastName);
                 holder.confirm = (Button) convertView.findViewById(R.id.confirmButton);

@@ -53,6 +53,7 @@
         android:layout_width="@dimen/nav_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:clickable="true"
         android:layout="@layout/nav_drawer"
         tools:layout="@layout/nav_drawer" />
 

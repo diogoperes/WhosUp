@@ -127,8 +127,7 @@
     <string name="reject">REJECT</string>
     <string name="old_password_is_wrong">Old password is wrong</string>
 
-
-    <!-- LOADING DIALOGS MESSAGES -->
-
+    <!-- GCM STRINGS -->
+    <string name="action_testgcm">Test GCM</string>
 
 </resources>
