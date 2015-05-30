@@ -34,7 +34,7 @@ public class GCMIntentService extends IntentService {
             String invitedUsername = extras.getString("attendant");
             String inviteAddress = extras.getString("inviteAddress");
             System.out.println("IS REGISTER: " + extras.getString("isRegister"));
-            if(extras.getString("isRegister")!=null && extras.getString("isRegister").equals("0")){
+            if(invitedUsername!=null){
                 sendNotification("User: " + invitedUsername  + " attended your invite in: " + "\n"
                         + inviteAddress);
             }else{
