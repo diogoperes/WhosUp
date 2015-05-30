@@ -23,7 +23,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -296,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case R.id.action_refresh:
 //                new refreshInvites(this).execute();
                 TryLoad();
+                return true;
             case R.id.action_testgcm:
                 Intent it = new Intent(MainActivity.this, GCMActivity.class);
                 startActivity(it);
@@ -837,32 +837,16 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // Check which checkbox was clicked
             switch(view.getId()) {
                 case R.id.radio_restaurant:
-                    if (checked) {
-                        radio_restaurant=true;
-                    }else {
-                        radio_restaurant=false;
-                    }
+                    radio_restaurant = checked;
                     break;
                 case R.id.radio_bar_cafe:
-                    if (checked) {
-                        radio_bar_cafe=true;
-                    }else {
-                        radio_bar_cafe=false;
-                    }
+                    radio_bar_cafe = checked;
                     break;
                 case R.id.radio_outdoor_sport:
-                    if (checked) {
-                        radio_outdoor_sport=true;
-                    }else {
-                        radio_outdoor_sport=false;
-                    }
+                    radio_outdoor_sport = checked;
                     break;
                 case R.id.radio_culture_art:
-                    if (checked) {
-                        radio_culture_art=true;
-                    }else {
-                        radio_culture_art=false;
-                    }
+                    radio_culture_art = checked;
                     break;
 
             }

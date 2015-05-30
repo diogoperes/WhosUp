@@ -6,9 +6,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
-import com.whosup.android.whosup.GCMActivity;
+import com.whosup.android.whosup.MainActivity;
 import com.whosup.android.whosup.R;
 
 public class GCMIntentService extends IntentService {
@@ -43,13 +44,15 @@ public class GCMIntentService extends IntentService {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, GCMActivity.class), 0);
+                new Intent(this, MainActivity.class), 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 this).setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Notification from Who\'sUp")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                 .setContentText(msg);
+        mBuilder.setVibrate(new long[] { 250, 250});
+        mBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
