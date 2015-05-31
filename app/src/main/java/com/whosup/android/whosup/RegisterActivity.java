@@ -187,6 +187,9 @@ public class RegisterActivity extends Activity {
         firstNameStr=firstName.getText().toString();
         lastNameStr=lastName.getText().toString();
 
+
+
+
         //check if date was inserted
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
         int yearInserted = Integer.parseInt(yearFormat.format(birthdate.getDate()));
@@ -216,6 +219,16 @@ public class RegisterActivity extends Activity {
             makeToast(R.string.invalid_email);
             return false;
         }
+
+        //check password lenght
+        if(passwordStr.length()<6){
+            makeToast(R.string.password_must_be_at_least_6_characters_long);
+            return false;
+        }else if(passwordStr.length()>30){
+            makeToast(R.string.password_too_long_maximum_length_is_30);
+            return false;
+        }
+
         // check if both password matches
         if(!passwordStr.equals(confirmPasswordStr)){
             makeToast(R.string.password_does_not_match);

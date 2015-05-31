@@ -260,13 +260,23 @@ public class UpdateMyProfileActivity extends Activity {
 
     private boolean allFieldsOk() {
         if(newPasswordEditText.getText().length()>0 || oldPasswordEditText.getText().length()>0){
+            //check password lenght
+            if(newPasswordEditText.getText().toString().length()<6){
+                Toast.makeText(UpdateMyProfileActivity.this, R.string.password_must_be_at_least_6_characters_long, Toast.LENGTH_LONG).show();
+                return false;
+            }else if(newPasswordEditText.getText().toString().length()>30){
+                Toast.makeText(UpdateMyProfileActivity.this, R.string.password_too_long_maximum_length_is_30, Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+
             String oldPasswordMD5 = Utility.MD5(oldPasswordEditText.getText().toString());
             if(!oldPasswordMD5.equals(SPreferences.getInstance().getLoginPassword(UpdateMyProfileActivity.this))){
-                Toast.makeText(UpdateMyProfileActivity.this, R.string.old_password_is_wrong, Toast.LENGTH_LONG).show();;
+                Toast.makeText(UpdateMyProfileActivity.this, R.string.old_password_is_wrong, Toast.LENGTH_LONG).show();
                 return false;
             }
             if(!newPasswordEditText.getText().toString().equals(confirmNewPasswordEditText.getText().toString())){
-                Toast.makeText(UpdateMyProfileActivity.this, R.string.password_does_not_match, Toast.LENGTH_LONG).show();;
+                Toast.makeText(UpdateMyProfileActivity.this, R.string.password_does_not_match, Toast.LENGTH_LONG).show();
                 return false;
             }
         }

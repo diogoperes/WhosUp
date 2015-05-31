@@ -9,6 +9,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.whosup.listview.Invite;
@@ -49,11 +50,22 @@ public class ViewMapActivity extends FragmentActivity implements OnMapReadyCallb
         /* TODO MARKERS CLUSTERING */
         ArrayList<Invite> invitesList = MainActivity.getInviteList();
         for(int i = 0; i < invitesList.size(); i++) {
-            mMap.addMarker(new MarkerOptions()
+            MarkerOptions marker = new MarkerOptions()
                     .position(new LatLng(Double.parseDouble(invitesList.get(i).getLatitude()),
-                                         Double.parseDouble(invitesList.get(i).getLongitude())))
+                            Double.parseDouble(invitesList.get(i).getLongitude())))
                     .title(invitesList.get(i).getAddress())
-                    .snippet(invitesList.get(i).getDescription()));
+                    .snippet(invitesList.get(i).getFirstName() + " " + invitesList.get(i).getLastName());
+
+            if(invitesList.get(i).getCategory().equals("Restaurant"))
+                marker.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_restaurant_marker));
+            if(invitesList.get(i).getCategory().equals("Bar / Cafe"))
+                marker.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_bar_cafe_marker));
+            if(invitesList.get(i).getCategory().equals("Outdoor / Sport"))
+                marker.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_outdoor_sport_marker));
+            if(invitesList.get(i).getCategory().equals("Culture / Art"))
+                marker.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_culture_art_marker));
+            mMap.addMarker(marker);
+
         }
 
         //SOME UI SETTINGS

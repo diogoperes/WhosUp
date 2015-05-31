@@ -191,7 +191,7 @@ public class CreateInviteActivity extends Fragment {
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         mMapView.setClickable(false);
-
+        setHasOptionsMenu(true);
         return rootview;
     }
 

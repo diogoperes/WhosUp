@@ -6,12 +6,17 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.whosup.android.whosup.LoginActivity;
+import com.whosup.android.whosup.MainActivity;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.UpdateMyProfileActivity;
 import com.whosup.android.whosup.utils.SPreferences;
@@ -107,10 +112,43 @@ public class ViewProfileFragment extends Fragment {
         }
 
         ageTextView.setText(age + " years");
+
+        setHasOptionsMenu(true);
         return rootview;
 
 
     }
+
+
+    /*@Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Auto-generated method stub
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.findItem(R.id.action_search).setVisible(false);
+        menu.findItem(R.id.action_refresh).setVisible(false);
+        menu.findItem(R.id.action_filter).setVisible(false);
+        menu.findItem(R.id.action_viewmap).setVisible(false);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_exit:
+                System.exit(0);
+                return true;
+            case R.id.action_logout:
+                SPreferences.getInstance().discardLoginCredentials(getActivity());
+                System.out.println("LOGOUT");
+                Intent i = new Intent(getActivity(), LoginActivity.class);
+                startActivity(i);
+                getActivity().finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }*/
 
     @Override
     public void onAttach(Activity activity) {

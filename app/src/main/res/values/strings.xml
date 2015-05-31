@@ -43,13 +43,13 @@
     <string name="nav_item_create_invite">Create Invite</string>
     <string name="nav_item_my_profile">My Profile</string>
     <string name="nav_item_my_invites">My Invites</string>
-    <string name="nav_item_my_attendees">My Attendees</string>
+    <string name="nav_item_my_attendants">My Attendants</string>
 
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_create_invite</item>
         <item>@string/nav_item_my_profile</item>
         <item>@string/nav_item_my_invites</item>
-        <item>@string/nav_item_my_attendees</item>
+        <item>@string/nav_item_my_attendants</item>
     </string-array>
 
     <!-- NAV DRAWER ITEMS TITLE-->
@@ -135,5 +135,7 @@
 
     <!-- GCM STRINGS -->
     <string name="action_testgcm">Test GCM</string>
+    <string name="password_must_be_at_least_6_characters_long">Password must be at least 6 characters long</string>
+    <string name="password_too_long_maximum_length_is_30">Password too long. Maximum length is 30</string>
 
 </resources>

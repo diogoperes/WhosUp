@@ -111,7 +111,7 @@ public class MyAttendeesFragment extends Fragment {
                 new LoadMyAttendees().execute();
             }
         }
-
+        setHasOptionsMenu(true);
         return rootview;
     }
 

@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     LocationManager locationManager;
     ConnectionDetector cd;
     private final int DO_IN_BACKGROUND_TIMEOUT = 5 * 1000;
-    private boolean myInvitesFragmentIsOpen = false, myProfileIsOpen = false;
+    private boolean myInvitesFragmentIsOpen = false, myProfileIsOpen = false, createInviteIsOpen=false, myAttendeesIsOpen =false;
     private EditText radiusEditText;
 
 
@@ -234,6 +234,22 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //menu.clear();
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.menu = menu;
+        if(myProfileIsOpen || myInvitesFragmentIsOpen || createInviteIsOpen || myAttendeesIsOpen) {
+            menu.findItem(R.id.action_search).setVisible(false);
+            menu.findItem(R.id.action_refresh).setVisible(false);
+            menu.findItem(R.id.action_filter).setVisible(false);
+            menu.findItem(R.id.action_viewmap).setVisible(false);
+        }
+
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -241,6 +257,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         getMenuInflater().inflate(R.menu.menu_main, menu);
         this.menu = menu;
 
+
+        System.out.println("MAIN OPTIONS MENU CREATED");
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -261,14 +279,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             public boolean onQueryTextChange(String query) {
                 System.out.println(query);
                 ArrayList<Invite> inviteListFiltered = new ArrayList<>();
-
-                for(Invite i : inviteList){
-                    String name = i.getFirstName() + " "+ i.getLastName();
+                System.out.println("TEXT ENTERED: " + query);
+                for (Invite i : inviteList) {
+                    String name = i.getFirstName() + " " + i.getLastName();
                     String date = Utility.arrangeDate(i.getMeetDay());
                     String time = Utility.arrangeHour(i.getMeetHour());
                     //System.out.println("INVITE DAY: " + date + " TIME: " + time);
-                    if( name.toLowerCase().contains(query) || i.getSubcategory().toLowerCase().contains(query) || i.getAddress().toLowerCase().contains(query)
-                            || date.contains(query) || time.contains(query)){
+                    if (name.toLowerCase().contains(query) || i.getSubcategory().toLowerCase().contains(query) || i.getAddress().toLowerCase().contains(query)
+                            || date.contains(query) || time.contains(query)) {
                         inviteListFiltered.add(i);
                     }
                 }
@@ -342,14 +360,20 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 System.out.println("BACK STACK CLEARED" + "286");
                 myInvitesFragmentIsOpen=false;
                 myProfileIsOpen=false;
+                createInviteIsOpen=true;
+                myAttendeesIsOpen=false;
                 fragment = new CreateInviteActivity();
                 title = getString(R.string.create_invite);
                 break;
             case 1:
+
+
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 System.out.println("BACK STACK CLEARED" + "294");
                 myInvitesFragmentIsOpen=false;
                 myProfileIsOpen=true;
+                createInviteIsOpen=false;
+                myAttendeesIsOpen=false;
                 //Intent i = new Intent(MainActivity.this, ViewProfileFragment.class );
                 User myUser = new User(true,
                         SPreferences.getInstance().getLoginUsername(MainActivity.this),
@@ -381,11 +405,16 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     System.out.println("BACK STACK CLEARED" + "325");
                     myInvitesFragmentIsOpen = true;
                     myProfileIsOpen=false;
+                    createInviteIsOpen=false;
+                    myAttendeesIsOpen=false;
+
                     fragment = new MyInvitesFragment();
                     title = getString(R.string.my_invites);
                 }
                 break;
             case 3:
+                createInviteIsOpen=false;
+                myAttendeesIsOpen=true;
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 fragment = new MyAttendeesFragment();
 
@@ -408,6 +437,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
     }
 
+    public Menu getMenu(){
+        return menu;
+    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -753,6 +785,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         } else {
             myInvitesFragmentIsOpen=false;
             myProfileIsOpen=false;
+            createInviteIsOpen=false;
+            myAttendeesIsOpen=false;
             getSupportFragmentManager().popBackStack();
         }
 

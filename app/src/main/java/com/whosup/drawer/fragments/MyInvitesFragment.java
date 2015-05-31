@@ -78,7 +78,7 @@ public class MyInvitesFragment extends Fragment {
 
 
 
-
+        setHasOptionsMenu(true);
 
         return rootview;
     }
