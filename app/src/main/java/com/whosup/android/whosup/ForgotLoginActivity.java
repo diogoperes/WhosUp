@@ -117,7 +117,7 @@ public class ForgotLoginActivity extends Activity{
                 // json success tag
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
-                    Log.d("Recovery login successful!", json.toString());
+                    Log.d("Recovery login success!", json.toString());
                     return ok;
                 }if (success == 0) {
                     Log.d("Recovery login Failure!", json.getString(TAG_MESSAGE));
