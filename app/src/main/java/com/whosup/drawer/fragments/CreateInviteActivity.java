@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.whosup.android.whosup.MainActivity;
 import com.whosup.android.whosup.R;
 import com.whosup.android.whosup.utils.Category;
 import com.whosup.android.whosup.utils.ConnectionDetector;
@@ -600,6 +601,7 @@ public class CreateInviteActivity extends Fragment {
             if (file_url != null){
                 Toast.makeText(getActivity(), file_url, Toast.LENGTH_LONG).show();
                 //Toast.makeText(getApplicationContext(), R.string.account_successfully_created, Toast.LENGTH_LONG).show();
+                ((MainActivity)getActivity()).setCreateInviteIsOpen(false);
                 getActivity().getSupportFragmentManager().popBackStack();
 
             }else{

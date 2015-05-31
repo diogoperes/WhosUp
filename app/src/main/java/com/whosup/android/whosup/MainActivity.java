@@ -190,6 +190,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         TryLoad();
     }
 
+    public void setCreateInviteIsOpen(boolean isOpen){
+        createInviteIsOpen=isOpen;
+    }
+
 
     public void TryLoad(){
         /*System.out.println("RADIUS EDIT TEXT INPUT: " + radiusEditText.getText().toString());
