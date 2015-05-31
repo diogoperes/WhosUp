@@ -16,12 +16,13 @@
         android:orderInCategory="100"
         android:title="@string/action_refresh"
         app:showAsAction="ifRoom" />
-
+    <!--
     <item
         android:id="@+id/action_testgcm"
         android:orderInCategory="100"
         android:title="@string/action_testgcm"
         app:showAsAction="never" />
+    -->
 
     <item
         android:id="@+id/action_filter"

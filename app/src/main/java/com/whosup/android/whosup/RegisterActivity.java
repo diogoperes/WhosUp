@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.whosup.android.whosup.utils.ConnectionDetector;
 import com.whosup.android.whosup.utils.DateDisplayPicker;
 import com.whosup.android.whosup.utils.JSONParser;
+import com.whosup.android.whosup.utils.RegisterInGCM;
 import com.whosup.android.whosup.utils.SPreferences;
 import com.whosup.android.whosup.utils.Utility;
 
@@ -347,7 +348,7 @@ public class RegisterActivity extends Activity {
             if (file_url != null){
                 Toast.makeText(RegisterActivity.this, file_url, Toast.LENGTH_LONG).show();
                 //Toast.makeText(getApplicationContext(), R.string.account_successfully_created, Toast.LENGTH_LONG).show();
-
+                new RegisterInGCM(getApplicationContext(), RegisterActivity.this);
                 if(success==1){
                     finish();
                 }

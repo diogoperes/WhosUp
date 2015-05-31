@@ -314,10 +314,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 //                new refreshInvites(this).execute();
                 TryLoad();
                 return true;
+            /*
             case R.id.action_testgcm:
                 Intent it = new Intent(MainActivity.this, GCMActivity.class);
                 startActivity(it);
                 return true;
+            */
             case R.id.action_filter:
                 Fragment fragment = null;
                 FragmentManager fragmentManager = getSupportFragmentManager();
