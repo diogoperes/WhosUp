@@ -248,6 +248,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             menu.findItem(R.id.action_refresh).setVisible(false);
             menu.findItem(R.id.action_filter).setVisible(false);
             menu.findItem(R.id.action_viewmap).setVisible(false);
+        }else{
+            menu.findItem(R.id.action_all_invites).setVisible(false);
         }
 
 
@@ -307,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -318,6 +320,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 //                new refreshInvites(this).execute();
                 TryLoad();
                 return true;
+            case R.id.action_all_invites:
+                myProfileIsOpen = false;
+                myInvitesFragmentIsOpen =false;
+                createInviteIsOpen = false;
+                myAttendeesIsOpen = false;
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                return true;
             /*
             case R.id.action_testgcm:
                 Intent it = new Intent(MainActivity.this, GCMActivity.class);
@@ -326,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             */
             case R.id.action_filter:
                 Fragment fragment = null;
-                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager = getSupportFragmentManager();
                 fragment = new FilterFragment();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.filter_fragment, fragment);
