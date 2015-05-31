@@ -348,7 +348,7 @@ public class RegisterActivity extends Activity {
             if (file_url != null){
                 Toast.makeText(RegisterActivity.this, file_url, Toast.LENGTH_LONG).show();
                 //Toast.makeText(getApplicationContext(), R.string.account_successfully_created, Toast.LENGTH_LONG).show();
-                new RegisterInGCM(getApplicationContext(), RegisterActivity.this);
+                new RegisterInGCM(getApplicationContext(), RegisterActivity.this, usernameStr);
                 if(success==1){
                     finish();
                 }

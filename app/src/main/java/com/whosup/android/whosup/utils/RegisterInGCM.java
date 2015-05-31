@@ -50,11 +50,13 @@ public class RegisterInGCM {
     protected static final int MSG_REGISTER_WEB_SERVER_FAILURE = 104;
     private String gcmRegId;
     Context context;
+    String username;
     RegisterActivity mRegisterActivity;
 
-    public RegisterInGCM(Context context, RegisterActivity mRegisterActivity){
+    public RegisterInGCM(Context context, RegisterActivity mRegisterActivity, String username){
         this.context=context;
         this.mRegisterActivity= mRegisterActivity;
+        this.username=username;
 
         if (isGoogelPlayInstalled()) {
             clearSharedPreferences();
@@ -182,7 +184,7 @@ public class RegisterInGCM {
             }
             Map<String, String> dataMap = new HashMap<>();
             dataMap.put("regId", gcmRegId);
-            dataMap.put("username", SPreferences.getInstance().getLoginUsername(context));
+            dataMap.put("username", username);
             System.out.println("REG ID: " + dataMap.get("regId"));
             System.out.println("USERNAME: " + dataMap.get("username"));
 
