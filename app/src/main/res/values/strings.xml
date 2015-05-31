@@ -138,5 +138,6 @@
     <string name="password_must_be_at_least_6_characters_long">Password must be at least 6 characters long</string>
     <string name="password_too_long_maximum_length_is_30">Password too long. Maximum length is 30</string>
     <string name="invites_list">Invites list</string>
+    <string name="all_invites">All Invites</string>
 
 </resources>

@@ -38,7 +38,7 @@
     <item
         android:id="@+id/action_all_invites"
         android:orderInCategory="100"
-        android:title="@string/invites_list"
+        android:title="@string/all_invites"
         app:showAsAction="never" />
 
     <item
