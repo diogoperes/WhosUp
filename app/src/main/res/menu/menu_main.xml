@@ -35,11 +35,11 @@
         android:orderInCategory="100"
         android:title="@string/action_viewmap"
         app:showAsAction="never" />
-    <item
+    <!--<item
         android:id="@+id/action_all_invites"
         android:orderInCategory="100"
         android:title="@string/all_invites"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 
     <item
         android:id="@+id/action_logout"

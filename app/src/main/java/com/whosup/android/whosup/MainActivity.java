@@ -248,8 +248,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             menu.findItem(R.id.action_refresh).setVisible(false);
             menu.findItem(R.id.action_filter).setVisible(false);
             menu.findItem(R.id.action_viewmap).setVisible(false);
-        }else{
-            menu.findItem(R.id.action_all_invites).setVisible(false);
         }
 
 
@@ -320,13 +318,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 //                new refreshInvites(this).execute();
                 TryLoad();
                 return true;
-            case R.id.action_all_invites:
-                myProfileIsOpen = false;
-                myInvitesFragmentIsOpen =false;
-                createInviteIsOpen = false;
-                myAttendeesIsOpen = false;
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                return true;
+
             /*
             case R.id.action_testgcm:
                 Intent it = new Intent(MainActivity.this, GCMActivity.class);
@@ -371,6 +363,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
             case 0:
+                if(myProfileIsOpen || myInvitesFragmentIsOpen || createInviteIsOpen || myAttendeesIsOpen){
+                    myProfileIsOpen = false;
+                    myInvitesFragmentIsOpen =false;
+                    createInviteIsOpen = false;
+                    myAttendeesIsOpen = false;
+                    fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
+                break;
+            case 1:
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 System.out.println("BACK STACK CLEARED" + "286");
                 myInvitesFragmentIsOpen=false;
@@ -380,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new CreateInviteActivity();
                 title = getString(R.string.create_invite);
                 break;
-            case 1:
+            case 2:
 
 
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -414,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
                 title = getString(R.string.view_profile);
                 break;
-            case 2:
+            case 3:
                 if (!myInvitesFragmentIsOpen){
                     fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     System.out.println("BACK STACK CLEARED" + "325");
@@ -427,7 +428,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     title = getString(R.string.my_invites);
                 }
                 break;
-            case 3:
+            case 4:
                 createInviteIsOpen=false;
                 myAttendeesIsOpen=true;
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);

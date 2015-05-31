@@ -40,12 +40,14 @@
     <string name="closeDrawer">Fechar Drawer</string>
 
     <!-- navigation drawer item labels  -->
+    <string name="nav_item_all_invites">All Invites</string>
     <string name="nav_item_create_invite">Create Invite</string>
     <string name="nav_item_my_profile">My Profile</string>
     <string name="nav_item_my_invites">My Invites</string>
     <string name="nav_item_my_attendants">My Attendants</string>
 
     <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_all_invites</item>
         <item>@string/nav_item_create_invite</item>
         <item>@string/nav_item_my_profile</item>
         <item>@string/nav_item_my_invites</item>
@@ -53,6 +55,7 @@
     </string-array>
 
     <!-- NAV DRAWER ITEMS TITLE-->
+
     <string name="create_invite">Create Invite</string>
     <string name="view_profile">My Profile</string>
     <string name="my_invites">My Invites</string>
